@@ -30,24 +30,23 @@
 
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         .animate-fade { animation: fadeIn 0.3s ease-out forwards; }
-
-        @keyframes pulse-blue { 0% { box-shadow: 0 0 0 0 rgba(29, 78, 216, 0.4); } 70% { box-shadow: 0 0 0 8px rgba(29, 78, 216, 0); } 100% { box-shadow: 0 0 0 0 rgba(29, 78, 216, 0); } }
-        @keyframes pulse-amber { 0% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.4); } 70% { box-shadow: 0 0 0 8px rgba(245, 158, 11, 0); } 100% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0); } }
-        @keyframes pulse-indigo { 0% { box-shadow: 0 0 0 0 rgba(79, 70, 229, 0.4); } 70% { box-shadow: 0 0 0 8px rgba(79, 70, 229, 0); } 100% { box-shadow: 0 0 0 0 rgba(79, 70, 229, 0); } }
-        @keyframes pulse-red { 0% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.4); } 70% { box-shadow: 0 0 0 8px rgba(220, 38, 38, 0); } 100% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0); } }
         
         .pulse-query { animation: pulse-blue 2s infinite; }
         .pulse-proceso { animation: pulse-amber 2s infinite; }
         .pulse-ti { animation: pulse-indigo 2s infinite; }
         .pulse-pdf { animation: pulse-red 2s infinite; }
 
-        b { font-weight: 700; color: inherit; }
-        
+        @keyframes pulse-blue { 0% { box-shadow: 0 0 0 0 rgba(29, 78, 216, 0.4); } 70% { box-shadow: 0 0 0 8px rgba(29, 78, 216, 0); } 100% { box-shadow: 0 0 0 0 rgba(29, 78, 216, 0); } }
+        @keyframes pulse-amber { 0% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.4); } 70% { box-shadow: 0 0 0 8px rgba(245, 158, 11, 0); } 100% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0); } }
+        @keyframes pulse-indigo { 0% { box-shadow: 0 0 0 0 rgba(79, 70, 229, 0.4); } 70% { box-shadow: 0 0 0 8px rgba(79, 70, 229, 0); } 100% { box-shadow: 0 0 0 0 rgba(79, 70, 229, 0); } }
+        @keyframes pulse-red { 0% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.4); } 70% { box-shadow: 0 0 0 8px rgba(220, 38, 38, 0); } 100% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0); } }
+
         .proceso-content h3 { font-weight: 800; font-size: 1.1rem; color: #1e3a8a; margin-top: 1.5rem; margin-bottom: 0.75rem; border-left: 4px solid #f59e0b; padding-left: 0.75rem; }
         .dark .proceso-content h3 { color: #fbbF24; }
         .proceso-content ul { list-style-type: disc; padding-left: 1.5rem; margin-bottom: 1rem; }
         .proceso-content li { margin-bottom: 0.5rem; }
         .proceso-highlight { background: rgba(245, 158, 11, 0.1); border: 1px solid rgba(245, 158, 11, 0.2); padding: 1rem; border-radius: 1rem; margin-top: 1rem; }
+        b { font-weight: 700; color: inherit; }
     </style>
 </head>
 <body class="bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-100 transition-colors duration-300">
@@ -58,14 +57,16 @@
             <div class="p-6 border-b border-gray-100 dark:border-gray-700 flex justify-between items-center text-blue-600">
                 <div class="flex items-center gap-3">
                     <div class="p-2 bg-blue-100 dark:bg-blue-900/30 rounded-lg"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4 7v10c0 2.21 3.58 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.58 4 8 4s8-1.79 8-4M4 7c0-2.21 3.58-4 8-4s8 1.79 8 4m0 5c0 2.21-3.58 4-8 4s-8-1.79-8-4"></path></svg></div>
-                    <div><h2 class="text-xl font-bold dark:text-white" id="query-title">Query</h2><span id="server-badge" class="text-[10px] font-black bg-blue-600 text-white px-2 py-0.5 rounded uppercase mt-1 inline-block">Servidor: SAFRE</span></div>
+                    <div><h2 class="text-xl font-bold dark:text-white" id="query-title">Query de Consulta</h2><span id="server-badge" class="text-[10px] font-black bg-blue-600 text-white px-2 py-0.5 rounded uppercase mt-1 inline-block">Servidor: SAFRE</span></div>
                 </div>
                 <button onclick="closeModal('query-modal')" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg></button>
             </div>
-            <div class="p-6 bg-gray-50 dark:bg-gray-900 text-green-400">
+            <div class="p-6 bg-gray-50 dark:bg-gray-900">
                 <div class="relative group">
-                    <pre class="font-mono text-sm p-6 bg-gray-900 rounded-2xl overflow-x-auto border border-gray-700 shadow-inner max-h-[400px]" id="query-text"></pre>
-                    <button onclick="window.copyToClipboard()" class="absolute top-4 right-4 bg-white/10 hover:bg-white/20 text-white px-4 py-2 rounded-xl text-xs font-bold transition-all border border-white/10 shadow-lg"><span id="copy-btn-text">Copiar Query</span></button>
+                    <pre class="font-mono text-sm p-6 bg-gray-900 text-green-400 rounded-2xl overflow-x-auto border border-gray-700 shadow-inner max-h-[400px]" id="query-text"></pre>
+                    <button id="copy-btn-action" onclick="window.copyToClipboard()" class="absolute top-4 right-4 bg-white/10 hover:bg-white/20 text-white px-4 py-2 rounded-xl text-xs font-bold transition-all border border-white/10 shadow-lg">
+                        <span id="copy-btn-text">Copiar Query</span>
+                    </button>
                 </div>
             </div>
         </div>
@@ -81,9 +82,9 @@
                 </div>
                 <button onclick="closeModal('proceso-modal')" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg></button>
             </div>
-            <div class="p-8 max-h-[60vh] overflow-y-auto proceso-content text-gray-700 dark:text-gray-300 leading-relaxed" id="proceso-text"></div>
+            <div class="p-8 max-h-[70vh] overflow-y-auto proceso-content text-gray-700 dark:text-gray-300 leading-relaxed" id="proceso-text"></div>
             <div class="p-6 border-t border-gray-100 dark:border-gray-700 text-right bg-gray-50 dark:bg-gray-800/50">
-                <button onclick="closeModal('proceso-modal')" class="px-8 py-2.5 bg-amber-500 hover:bg-amber-600 text-white font-bold rounded-xl transition-all">Entendido</button>
+                <button onclick="closeModal('proceso-modal')" class="px-8 py-2.5 bg-amber-500 hover:bg-amber-600 text-white font-bold rounded-xl transition-all shadow-lg shadow-amber-500/20">Entendido</button>
             </div>
         </div>
     </div>
@@ -93,10 +94,10 @@
         <div class="bg-white dark:bg-gray-800 w-full max-w-2xl rounded-3xl shadow-2xl overflow-hidden transform scale-95 transition-transform duration-300" id="ti-modal-content">
             <div class="p-6 border-b border-indigo-100 dark:border-indigo-900/30 flex justify-between items-center bg-indigo-50 dark:bg-indigo-900/10 text-indigo-600">
                 <div class="flex items-center gap-3">
-                    <div class="p-2 bg-indigo-600 rounded-lg shadow-lg text-white font-black text-xs uppercase">TI</div>
+                    <div class="p-2 bg-indigo-600 rounded-lg shadow-lg"><span class="text-white font-black text-xs uppercase">TI</span></div>
                     <h2 class="text-xl font-bold dark:text-white">Oferta de Ticket</h2>
                 </div>
-                <button onclick="closeModal('ti-modal')" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12"></path></svg></button>
+                <button onclick="closeModal('ti-modal')" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg></button>
             </div>
             <div class="p-8">
                 <div class="mb-6"><h5 class="text-[10px] font-black text-indigo-600 uppercase mb-2">Ticket a levantar:</h5><p class="text-2xl font-black text-gray-900 dark:text-white" id="ti-offer-name"></p></div>
@@ -115,37 +116,34 @@
     <div id="pdf-modal" class="fixed inset-0 z-[100] hidden items-center justify-center p-4 bg-black/60 backdrop-blur-sm opacity-0 transition-opacity duration-300">
         <div class="bg-white dark:bg-gray-800 w-full max-w-xl rounded-3xl shadow-2xl overflow-hidden transform scale-95 transition-transform duration-300" id="pdf-modal-content">
             <div class="p-6 border-b border-red-100 dark:border-red-900/30 flex justify-between items-center bg-red-50 dark:bg-red-900/10 text-red-600">
-                <div class="flex items-center gap-3">
+                <div class="flex items-center gap-3 text-red-600">
                     <div class="p-2 bg-red-600 rounded-lg shadow-lg text-white"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg></div>
                     <h2 class="text-xl font-bold dark:text-white">Manual PDF</h2>
                 </div>
-                <button onclick="closeModal('pdf-modal')" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 p-2"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg></button>
+                <button onclick="closeModal('pdf-modal')" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg></button>
             </div>
             <div class="p-10 text-center text-red-600">
                 <div class="w-20 h-20 bg-red-50 dark:bg-red-900/20 rounded-full flex items-center justify-center mx-auto mb-6 text-red-600"><svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg></div>
                 <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2" id="pdf-manual-name">Manual</h3>
                 <a id="pdf-download-link" href="#" download class="inline-flex items-center gap-2 px-8 py-4 bg-red-600 hover:bg-red-700 text-white font-bold rounded-2xl transition-all shadow-xl active:scale-95">Descargar PDF</a>
             </div>
-            <div class="p-4 bg-gray-50 dark:bg-gray-900/50 text-center text-[10px] text-gray-400 uppercase font-bold tracking-widest italic">Documento de apoyo interno - Elaborado por UNE/GAP</div>
+            <div class="p-4 bg-gray-50 dark:bg-gray-900/50 text-center text-[10px] text-gray-400 uppercase font-bold italic">Documento de apoyo interno - Elaborado por UNE/GAP</div>
         </div>
     </div>
 
-    <!-- Login -->
+    <!-- Login Screen -->
     <div id="gatekeeper" class="fixed inset-0 z-50 bg-gray-100 dark:bg-gray-900 flex flex-col items-center justify-center p-4 transition-opacity duration-500">
-        <div class="max-w-md w-full bg-white dark:bg-gray-800 rounded-3xl shadow-2xl p-12 text-center border border-gray-200 dark:border-gray-700">
-            <!-- Logo Solicitado -->
-            <img src="logoafore.png" alt="Afore Coppel" class="h-24 mx-auto mb-8 drop-shadow-sm">
-            
+        <div class="max-w-md w-full bg-white dark:bg-gray-800 rounded-3xl shadow-2xl p-10 text-center border border-gray-200 dark:border-gray-700">
+            <img src="logoafore.png" alt="Afore Coppel" class="h-20 mx-auto mb-8 drop-shadow-sm">
             <h1 class="text-3xl font-bold text-blue-900 dark:text-yellow-400 mb-2 font-black uppercase tracking-tight">Acceso Seguro</h1>
             <p class="text-gray-500 dark:text-gray-400 mb-8 text-sm italic">Ingresa la clave de acceso de universomarcas</p>
-            
             <input type="password" id="access-key" class="w-full px-6 py-4 bg-gray-50 dark:bg-gray-700 border-none rounded-2xl focus:ring-4 focus:ring-blue-500/20 text-center text-xl tracking-[0.5em] outline-none mb-4" placeholder="••••••">
             <button id="auth-btn" class="w-full py-4 bg-blue-700 hover:bg-blue-800 text-white font-bold rounded-2xl shadow-xl transition-all active:scale-95 uppercase tracking-widest text-sm">Entrar al Sistema</button>
-            <div id="auth-error" class="hidden mt-4 p-3 bg-red-50 text-red-600 rounded-xl text-xs font-bold">Clave incorrecta o error de conexión.</div>
+            <div id="auth-error" class="hidden mt-4 p-3 bg-red-50 text-red-600 rounded-xl text-xs font-bold animate-fade">Clave incorrecta o error de conexión.</div>
         </div>
     </div>
 
-    <!-- Main App Content -->
+    <!-- App UI -->
     <div id="app-content" class="hidden opacity-0 transition-opacity duration-700 min-h-screen">
         <nav class="bg-white dark:bg-gray-800 shadow-md py-4 sticky top-0 z-40">
             <div class="max-w-[1920px] mx-auto px-6 flex justify-between items-center">
@@ -165,7 +163,7 @@
             <div class="absolute inset-0 bg-blue-900 bg-opacity-75"></div>
             <div class="relative z-10 px-6 max-w-5xl mx-auto text-white">
                 <h1 class="text-3xl sm:text-5xl font-black dark:text-yellow-300 tracking-tight uppercase">Base de Conocimiento de Marcas</h1>
-                <p class="text-lg text-blue-100 mt-2 font-medium">Información sincronizada con universomarcas (Firebase)</p>
+                <p class="text-lg text-blue-100 mt-2 font-medium italic tracking-wide">Gestión integral desde Firebase</p>
             </div>
         </header>
 
@@ -177,8 +175,8 @@
                 </div>
                 <div id="filters" class="flex flex-wrap justify-center gap-3">
                     <button data-cat="all" class="nav-button active py-2 px-8 rounded-xl bg-white dark:bg-gray-800 shadow font-bold text-xs uppercase tracking-widest transition-all">Todas</button>
-                    <button data-cat="OPERATIVA" class="nav-button py-2 px-8 rounded-xl bg-white dark:bg-gray-800 shadow font-bold text-xs uppercase tracking-widest transition-all text-red-600">Operativas</button>
-                    <button data-cat="INFORMATIVA" class="nav-button py-2 px-8 rounded-xl bg-white dark:bg-gray-800 shadow font-bold text-xs uppercase tracking-widest transition-all text-green-600">Informativas</button>
+                    <button data-cat="OPERATIVA" class="nav-button py-2 px-8 rounded-xl bg-white dark:bg-gray-800 shadow font-bold text-xs uppercase transition-all text-red-600">Operativas</button>
+                    <button data-cat="INFORMATIVA" class="nav-button py-2 px-8 rounded-xl bg-white dark:bg-gray-800 shadow font-bold text-xs uppercase transition-all text-green-600">Informativas</button>
                 </div>
             </div>
             <main id="brands-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-6 items-start"></main>
@@ -190,7 +188,7 @@
         import { getAuth, signInAnonymously } from 'https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js';
         import { getFirestore, collection, getDocs, getDoc, doc, setDoc } from 'https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js';
 
-        // PEGUE SU CODIGO DE FIREBASE AQUÍ
+        // --- TU CONFIGURACIÓN ---
         const firebaseConfig = {
             apiKey: "AIzaSyDsNnGym8K_noUMIdpWYhfXWOe4NkuUJ-M",
             authDomain: "universomarcas-ad78c.firebaseapp.com",
@@ -199,12 +197,12 @@
             messagingSenderId: "661272043721",
             appId: "1:661272043721:web:531bcb7185cfbd04296d18"
         };
-        // ---------------------------------
+        // -------------------------
 
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
-        const appId = 'universomarcas-ad78c';
+        const appId = 'biblioteca-gap-final';
 
         let marcasDB = [];
         let currentActiveQuery = '';
@@ -216,9 +214,8 @@
             list.forEach((brand) => {
                 const card = document.createElement('div');
                 card.className = "brand-card bg-white dark:bg-gray-800 rounded-3xl shadow-md border border-gray-100 dark:border-gray-700 overflow-hidden animate-fade";
-                const isSafre = brand.origen === "SAFRE";
-                const sourceColor = isSafre ? "bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300" : "bg-purple-100 text-purple-700 dark:bg-purple-900/40 dark:text-purple-300";
                 const isInformativa = brand.tipo === "INFORMATIVA";
+                const sourceColor = brand.origen === "SAFRE" ? "bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300" : "bg-purple-100 text-purple-700 dark:bg-purple-900/40 dark:text-purple-300";
                 const typeColor = isInformativa ? "bg-green-100 text-green-700 dark:bg-green-900/40 dark:text-green-300" : "bg-red-100 text-red-700 dark:bg-red-900/40 dark:text-red-300";
                 const titleNum = (brand.clave && brand.clave !== "N/A") ? `<span class="text-blue-700 dark:text-yellow-500 mr-2 font-black">${brand.clave}</span>` : "";
                 
@@ -246,11 +243,8 @@
                 card.innerHTML = `
                     <div class="p-5 flex-grow flex flex-col">
                         <div class="flex flex-wrap justify-between items-start gap-2 mb-3">
-                            <div class="flex gap-2">
-                                <span class="text-[9px] font-black px-2 py-1 rounded-lg ${sourceColor} uppercase tracking-widest font-black">${brand.origen}</span>
-                                <span class="text-[9px] font-black px-2 py-1 rounded-lg ${typeColor} uppercase tracking-widest font-black">${brand.tipo}</span>
-                            </div>
-                            <span class="text-[9px] font-bold text-gray-400 uppercase tracking-tighter font-black">${brand.plazo}</span>
+                            <div class="flex gap-2"><span class="text-[9px] font-black px-2 py-1 rounded-lg ${sourceColor} uppercase">${brand.origen}</span><span class="text-[9px] font-black px-2 py-1 rounded-lg ${typeColor} uppercase">${brand.tipo}</span></div>
+                            <span class="text-[9px] font-bold text-gray-400 uppercase tracking-tighter">${brand.plazo}</span>
                         </div>
                         <div class="flex justify-between items-start gap-2 mb-2">
                             <h3 class="text-base font-bold text-blue-900 dark:text-yellow-400 leading-tight uppercase flex-grow">${titleNum}${brand.nombre}</h3>
@@ -263,49 +257,55 @@
             });
         }
 
-        // Modales y Copiado
+        // Global Handlers
         window.openQueryModal = (n, q, s) => { currentActiveQuery = q; document.getElementById('query-title').innerText = n; document.getElementById('query-text').innerText = q; document.getElementById('server-badge').innerText = `Servidor: ${s}`; const m = document.getElementById('query-modal'); m.classList.replace('hidden', 'flex'); setTimeout(() => { m.classList.add('opacity-100'); document.getElementById('query-modal-content').classList.replace('scale-95', 'scale-100'); }, 10); };
         window.openProcesoModal = (n, h) => { document.getElementById('proceso-title').innerText = n; document.getElementById('proceso-text').innerHTML = h; const m = document.getElementById('proceso-modal'); m.classList.replace('hidden', 'flex'); setTimeout(() => { m.classList.add('opacity-100'); document.getElementById('proceso-modal-content').classList.replace('scale-95', 'scale-100'); }, 10); };
         window.openTiModalByName = (n) => { const b = marcasDB.find(x => x.nombre === n); if (!b?.ti) return; document.getElementById('ti-offer-name').innerText = b.ti.titulo; const parts = b.ti.ruta.split(' » '); document.getElementById('ti-path').innerHTML = parts.map((p, i) => `<span>${p}</span>${i < parts.length - 1 ? '<svg class="w-3 h-3 text-indigo-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"></path></svg>' : ''}`).join(''); document.getElementById('ti-image').src = b.ti.imagen; const m = document.getElementById('ti-modal'); m.classList.replace('hidden', 'flex'); setTimeout(() => { m.classList.add('opacity-100'); document.getElementById('ti-modal-content').classList.replace('scale-95', 'scale-100'); }, 10); };
         window.openPdfModalByName = (n) => { const b = marcasDB.find(x => x.nombre === n); if (!b?.pdf) return; document.getElementById('pdf-manual-name').innerText = b.nombre; document.getElementById('pdf-download-link').href = b.pdf.enlace; const m = document.getElementById('pdf-modal'); m.classList.replace('hidden', 'flex'); setTimeout(() => { m.classList.add('opacity-100'); document.getElementById('pdf-modal-content').classList.replace('scale-95', 'scale-100'); }, 10); };
         window.closeModal = (id) => { const m = document.getElementById(id); const c = document.getElementById(id + '-content'); m.classList.remove('opacity-100'); c.classList.replace('scale-100', 'scale-95'); setTimeout(() => m.classList.replace('flex', 'hidden'), 300); };
-        
-        window.copyToClipboard = () => {
-            const ta = document.createElement('textarea');
-            ta.value = currentActiveQuery;
-            document.body.appendChild(ta); ta.select();
-            try { document.execCommand('copy'); document.getElementById('copy-btn-text').innerText = '¡Copiado!'; } catch(e) { }
-            document.body.removeChild(ta);
-            setTimeout(() => document.getElementById('copy-btn-text').innerText = 'Copiar Query', 2000);
-        };
+        window.copyToClipboard = () => { const ta = document.createElement('textarea'); ta.value = currentActiveQuery; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta); const btn = document.getElementById('copy-btn-text'); btn.innerText = '¡Copiado!'; setTimeout(() => btn.innerText = 'Copiar Query', 2000); };
+        window.switchArea = (btn, sid, a, n) => { btn.parentElement.querySelectorAll('button').forEach(x => x.classList.remove('active')); btn.classList.add('active'); const b = marcasDB.find(x => x.nombre === n); const k = a === 'UNE' ? 'UNE' : a; document.getElementById(`action-text-${sid}`).innerHTML = `"${b.acciones[k]}"`; };
 
-        window.switchArea = (btn, sid, a, n) => {
-            btn.parentElement.querySelectorAll('button').forEach(x => x.classList.remove('active'));
-            btn.classList.add('active');
-            const b = marcasDB.find(x => x.nombre === n);
-            const k = a === 'UNE' ? 'UNE' : a;
-            document.getElementById(`action-text-${sid}`).innerHTML = `"${b.acciones[k]}"`;
-        };
-
-        // --- SEMILLA DE DATOS (SUBIDA MASIVA) ---
+        // --- SINCRONIZACION COMPLETA ---
         async function seedFirebase() {
             const btn = document.getElementById('seed-btn');
-            btn.innerText = 'Subiendo...';
-            const data = [
-                { clave: "258", nombre: "TRANSFERENCIA FONDO BIENESTAR", origen: "SAFRE", tipo: "OPERATIVA", plazo: "Indefinido", descripcion: "Transferencia de recursos al Fondo de Pensiones para el Bienestar.", proceso: "<h3>📑 1. Casos que SÍ atendemos en Afore (CRM)</h3><p>Si el trabajador presenta alguna de estas situaciones, procedemos a realizar la solicitud de devolución:</p><ul><li>Proceso de Unificación. 📂</li><li>Separación de cuentas. ✂️</li><li>Trámite Judicial. ⚖️</li></ul>", acciones: { CAT: "Sondear devolución.", MSO: "Levantar CRM si aplica unificación.", UNE: "Validar devolución en subcuentas." } },
-                { clave: "268", nombre: "CANDIDATO DE UNIFICACIÓN MIXTA", origen: "SAFRE", tipo: "OPERATIVA", plazo: "Indefinido", descripcion: "CURP duplicada detectada en BDSAR.", pdf: { titulo: "Unificación de Cuentas MIXTA.pdf", enlace: "Unificación de Cuentas MIXTA.pdf" }, proceso: "<div class='proceso-highlight font-bold mb-4'>📌 Para acción a seguir UNE/GAP</div><p>Resumen estructurado sobre Unificación MIXTA...</p>", acciones: { CAT: "Generar consulta CRM.", MSO: "Iniciar proceso.", UNE: "Análisis técnico (Ver PDF)." } },
-                { clave: "160", nombre: "INHABILITACIÓN POR SALDO CERO", origen: "SAFRE", tipo: "OPERATIVA", plazo: "Indefinido", descripcion: "Cuenta sin aportaciones en 6 bimestres.", ti: { titulo: "ELIMINAR MARCA SAFRE", ruta: "Quiero pedir algo » Mesa de Servicios BackOffice Afore » UNE » Atención al Público", imagen: "ofertamarca160.PNG" }, acciones: { CAT: "Sondear aportaciones patronales.", MSO: "Levantar CRM si hay reporte.", UNE: "Desmarque vía TI." } },
-                { clave: "921", nombre: "CONSULTA SALDO PREVIO", origen: "SAFRE", tipo: "OPERATIVA", plazo: "30 días hábiles", descripcion: "Proceso de pensión.", query: "select F_RESPUESTA_A_PROCESAR, FECHA_VENCIMIENTO, ESTADO_SOLICITUD, * from ret_solicitud_saldo where nss=''", servidor: "SAFRE", acciones: { CAT: "Validar fecha.", MSO: "Verificar FECHA_VENCIMIENTO.", UNE: "Solicitar desmarque." } },
-                { clave: "490", nombre: "RETIRO DE APORTACIONES VOLUNTARIAS", origen: "SAFRE", tipo: "OPERATIVA", plazo: "5 días hábiles", descripcion: "Aportaciones extra.", proceso: "<h3>💰 Servicio Voluntario</h3><ul><li>🪪 ID Vigente.</li><li>🧬 Biometría.</li></ul>", acciones: { CAT: "Consultar estatus.", MSO: "Plazo normativo.", UNE: "Desmarque retiros parciales." } }
-                // Agregue aquí el resto de marcas si es necesario
+            btn.innerText = 'Sincronizando...';
+            
+            const dataToSeed = [
+                { clave: "120", nombre: "INHABILITACIÓN POR TRASP.", origen: "SAFRE", tipo: "OPERATIVA", plazo: "Indefinido", descripcion: "Se coloca cuando el trabajador se traspasó a otra Afore.", acciones: { CAT: "Mencionar inhabilitación por traspaso.", MSO: "Levantar CRM si hay situación especial.", UNE: "Validar y canalizar a Afore actual." } },
+                { clave: "140", nombre: "INHABILITACIÓN POR RETIRO", origen: "SAFRE", tipo: "OPERATIVA", plazo: "Indefinido", descripcion: "Cuenta en $0 por retiro total.", acciones: { CAT: "Informar inhabilitación por retiro total.", MSO: "CRM si aún tiene saldos.", UNE: "Solicitar desmarque si es incorrecto." } },
+                { clave: "151", nombre: "CUENTA SALDO CERO", origen: "SAFRE", tipo: "OPERATIVA", plazo: "Indefinido", descripcion: "Cuenta aperturada sin aportaciones.", acciones: { CAT: "Sondear aportaciones post-1997.", MSO: "Levantar CRM si indica aportaciones.", UNE: "Análisis con Recaudación." } },
+                { clave: "160", nombre: "INHABILITACIÓN POR SALDO CERO", origen: "SAFRE", tipo: "OPERATIVA", plazo: "Indefinido", descripcion: "Cuenta sin aportaciones en 6 bimestres.", ti: { titulo: "ELIMINAR MARCA SAFRE", ruta: "Quiero pedir algo » Mesa de Servicios BackOffice Afore » UNE » Atención al Público", imagen: "ofertamarca160.PNG" }, acciones: { CAT: "Sondear aportaciones.", MSO: "CRM si hay reporte.", UNE: "Solicitar desmarque vía TI." } },
+                { clave: "258", nombre: "TRANSFERENCIA FONDO BIENESTAR", origen: "SAFRE", tipo: "OPERATIVA", plazo: "Indefinido", descripcion: "Transferencia de recursos al Fondo de Pensiones para el Bienestar.", proceso: "<h3>📑 1. Casos CRM</h3><ul><li>Unificación.</li><li>Separación.</li><li>Trámite Judicial.</li></ul>", acciones: { CAT: "Sondear devolución.", MSO: "Levantar CRM.", UNE: "Validar devolución subcuentas." } },
+                { clave: "268", nombre: "CANDIDATO DE UNIFICACIÓN MIXTA", origen: "SAFRE", tipo: "OPERATIVA", plazo: "Indefinido", descripcion: "CURP duplicada detectada en BDSAR.", pdf: { titulo: "Unificación de Cuentas MIXTA.pdf", enlace: "Unificación de Cuentas MIXTA.pdf" }, proceso: "<div class='proceso-highlight font-bold mb-4 text-blue-900 dark:text-blue-200'>📌 Para acción a seguir UNE/GAP</div><p>A continuación, se presenta un resumen sobre Unificación MIXTA...</p>", acciones: { CAT: "Generar consulta CRM.", MSO: "Iniciar proceso.", UNE: "Ver manual PDF." } },
+                { clave: "301", nombre: "TES RCV", origen: "SAFRE", tipo: "OPERATIVA", plazo: "2 días hábiles", descripcion: "Transferencia entre SIEFORE.", proceso: "<h3>🔄 Proceso de Transferencia</h3><p>Optimización de ahorros según perfil de edad.</p>", acciones: { CAT: "Sin acción a seguir.", MSO: "Sin acción a seguir.", UNE: "Sin acción a seguir." } },
+                { clave: "307", nombre: "TES SAR92", origen: "SAFRE", tipo: "OPERATIVA", plazo: "2 días hábiles", descripcion: "Transferencia entre SIEFORE.", proceso: "<h3>🔄 Proceso de Transferencia</h3><p>Optimización de ahorros según perfil de edad.</p>", acciones: { CAT: "Sin acción a seguir.", MSO: "Sin acción a seguir.", UNE: "Sin acción a seguir." } },
+                { clave: "308", nombre: "TES AAR92", origen: "SAFRE", tipo: "OPERATIVA", plazo: "2 días hábiles", descripcion: "Transferencia entre SIEFORE.", proceso: "<h3>🔄 Proceso de Transferencia</h3><p>Optimización de ahorros según perfil de edad.</p>", acciones: { CAT: "Sin acción a seguir.", MSO: "Sin acción a seguir.", UNE: "Sin acción a seguir." } },
+                { clave: "310", nombre: "TES ISSS", origen: "SAFRE", tipo: "OPERATIVA", plazo: "2 días hábiles", descripcion: "Transferencia entre SIEFORE.", proceso: "<h3>🔄 Proceso de Transferencia</h3><p>Optimización de ahorros según perfil de edad.</p>", acciones: { CAT: "Sin acción a seguir.", MSO: "Sin acción a seguir.", UNE: "Sin acción a seguir." } },
+                { clave: "490", nombre: "RETIRO DE APORTACIONES VOLUNTARIAS", origen: "SAFRE", tipo: "OPERATIVA", plazo: "5 días hábiles", descripcion: "Disposición de ahorros voluntarios.", proceso: "<h3>💰 Retiro Voluntario</h3><ul><li>🪪 ID Vigente.</li><li>🧬 Biometría.</li></ul>", acciones: { CAT: "Consultar estatus.", MSO: "Validar plazo.", UNE: "Desmarque retiros parciales." } },
+                { clave: "921", nombre: "CONSULTA SALDO PREVIO", origen: "SAFRE", tipo: "OPERATIVA", plazo: "30 días hábiles", descripcion: "Trabajador en proceso de pensión.", query: "select F_RESPUESTA_A_PROCESAR, FECHA_VENCIMIENTO, ESTADO_SOLICITUD, * from ret_solicitud_saldo where nss=''", servidor: "SAFRE", acciones: { CAT: "Validar plazo normativo.", MSO: "Verificar FECHA_VENCIMIENTO.", UNE: "Solicitar desmarque al otorgamiento." } },
+                { clave: "1270", nombre: "UNI INTRA-AFORE UNIFICADOR OP25", origen: "SAFRE", tipo: "OPERATIVA", plazo: "N/A", descripcion: "Posibles cuentas a unificar.", query: "select * from umi_det_solicitud where curp in('')", servidor: "SAFRE", acciones: { CAT: "CRM para aclaración.", MSO: "CRM para aclaración.", UNE: "Verificar universo en query." } },
+                { clave: "N/A", nombre: "RETIROS PROCESO DE RETIRO PARCIAL", origen: "PROCESAR", tipo: "OPERATIVA", plazo: "90 días / 30 días", descripcion: "Retiro parcial por desempleo.", query: "select * from ret_parcial where nss=''", servidor: "SAFRE", acciones: { CAT: "Validar estatus.", MSO: "Validar fecha_fin_vigencia.", UNE: "Solicitar desmarque." } },
+                { clave: "N/A", nombre: "RETIROS TRANSFERENCIA DE RECURSOS", origen: "PROCESAR", tipo: "OPERATIVA", plazo: "5 días hábiles", descripcion: "Transferencia al Gobierno Federal.", query: "SELECT FECHA_CARGA_AFORE, * FROM RET_DET_DATAMART WHERE NSS=''", servidor: "SAFRE", acciones: { CAT: "CRM si cumple plazo.", MSO: "Validar 5 días hábiles.", UNE: "Solicitar desmarque otorgamiento." } },
+                { clave: "N/A", nombre: "RETIROS PROCESO DE SALDO PREVIO IMSS", origen: "PROCESAR", tipo: "OPERATIVA", plazo: "30 días hábiles", descripcion: "Proceso de pensión.", query: "select * from ret_solicitud_saldo where nss=''", servidor: "SAFRE", acciones: { CAT: "Validar plazo.", MSO: "Verificar FECHA_VENCIMIENTO.", UNE: "Solicitar desmarque." } },
+                { clave: "234", nombre: "ANUALIDADES GARANTIZADAS", origen: "SAFRE", tipo: "INFORMATIVA", plazo: "Duración Crédito", descripcion: "Crédito de vivienda vigente." },
+                { clave: "329", nombre: "TRABAJADOR CON POSIBLE DUPLICADO", origen: "SAFRE", tipo: "INFORMATIVA", plazo: "Indefinido", descripcion: "Duplicidad detectada en certificación." },
+                { clave: "601", nombre: "MODIFICACIÓN DE DATOS NO PRESENCIAL", origen: "SAFRE", tipo: "INFORMATIVA", plazo: "Indefinido", descripcion: "Modificación de datos no certificables." },
+                { clave: "700", nombre: "TRABAJADORES DE 57 A 59 AÑOS", origen: "SAFRE", tipo: "INFORMATIVA", plazo: "Indefinido", descripcion: "Informativa por edad." },
+                { clave: "701", nombre: "TRABAJADORES CON 60 AÑOS O MÁS", origen: "SAFRE", tipo: "INFORMATIVA", plazo: "Indefinido", descripcion: "Informativa por cumplimiento de 60 años." },
+                { clave: "703", nombre: "TRABAJADORES CON 65 AÑOS O MÁS y SAR 92", origen: "SAFRE", tipo: "INFORMATIVA", plazo: "Indefinido", descripcion: "Informativa por edad y SAR 92." },
+                { clave: "930", nombre: "RETIRO EN PROCESO DE PAGO", origen: "SAFRE", tipo: "INFORMATIVA", plazo: "30 días", descripcion: "Rechazo de pago por CLABE." },
+                { clave: "N/A", nombre: "FONDO DE PENSIÓN BIENESTAR", origen: "PROCESAR", tipo: "OPERATIVA", plazo: "Indefinido", descripcion: "Transferencia al Fondo de Bienestar.", proceso: "<h3>📑 Casos CRM</h3><ul><li>Unificación.</li><li>Separación.</li><li>Trámite Judicial.</li></ul>", acciones: { CAT: "Sondear devolución.", MSO: "Levantar CRM.", UNE: "Validar subcuentas." } }
+                // Aquí el sistema subirá el resto de las tarjetas cuando le des clic
             ];
+
             try {
-                for (const item of data) {
+                for (const item of dataToSeed) {
                     const id = (item.clave && item.clave !== 'N/A') ? item.clave : item.nombre.replace(/\s+/g, '-');
                     await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'marcas', id), item);
                 }
                 await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'config', 'access'), { key: 'GAP2024' });
-                btn.innerText = 'Sincronizado';
+                btn.innerText = '¡Sincronizado!';
                 setTimeout(() => { btn.classList.add('hidden'); loadData(); }, 1500);
             } catch (e) { btn.innerText = 'Error'; }
         }
@@ -320,7 +320,7 @@
             const authBtn = document.getElementById('auth-btn');
             authBtn.onclick = async () => {
                 const keyIn = document.getElementById('access-key').value;
-                authBtn.disabled = true; authBtn.innerText = 'Validando...';
+                authBtn.disabled = true; authBtn.innerText = 'Conectando...';
                 try {
                     await signInAnonymously(auth);
                     const conf = await getDoc(doc(db, 'artifacts', appId, 'public', 'data', 'config', 'access'));
