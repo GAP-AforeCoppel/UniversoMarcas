@@ -31,14 +31,15 @@
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         .animate-fade { animation: fadeIn 0.3s ease-out forwards; }
 
-        /* Efectos de pulso */
         @keyframes pulse-blue { 0% { box-shadow: 0 0 0 0 rgba(29, 78, 216, 0.4); } 70% { box-shadow: 0 0 0 8px rgba(29, 78, 216, 0); } 100% { box-shadow: 0 0 0 0 rgba(29, 78, 216, 0); } }
         @keyframes pulse-amber { 0% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.4); } 70% { box-shadow: 0 0 0 8px rgba(245, 158, 11, 0); } 100% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0); } }
         @keyframes pulse-indigo { 0% { box-shadow: 0 0 0 0 rgba(79, 70, 229, 0.4); } 70% { box-shadow: 0 0 0 8px rgba(79, 70, 229, 0); } 100% { box-shadow: 0 0 0 0 rgba(79, 70, 229, 0); } }
+        @keyframes pulse-red { 0% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.4); } 70% { box-shadow: 0 0 0 8px rgba(220, 38, 38, 0); } 100% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0); } }
         
         .pulse-query { animation: pulse-blue 2s infinite; }
         .pulse-proceso { animation: pulse-amber 2s infinite; }
         .pulse-ti { animation: pulse-indigo 2s infinite; }
+        .pulse-pdf { animation: pulse-red 2s infinite; }
 
         b { font-weight: 700; color: inherit; }
         
@@ -46,733 +47,303 @@
         .dark .proceso-content h3 { color: #fbbF24; }
         .proceso-content ul { list-style-type: disc; padding-left: 1.5rem; margin-bottom: 1rem; }
         .proceso-content li { margin-bottom: 0.5rem; }
-        .proceso-content p { margin-bottom: 1rem; }
         .proceso-highlight { background: rgba(245, 158, 11, 0.1); border: 1px solid rgba(245, 158, 11, 0.2); padding: 1rem; border-radius: 1rem; margin-top: 1rem; }
     </style>
 </head>
 <body class="bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-100 transition-colors duration-300">
 
-    <!-- Modal para el Query SQL -->
+    <!-- Modal SQL -->
     <div id="query-modal" class="fixed inset-0 z-[100] hidden items-center justify-center p-4 bg-black/60 backdrop-blur-sm opacity-0 transition-opacity duration-300">
         <div class="bg-white dark:bg-gray-800 w-full max-w-2xl rounded-3xl shadow-2xl overflow-hidden transform scale-95 transition-transform duration-300" id="query-modal-content">
-            <div class="p-6 border-b border-gray-100 dark:border-gray-700 flex justify-between items-center">
+            <div class="p-6 border-b border-gray-100 dark:border-gray-700 flex justify-between items-center text-blue-600">
                 <div class="flex items-center gap-3">
-                    <div class="p-2 bg-blue-100 dark:bg-blue-900/30 rounded-lg">
-                        <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.58 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.58 4 8 4s8-1.79 8-4M4 7c0-2.21 3.58-4 8-4s8 1.79 8 4m0 5c0 2.21-3.58 4-8 4s-8-1.79-8-4"></path></svg>
-                    </div>
-                    <div>
-                        <h2 class="text-xl font-bold dark:text-white" id="query-title">Query de Consulta</h2>
-                        <span id="server-badge" class="text-[10px] font-black bg-blue-600 text-white px-2 py-0.5 rounded uppercase tracking-widest mt-1 inline-block">Servidor: SAFRE</span>
-                    </div>
+                    <div class="p-2 bg-blue-100 dark:bg-blue-900/30 rounded-lg"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4 7v10c0 2.21 3.58 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.58 4 8 4s8-1.79 8-4M4 7c0-2.21 3.58-4 8-4s8 1.79 8 4m0 5c0 2.21-3.58 4-8 4s-8-1.79-8-4"></path></svg></div>
+                    <div><h2 class="text-xl font-bold dark:text-white" id="query-title">Query</h2><span id="server-badge" class="text-[10px] font-black bg-blue-600 text-white px-2 py-0.5 rounded uppercase mt-1 inline-block">Servidor: SAFRE</span></div>
                 </div>
-                <button onclick="closeModal('query-modal')" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 p-2">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-                </button>
+                <button onclick="closeModal('query-modal')" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg></button>
             </div>
-            <div class="p-6 bg-gray-50 dark:bg-gray-900">
+            <div class="p-6 bg-gray-50 dark:bg-gray-900 text-green-400">
                 <div class="relative group">
-                    <pre class="font-mono text-sm p-6 bg-gray-900 text-green-400 rounded-2xl overflow-x-auto border border-gray-700 shadow-inner max-h-[400px]" id="query-text"></pre>
-                    <button id="copy-query-btn" class="absolute top-4 right-4 bg-white/10 hover:bg-white/20 text-white px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 backdrop-blur-md border border-white/10 shadow-lg">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path></svg>
-                        <span id="copy-btn-text">Copiar Query</span>
-                    </button>
+                    <pre class="font-mono text-sm p-6 bg-gray-900 rounded-2xl overflow-x-auto border border-gray-700 shadow-inner max-h-[400px]" id="query-text"></pre>
+                    <button onclick="window.copyToClipboard()" class="absolute top-4 right-4 bg-white/10 hover:bg-white/20 text-white px-4 py-2 rounded-xl text-xs font-bold transition-all border border-white/10 shadow-lg"><span id="copy-btn-text">Copiar Query</span></button>
                 </div>
             </div>
-            <div class="p-4 text-center text-xs text-gray-400 italic">Copia el query y reemplaza los parámetros necesarios en tu gestor SQL.</div>
         </div>
     </div>
 
-    <!-- Modal para el Proceso/Desarrollo -->
+    <!-- Modal Proceso -->
     <div id="proceso-modal" class="fixed inset-0 z-[100] hidden items-center justify-center p-4 bg-black/60 backdrop-blur-sm opacity-0 transition-opacity duration-300">
         <div class="bg-white dark:bg-gray-800 w-full max-w-3xl rounded-3xl shadow-2xl overflow-hidden transform scale-95 transition-transform duration-300" id="proceso-modal-content">
-            <div class="p-6 border-b border-amber-100 dark:border-amber-900/30 flex justify-between items-center bg-amber-50/50 dark:bg-amber-900/10">
+            <div class="p-6 border-b border-amber-100 dark:border-amber-900/30 flex justify-between items-center bg-amber-50/50 dark:bg-amber-900/10 text-amber-600">
                 <div class="flex items-center gap-3">
-                    <div class="p-2 bg-amber-100 dark:bg-amber-900/30 rounded-lg shadow-inner">
-                        <svg class="w-5 h-5 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
-                    </div>
+                    <div class="p-2 bg-amber-100 dark:bg-amber-900/30 rounded-lg shadow-inner"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg></div>
                     <h2 class="text-xl font-bold dark:text-white" id="proceso-title">Desarrollo</h2>
                 </div>
-                <button onclick="closeModal('proceso-modal')" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 p-2">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-                </button>
+                <button onclick="closeModal('proceso-modal')" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg></button>
             </div>
-            <div class="p-8 max-h-[70vh] overflow-y-auto proceso-content text-gray-700 dark:text-gray-300 leading-relaxed" id="proceso-text"></div>
+            <div class="p-8 max-h-[60vh] overflow-y-auto proceso-content text-gray-700 dark:text-gray-300 leading-relaxed" id="proceso-text"></div>
             <div class="p-6 border-t border-gray-100 dark:border-gray-700 text-right bg-gray-50 dark:bg-gray-800/50">
-                <button onclick="closeModal('proceso-modal')" class="px-8 py-2.5 bg-amber-500 hover:bg-amber-600 text-white font-bold rounded-xl transition-all shadow-lg shadow-amber-500/20">Entendido</button>
+                <button onclick="closeModal('proceso-modal')" class="px-8 py-2.5 bg-amber-500 hover:bg-amber-600 text-white font-bold rounded-xl transition-all">Entendido</button>
             </div>
         </div>
     </div>
 
-    <!-- Modal para la Oferta TI -->
+    <!-- Modal TI -->
     <div id="ti-modal" class="fixed inset-0 z-[100] hidden items-center justify-center p-4 bg-black/60 backdrop-blur-sm opacity-0 transition-opacity duration-300">
         <div class="bg-white dark:bg-gray-800 w-full max-w-2xl rounded-3xl shadow-2xl overflow-hidden transform scale-95 transition-transform duration-300" id="ti-modal-content">
-            <div class="p-6 border-b border-indigo-100 dark:border-indigo-900/30 flex justify-between items-center bg-indigo-50 dark:bg-indigo-900/10">
+            <div class="p-6 border-b border-indigo-100 dark:border-indigo-900/30 flex justify-between items-center bg-indigo-50 dark:bg-indigo-900/10 text-indigo-600">
                 <div class="flex items-center gap-3">
-                    <div class="p-2 bg-indigo-600 rounded-lg shadow-lg">
-                        <span class="text-white font-black text-xs uppercase">TI</span>
-                    </div>
-                    <h2 class="text-xl font-bold dark:text-white" id="ti-title">Oferta de Ticket (TI)</h2>
+                    <div class="p-2 bg-indigo-600 rounded-lg shadow-lg text-white font-black text-xs uppercase">TI</div>
+                    <h2 class="text-xl font-bold dark:text-white">Oferta de Ticket</h2>
                 </div>
-                <button onclick="closeModal('ti-modal')" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 p-2">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-                </button>
+                <button onclick="closeModal('ti-modal')" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12"></path></svg></button>
             </div>
             <div class="p-8">
-                <div class="mb-6">
-                    <h5 class="text-[10px] font-black text-indigo-600 dark:text-indigo-400 uppercase tracking-[0.2em] mb-2">Ticket a levantar:</h5>
-                    <p class="text-2xl font-black text-gray-900 dark:text-white" id="ti-offer-name"></p>
-                </div>
-                <div class="p-5 bg-gray-50 dark:bg-gray-900/50 rounded-2xl border border-gray-100 dark:border-gray-700 mb-8">
-                    <h5 class="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-3 uppercase">Ruta del Ticket:</h5>
-                    <p class="text-sm font-bold text-gray-700 dark:text-gray-300 flex flex-wrap items-center gap-2" id="ti-path"></p>
-                </div>
+                <div class="mb-6"><h5 class="text-[10px] font-black text-indigo-600 uppercase mb-2">Ticket a levantar:</h5><p class="text-2xl font-black text-gray-900 dark:text-white" id="ti-offer-name"></p></div>
+                <div class="p-5 bg-gray-50 dark:bg-gray-900/50 rounded-2xl border border-gray-100 dark:border-gray-700 mb-8"><h5 class="text-[10px] font-black text-gray-400 uppercase mb-3 uppercase">Ruta del Ticket:</h5><p class="text-sm font-bold text-gray-700 dark:text-gray-300 flex flex-wrap items-center gap-2" id="ti-path"></p></div>
                 <div class="text-center">
                     <h5 class="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-4">Imagen de Referencia:</h5>
                     <div class="inline-block p-2 bg-white dark:bg-gray-700 rounded-2xl shadow-md border border-gray-100 dark:border-gray-600">
-                        <img id="ti-image" src="" alt="Referencia TI" class="rounded-xl max-w-full h-auto max-h-[300px]" onerror="this.alt='Imagen no encontrada'; this.style.opacity='0.5';">
+                        <img id="ti-image" src="" alt="Referencia TI" class="rounded-xl max-w-full h-auto max-h-[300px]">
                     </div>
                 </div>
-            </div>
-            <div class="p-6 border-t border-gray-100 dark:border-gray-700 text-center bg-gray-50 dark:bg-gray-800/50 text-[10px] text-gray-400 uppercase font-bold tracking-tighter">
-                Sigue la ruta exacta para asegurar la atención de tu solicitud
             </div>
         </div>
     </div>
 
-    <!-- App UI -->
-    <div id="app-content" class="hidden opacity-0 transition-opacity duration-700">
+    <!-- Modal PDF -->
+    <div id="pdf-modal" class="fixed inset-0 z-[100] hidden items-center justify-center p-4 bg-black/60 backdrop-blur-sm opacity-0 transition-opacity duration-300">
+        <div class="bg-white dark:bg-gray-800 w-full max-w-xl rounded-3xl shadow-2xl overflow-hidden transform scale-95 transition-transform duration-300" id="pdf-modal-content">
+            <div class="p-6 border-b border-red-100 dark:border-red-900/30 flex justify-between items-center bg-red-50 dark:bg-red-900/10 text-red-600">
+                <div class="flex items-center gap-3">
+                    <div class="p-2 bg-red-600 rounded-lg shadow-lg text-white"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg></div>
+                    <h2 class="text-xl font-bold dark:text-white">Manual PDF</h2>
+                </div>
+                <button onclick="closeModal('pdf-modal')" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 p-2"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg></button>
+            </div>
+            <div class="p-10 text-center text-red-600">
+                <div class="w-20 h-20 bg-red-50 dark:bg-red-900/20 rounded-full flex items-center justify-center mx-auto mb-6 text-red-600"><svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg></div>
+                <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2" id="pdf-manual-name">Manual</h3>
+                <a id="pdf-download-link" href="#" download class="inline-flex items-center gap-2 px-8 py-4 bg-red-600 hover:bg-red-700 text-white font-bold rounded-2xl transition-all shadow-xl active:scale-95">Descargar PDF</a>
+            </div>
+            <div class="p-4 bg-gray-50 dark:bg-gray-900/50 text-center text-[10px] text-gray-400 uppercase font-bold tracking-widest italic">Documento de apoyo interno - Elaborado por UNE/GAP</div>
+        </div>
+    </div>
+
+    <!-- Login -->
+    <div id="gatekeeper" class="fixed inset-0 z-50 bg-gray-100 dark:bg-gray-900 flex flex-col items-center justify-center p-4 transition-opacity duration-500">
+        <div class="max-w-md w-full bg-white dark:bg-gray-800 rounded-3xl shadow-2xl p-12 text-center border border-gray-200 dark:border-gray-700">
+            <!-- Logo Solicitado -->
+            <img src="logoafore.png" alt="Afore Coppel" class="h-24 mx-auto mb-8 drop-shadow-sm">
+            
+            <h1 class="text-3xl font-bold text-blue-900 dark:text-yellow-400 mb-2 font-black uppercase tracking-tight">Acceso Seguro</h1>
+            <p class="text-gray-500 dark:text-gray-400 mb-8 text-sm italic">Ingresa la clave de acceso de universomarcas</p>
+            
+            <input type="password" id="access-key" class="w-full px-6 py-4 bg-gray-50 dark:bg-gray-700 border-none rounded-2xl focus:ring-4 focus:ring-blue-500/20 text-center text-xl tracking-[0.5em] outline-none mb-4" placeholder="••••••">
+            <button id="auth-btn" class="w-full py-4 bg-blue-700 hover:bg-blue-800 text-white font-bold rounded-2xl shadow-xl transition-all active:scale-95 uppercase tracking-widest text-sm">Entrar al Sistema</button>
+            <div id="auth-error" class="hidden mt-4 p-3 bg-red-50 text-red-600 rounded-xl text-xs font-bold">Clave incorrecta o error de conexión.</div>
+        </div>
+    </div>
+
+    <!-- Main App Content -->
+    <div id="app-content" class="hidden opacity-0 transition-opacity duration-700 min-h-screen">
         <nav class="bg-white dark:bg-gray-800 shadow-md py-4 sticky top-0 z-40">
             <div class="max-w-[1920px] mx-auto px-6 flex justify-between items-center">
                 <div class="flex items-center gap-4">
-                    <img src="logoafore.png" alt="Logo Afore Coppel" class="h-10" onerror="this.style.display='none';">
+                    <img src="logoafore.png" alt="Logo Afore Coppel" class="h-10">
                     <div class="border-l border-gray-300 dark:border-gray-600 h-8"></div>
-                    <img src="logogap.png" alt="Logo Gerencia" class="w-16" onerror="this.style.display='none';">
+                    <img src="logogap.png" alt="Logo Gerencia" class="w-16">
                 </div>
-                <button id="toggle-dark" class="p-2 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
-                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0z"></path></svg>
-                </button>
+                <div class="flex items-center gap-3">
+                    <button id="seed-btn" class="hidden p-2.5 bg-blue-50 text-blue-600 rounded-xl text-[10px] font-black uppercase tracking-tighter" title="Sincronizar base de datos">Sincronizar Firebase</button>
+                    <button id="toggle-dark" class="p-2.5 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-700 transition-all"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0z"></path></svg></button>
+                </div>
             </div>
         </nav>
 
-        <header class="relative text-center bg-cover bg-center shadow-xl overflow-hidden py-24 mb-10" style="background-image: url('cafe.png'); background-color: #1e3a8a;">
+        <header class="relative text-center bg-cover bg-center shadow-xl overflow-hidden py-24 md:py-48 lg:py-64 mb-10" style="background-image: url('cafe.png'); background-color: #1e3a8a;">
             <div class="absolute inset-0 bg-blue-900 bg-opacity-75"></div>
             <div class="relative z-10 px-6 max-w-5xl mx-auto text-white">
                 <h1 class="text-3xl sm:text-5xl font-black dark:text-yellow-300 tracking-tight uppercase">Base de Conocimiento de Marcas</h1>
-                <p class="text-lg text-blue-100 dark:text-gray-300 mt-2 font-medium">Guía integral dirigida a CAT, MSO y UNE/GAP</p>
+                <p class="text-lg text-blue-100 mt-2 font-medium">Información sincronizada con universomarcas (Firebase)</p>
             </div>
         </header>
 
         <div class="max-w-[1920px] mx-auto px-6 pb-20">
             <div class="max-w-5xl mx-auto mb-10 text-center">
                 <div class="relative mb-6">
-                    <input type="text" id="search-input" class="w-full bg-white dark:bg-gray-800 shadow-xl rounded-2xl py-5 pl-14 pr-4 text-lg focus:ring-4 focus:ring-blue-500/20 border-none outline-none transition-all placeholder:text-gray-400" placeholder="Buscar por código, nombre o descripción...">
-                    <svg class="w-6 h-6 absolute left-5 top-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                    <input type="text" id="search-input" class="w-full bg-white dark:bg-gray-800 shadow-xl rounded-2xl py-5 pl-14 pr-4 text-lg focus:ring-4 focus:ring-blue-500/20 border-none outline-none transition-all placeholder:text-gray-400" placeholder="Buscar marcas...">
+                    <svg class="w-6 h-6 absolute left-5 top-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
                 </div>
-                <div class="flex flex-wrap justify-center gap-3">
+                <div id="filters" class="flex flex-wrap justify-center gap-3">
                     <button data-cat="all" class="nav-button active py-2 px-8 rounded-xl bg-white dark:bg-gray-800 shadow font-bold text-xs uppercase tracking-widest transition-all">Todas</button>
-                    <button data-cat="OPERATIVA" class="nav-button py-2 px-8 rounded-xl bg-white dark:bg-gray-800 shadow font-bold text-xs uppercase tracking-widest transition-all text-red-600 dark:text-red-400">Operativas</button>
-                    <button data-cat="INFORMATIVA" class="nav-button py-2 px-8 rounded-xl bg-white dark:bg-gray-800 shadow font-bold text-xs uppercase tracking-widest transition-all text-green-600 dark:text-green-400">Informativas</button>
+                    <button data-cat="OPERATIVA" class="nav-button py-2 px-8 rounded-xl bg-white dark:bg-gray-800 shadow font-bold text-xs uppercase tracking-widest transition-all text-red-600">Operativas</button>
+                    <button data-cat="INFORMATIVA" class="nav-button py-2 px-8 rounded-xl bg-white dark:bg-gray-800 shadow font-bold text-xs uppercase tracking-widest transition-all text-green-600">Informativas</button>
                 </div>
             </div>
             <main id="brands-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-6 items-start"></main>
         </div>
     </div>
 
-    <!-- Gatekeeper Original -->
-    <div id="gatekeeper" class="fixed inset-0 z-50 bg-gray-100 dark:bg-gray-900 flex flex-col items-center justify-center p-4 transition-opacity duration-500">
-        <div class="max-w-md w-full bg-white dark:bg-gray-800 rounded-2xl shadow-2xl p-8 text-center border border-gray-200 dark:border-gray-700">
-            <img src="logoafore.png" alt="Logo" class="h-16 mx-auto mb-6" onerror="this.style.display='none'">
-            <h1 class="text-3xl font-bold text-blue-900 dark:text-yellow-400 mb-2 font-black uppercase tracking-tight">Biblioteca GAP</h1>
-            <p class="text-gray-600 dark:text-gray-300 mb-8 font-medium italic uppercase text-xs tracking-widest">Base de Conocimiento de Marcas</p>
-            <button id="access-app" class="w-full py-3 px-4 bg-blue-700 hover:bg-blue-800 text-white font-bold rounded-lg shadow transition-all active:scale-95 uppercase tracking-widest text-sm">Ingresar al Sistema</button>
-        </div>
-    </div>
-
     <script type="module">
-        const brandsData = [
-            // --- SAFRE ---
-            { clave: "234", nombre: "ANUALIDADES GARANTIZADAS", origen: "SAFRE", tipo: "INFORMATIVA", plazo: "Duración del Crédito de Vivienda", descripcion: "Se Marca cuando el trabajador cuenta con <b>crédito de vivienda</b> y queda hasta que haya terminado el crédito." },
-            { clave: "329", nombre: "TRABAJADOR CON POSIBLE DUPLICADO", origen: "SAFRE", tipo: "INFORMATIVA", plazo: "Indefinido", descripcion: "Se recibe un rechazo en la certificación del <b>Enrolamiento</b> por duplicidad de huellas del trabajador en otra cuenta individual en la <b>BDNSAR</b> y se obliga al Trabajador a iniciar el proceso de <b>Análisis de Posible Duplicado</b> (Si se encuentra en <b>Postgres</b> nomas, hay que eliminar la marca para que pueda Detonar el servicio de Análisis de Posible Duplicado)." },
-            { clave: "601", nombre: "MODIFICACIÓN DE DATOS NO PRESENCIAL", origen: "SAFRE", tipo: "INFORMATIVA", plazo: "Indefinido", descripcion: "Se coloca cuando al solicitar un estado de cuenta o resumen de movimientos se modifica un dato no certificable como correo electrónico o teléfono." },
-            { clave: "700", nombre: "TRABAJADORES DE 57 A 59 AÑOS", origen: "SAFRE", tipo: "INFORMATIVA", plazo: "Indefinido", descripcion: "La marca 700 solo es informativa y se coloca cuando el trabajador cuenta con edad 57 a 59 años." },
-            { clave: "701", nombre: "TRABAJADORES CON 60 AÑOS O MÁS", origen: "SAFRE", tipo: "INFORMATIVA", plazo: "Indefinido", descripcion: "La marca 701 es solo informativa y se coloca cuando el trabajador cumple 60 años." },
-            { clave: "703", nombre: "TRABAJADORES CON 65 AÑOS O MÁS y SAR 92", origen: "SAFRE", tipo: "INFORMATIVA", plazo: "Indefinido", descripcion: "La marca 703 es solo informativa y se coloca cuando el trabajador cumple 65 años o más." },
-            { clave: "930", nombre: "RETIRO EN PROCESO DE PAGO", origen: "SAFRE", tipo: "INFORMATIVA", plazo: "30 días naturales", descripcion: "Se coloca cuando se rechaza el pago por la cuenta clabe bancaria, es necesario que el trabajador mande un nuevo <b>estado de cuenta</b> para gestionar su pago." },
-            { clave: "120", nombre: "INHABILITACIÓN POR TRASP.", origen: "SAFRE", tipo: "OPERATIVA", plazo: "Indefinido", descripcion: "Se coloca cuando el trabajador se traspasó a otra Afore y se elimina una vez que el trabajador regrese a <b>Afore Coppel</b>.", acciones: {
-                MSO: "Levantar <b>CRM</b> si presenta una situación especial, de lo contrario la marca es correcta.",
-                CAT: "Mencionar al trabajador que su cuenta se encuentra inhabilitada derivado de un servicio de traspaso realizado y canalizarlo a su Afore actual para consultar el estatus.",
-                UNE: "Validar si es correcta la Marca y canalizar al trabajador a su Afore actual."
-            }},
-            { clave: "140", nombre: "INHABILITACIÓN POR RETIRO", origen: "SAFRE", tipo: "OPERATIVA", plazo: "Indefinido", descripcion: "La cuenta se queda en $0 por realizar un <b>Retiro Total</b>, la marca se elimina si el Trabajador recibe aportaciones.", acciones: {
-                MSO: "En caso de que la cuenta del trabajador cuente con saldos, es necesario solicitar el desmarque mediante un folio <b>CRM</b>.",
-                CAT: "Informar al trabajador que su cuenta está inhabilitada debido a un servicio de retiro total. Si la cuenta individual del trabajador presenta esta marca y aún tiene saldos, se debe levantar consulta mediante un folio <b>CRM</b>.",
-                UNE: "Si la marca es incorrecta, solicitar desmarque con el área de <b>retiros totales</b>."
-            }},
-            { clave: "151", nombre: "CUENTA SALDO CERO", origen: "SAFRE", tipo: "OPERATIVA", plazo: "Indefinido", descripcion: "Se apertura la cuenta y no se reciben aportaciones, se elimina cuando se reciben aportaciones.", acciones: {
-                MSO: "Si el asesor indica que el trabajador tiene aportaciones pero no tiene saldo en la cuenta, se debe levantar un <b>CRM</b>. En este caso, si se dispone del reporte de semanas cotizadas, se debe anexar al folio. Si el trabajador sí cuenta con saldos, se debe solicitar el desmarque.",
-                CAT: "Sondear al trabajador si ha recibido aportaciones patronales posteriores al 1ro de Julio de 1997. En caso de requerir una aclaración de saldos o presentar saldos en la cuenta, levantar consulta <b>CRM</b>.",
-                UNE: "Si no hay saldo disponible, es necesario realizar un análisis para confirmar la procedencia. En caso de ser así, se debe generar una consulta con el área de <b>Recaudación</b>, proporcionando los siguientes datos: comprobantes de pago, NSS, PERIODO DE PAGO, FOLIO SUA y NRP. Si cuenta con saldos, se debe solicitar el desmarque."
-            }},
-            { clave: "160", nombre: "INHABILITACIÓN POR SALDO CERO", origen: "SAFRE", tipo: "OPERATIVA", plazo: "Indefinido", descripcion: "Cuando se apertura una cuenta y no se recibe aportación en por lo menos 6 bimestres, se elimina al recibir nuevas aportaciones.", ti: { titulo: "ELIMINAR MARCA SAFRE", ruta: "Quiero pedir algo » Mesa de Servicios BackOffice Afore » UNE » Atención al Público", imagen: "ofertamarca160.png" }, acciones: {
-                MSO: "Si el asesor indica que el trabajador tiene aportaciones pero no tiene saldo en la cuenta, se debe levantar un <b>CRM</b>. En este caso, si se dispone del reporte de semanas cotizadas, se debe anexar al folio. Si el trabajador sí cuenta con saldos, se debe solicitar el desmarque.",
-                CAT: "Sondear al trabajador si ha recibido aportaciones patronales posteriores al 1ro de Julio del 1997. En caso de requerir una aclaración de saldos o presenta saldos en la cuenta, levantar consulta <b>CRM</b>.",
-                UNE: "Si no hay saldo disponible, es necesario realizar un análisis para confirmar la procedencia. En caso de ser así, se debe generar una consulta con el área de <b>Recaudación</b>, proporcionando los siguientes datos: comprobantes de pago, NSS, PERIODO DE PAGO, FOLIO SUA y NRP. Si cuenta con saldos, se debe solicitar el desmarque mediante <b>TI</b>."
-            }},
-            { clave: "220", nombre: "TRASPASO AFORE CEDENTE", origen: "SAFRE", tipo: "OPERATIVA", plazo: "1 semana", descripcion: "Esta marca se coloca cuando la cuenta se encuentra en proceso de Traspaso a otra Afore.", acciones: {
-                MSO: "Sin acción a seguir, trabajador se encuentra en proceso de traspaso.",
-                CAT: "Sin acción a seguir, mencionar al trabajador que su cuenta se encuentra en un proceso de traspaso hacia a otra Afore.",
-                UNE: "Sin acción a seguir, mencionar al trabajador que su cuenta se encuentra en un proceso de traspaso hacia a otra Afore."
-            }},
-            { clave: "235", nombre: "PROCESO DE ANUALIDADES GARANTIZADAS", origen: "SAFRE", tipo: "OPERATIVA", plazo: "1 Mes", descripcion: "Se coloca cuando el instituto lo notifica y dura aproximadamente un mes hasta que se liquidan sus recursos.", acciones: {
-                MSO: "Sin acción a seguir, trabajador se encuentra en proceso con el instituto de <b>Vivienda</b>.",
-                CAT: "Sin acción a seguir, mencionar al trabajador que su cuenta se encuentra en un proceso Operativo con el instituto de <b>Vivienda</b>.",
-                UNE: "Sin acción a seguir, mencionar al trabajador que su cuenta se encuentra en un proceso Operativo con el instituto de <b>Vivienda</b>."
-            }},
-            { clave: "239", nombre: "ACREDITADOS FOVISSSTE SALDO EN GARANTÍA", origen: "SAFRE", tipo: "OPERATIVA", plazo: "Indefinido", descripcion: "Credito vivienda", acciones: {
-                MSO: "En caso de no convivir con algún servicio, levantar <b>CRM</b> para aclaración de la marca.",
-                CAT: "En caso de que el trabajador quiera realizar un servicio y presente la marca, levantar aclaración mediante <b>CRM</b>.",
-                UNE: "Levantar consulta con el área de <b>Traspasos A-A</b> para validar si la marca es correcta."
-            }},
-            { clave: "243", nombre: "UNIFICACIÓN EXTRA-AFORE", origen: "SAFRE", tipo: "OPERATIVA", plazo: "30 días hábiles", descripcion: "Se coloca cuando el trabajador está en proceso de Unificación y la otra cuenta se encuentra “X” Administradora. El plazo puede extenderse en caso de que los institutos así lo requieran.", acciones: {
-                MSO: "Validar si ya se cumplió el plazo normativo, en caso de ser así, levantar folio <b>CRM</b> solicitando status.",
-                CAT: "Validar si ya se cumplió el plazo normativo, en caso de ser así, levantar folio <b>CRM</b> solicitando status.",
-                UNE: "Validar status de la unificación en <b>SICI</b>, de acuerdo al status realizar la consulta o aclaración correspondiente."
-            }},
-            { clave: "250", nombre: "TRASPASO DE ICEFAS", origen: "SAFRE", tipo: "OPERATIVA", plazo: "60 días hábiles", descripcion: "Se coloca cuando el trabajador realiza un servicio de traspaso de <b>ICEFAS IMSS</b> y tarda aproximadamente 60 días hábiles en liquidar sus recursos.", acciones: {
-                MSO: "Validar si ya se cumplió el plazo normativo, en caso de ser así, levantar folio <b>CRM</b> solicitando el desmarque.",
-                CAT: "Validar si ya se cumplió el plazo normativo, en caso de ser así, levantar folio <b>CRM</b> solicitando el desmarque.",
-                UNE: "Validar si ya se cumplió el plazo normativo, en caso de ser así, solicitar el desmarque con el área de <b>Traspasos A-A</b>."
-            }},
-            { clave: "255", nombre: "IDENTIFICACIÓN POR EDAD", origen: "SAFRE", tipo: "INFORMATIVA", plazo: "3 Meses", descripcion: "La marca 255 se coloca cuando inicia el proceso de transferencia anual por Edad." },
-            { clave: "256", nombre: "TRANSFERENCIA SB 90", origen: "SAFRE", tipo: "OPERATIVA", plazo: "Indefinido", descripcion: "Cambio de régimen a la <b>SB 90</b> y Transferencia de Recursos, está sujeta a los lineamientos emitidos por la <b>CONSAR</b>.", acciones: {
-                MSO: "En caso de no convivir con el servicio deseado es necesario levantar <b>CRM</b> para aclaración.",
-                CAT: "En caso de que el trabajador quiera realizar un servicio y presente la marca, levantar aclaración <b>CRM</b>.",
-                UNE: "En caso de no convivir con el servicio deseado es necesario levantar consulta con <b>Operaciones</b>."
-            }},
-            { clave: "258", nombre: "TRANSFERENCIA FONDO BIENESTAR", origen: "SAFRE", tipo: "OPERATIVA", plazo: "Indefinido", descripcion: "Se coloca cuando se realiza la Transferencia de Recursos al <b>FONDO BIENESTAR</b>", proceso: "<h3>📑 1. Casos que SÍ atendemos en Afore (CRM)</h3><p>Si el trabajador presenta alguna de estas situaciones, procedemos a realizar la solicitud de devolución generando el CRM correspondiente:</p><ul><li>Proceso de <b>Unificación de cuentas</b>. 📂</li><li><b>Separación de cuentas</b>. ✂️</li><li><b>Trámite Judicial</b> en curso. ⚖️</li></ul><h3>🏛️ 2. Casos gestionados por el Instituto (IMSS/ISSSTE)</h3><p>En los siguientes escenarios, la Afore ya no inicia el proceso:</p><ul><li><b>Si el trabajador ya tiene resolución (derecho cargado):</b> O si está iniciando su trámite de pensión, el Instituto será el encargado de detonar la devolución de los recursos automáticamente. ✅</li><li><b>Si el trabajador NO tiene resolución:</b> (Y no requiere unificación, separación o trámite judicial), debemos dirigir al trabajador al Instituto correspondiente (IMSS o ISSSTE), donde ellos iniciarán su devolución. 🚩</li></ul><div class='proceso-highlight'><p>💡 <b>Resumen para tu atención:</b> Es muy importante identificar si el cliente tiene un trámite administrativo pendiente (Unificación/Separación) antes de derivarlo, para asegurar que reciba la atención correcta en el lugar indicado. 🎯</p></div>", acciones: {
-                MSO: "Si la devolución de todas las subcuentas ya ha sido efectuada, se debe generar un folio <b>CRM</b> para solicitar el desmarque. En el supuesto de que los saldos presenten el cargo al <b>FPB</b> y aún no se haya realizado la solicitud de devolución, canalizar a ventanilla correspondiente.",
-                CAT: "Sondear al trabajador si ya realizó la solicitud de devolución de recurso transferidos al fondo de pensiones bienestar, en caso de no ser así, canalizarlo a ventanilla correspondiente. En caso de mencionar de haber realizado la solicitud, canalizar al trabajador en ventanilla que lo realizó para solicitar estatus.",
-                UNE: "Validar si ya se realizó la devolución de los saldos en las subcuentas correspondientes, de ser así, solicitar el desmarque con <b>Traspasos A-A</b>. En caso de que alguna subcuenta tenga el cargo al <b>FPB</b>, canalizar a ventanilla correspondiente."
-            }},
-            { clave: "261", nombre: "UNIFICACIÓN ISSSTE MIXTA", origen: "SAFRE", tipo: "OPERATIVA", plazo: "30 días hábiles", descripcion: "Se coloca en el proceso de <b>Unificación Mixta</b>", acciones: {
-                MSO: "Validar si ya se cumplió el plazo normativo, en caso de ser así, levantar folio <b>CRM</b> solicitando status.",
-                CAT: "Validar si ya se cumplió el plazo normativo, en caso de ser así, levantar folio <b>CRM</b> solicitando status.",
-                UNE: "Validar status de la unificación en <b>SICI</b>, de acuerdo al status realizar la consulta o aclaración correspondiente."
-            }},
-            { clave: "263", nombre: "ANÁLISIS UNIFICACIÓN DE CUENTAS MIXTA", origen: "SAFRE", tipo: "OPERATIVA", plazo: "Dentro de los 30 días hábiles", descripcion: "Parte del proceso de la <b>Unificación Mixta</b>", acciones: {
-                MSO: "Validar si ya se cumplió el plazo normativo, en caso de ser así, levantar folio <b>CRM</b> solicitando status.",
-                CAT: "Validar si ya se cumplió el plazo normativo, en caso de ser así, levantar folio <b>CRM</b> solicitando status.",
-                UNE: "Validar status de la unificación en <b>SICI</b>, de acuerdo al status realizar la consulta o aclaración correspondiente."
-            }},
-            { clave: "264", nombre: "UNIFICACIÓN INTRA-AFORE IMSS-ISSSTE UNIFICADO", origen: "SAFRE", tipo: "OPERATIVA", plazo: "Dentro de los 30 días hábiles", descripcion: "Parte del proceso de la <b>Unificación Mixta</b> / Proceso de liquidación de los recursos de la cuenta", acciones: {
-                MSO: "Validar si ya se cumplió el plazo normativo, en caso de ser así, levantar folio <b>CRM</b> solicitando status.",
-                CAT: "Validar si ya se cumplió el plazo normativo, en caso de ser así, levantar folio <b>CRM</b> solicitando status.",
-                UNE: "Validar status de la unificación en <b>SICI</b>, de acuerdo al status realizar la consulta o aclaración correspondiente."
-            }},
-            { clave: "265", nombre: "UNIFICACIÓN INTRA-AFORE IMSS-ISSSTE UNIFICADOR", origen: "SAFRE", tipo: "OPERATIVA", plazo: "Dentro de los 30 días hábiles", descripcion: "Parte del proceso de la <b>Unificación Mixta</b> / Proceso de liquidación de los recursos de la cuenta", acciones: {
-                MSO: "Validar si ya se cumplió el plazo normativo, en caso de ser así, levantar folio <b>CRM</b> solicitando status.",
-                CAT: "Validar si ya se cumplió el plazo normativo, en caso de ser así, levantar folio <b>CRM</b> solicitando status.",
-                UNE: "Validar status de la unificación en <b>SICI</b>, de acuerdo al status realizar la consulta o aclaración correspondiente."
-            }},
-            { clave: "268", nombre: "CANDIDATO DE UNIFICACIÓN MIXTA", origen: "SAFRE", tipo: "OPERATIVA", plazo: "Indefinido", descripcion: "Se coloca cuando se identifica <b>CURP duplicada</b> en <b>BDSAR</b>. Se finaliza cuando el trabajador realiza el servicio de <b>Unificación mixta</b>", acciones: {
-                MSO: "Es necesario iniciar el proceso de <b>Unificación Mixta</b>, en caso de no permitir realizar el el servicio, levantar folio <b>CRM</b> para aclaración.",
-                CAT: "Generar una consulta en el <b>CRM</b> para la aclaración de la marca operativa.",
-                UNE: "Realizar el análisis de la cuenta del trabajador para validar si es candidato y realizar las consultas correspondientes de acuerdo al análisis."
-            }},
-            { clave: "294", nombre: "TRASPASO POR ENTIDAD VERIFICADORA", origen: "SAFRE", tipo: "OPERATIVA", plazo: "1 semana", descripcion: "Solicitud de traspaso cedente del trabajador.", acciones: {
-                MSO: "Sin acción a seguir, trabajador se encuentra en proceso de traspaso.",
-                CAT: "Sin acción a seguir, mencionar al trabajador que su cuenta se encuentra en un proceso de traspaso.",
-                UNE: "Sin acción a seguir, mencionar al trabajador que su cuenta se encuentra en un proceso de traspaso."
-            }},
-            { clave: "301", nombre: "TES RCV", origen: "SAFRE", tipo: "OPERATIVA", plazo: "2 días hábiles", descripcion: "La marca 301 se coloca cuando la cuenta participa en la transferencia entre <b>SIEFORE</b>.", proceso: "<h3>🔄 Proceso de Transferencia de Recursos (SIEFORE)</h3><p>La cuenta individual del trabajador participa en la transferencia de recursos entre Sociedades de Inversión Especializadas en Fondos para el Retiro (SIEFORE):</p><ul><li><b>📊 Estrategia:</b> Proceso regulado que se lleva a cabo con base en la estrategia de inversión y el perfil de edad del cotizante. 📈</li><li><b>💰 Objetivo:</b> Optimizar la rentabilidad de los ahorros para el retiro moviendo los activos a la SIEFORE que mejor se adapte. 🏦</li><li><b>🏛️ Estructura:</b> Los movimientos ocurren dentro del mismo esquema de la Administradora (AFORE), sin que exista un cambio de AFORE.</li><li><b>⚖️ Normativa:</b> Conforme a las políticas establecidas por la Comisión Nacional del Sistema de Ahorro para el Retiro (CONSAR). 🎯</li></ul>", acciones: {
-                MSO: "Sin acción a seguir, la cuenta del trabajador se encuentra en transferencia de recursos entre <b>SIEFORES</b>.",
-                CAT: "Sin acción a seguir, se debe informar al trabajador que su cuenta está participando en un proceso de transferencia de recursos entre <b>SIEFORES</b>.",
-                UNE: "Sin acción a seguir, se debe informar al trabajador que su cuenta está participando en un proceso de transferencia de recursos entre <b>SIEFORES</b>."
-            }},
-            { clave: "307", nombre: "TES SAR92", origen: "SAFRE", tipo: "OPERATIVA", plazo: "2 días hábiles", descripcion: "La marca 307 se coloca cuando la cuenta participa en la transferencia entre <b>SIEFORE</b>.", proceso: "<h3>🔄 Proceso de Transferencia de Recursos (SIEFORE)</h3><p>La cuenta individual del trabajador participa en la transferencia de recursos entre Sociedades de Inversión Especializadas en Fondos para el Retiro (SIEFORE):</p><ul><li><b>📊 Estrategia:</b> Proceso regulado que se lleva a cabo con base en la estrategia de inversión y el perfil de edad del cotizante. 📈</li><li><b>💰 Objetivo:</b> Optimizar la rentabilidad de los ahorros para el retiro moviendo los activos a la SIEFORE que mejor se adapte. 🏦</li><li><b>🏛️ Estructura:</b> Los movimientos ocurren dentro del mismo esquema de la Administradora (AFORE), sin que exista un cambio de AFORE.</li><li><b>⚖️ Normativa:</b> Conforme a las políticas establecidas por la Comisión Nacional del Sistema de Ahorro para el Retiro (CONSAR). 🎯</li></ul>", acciones: {
-                MSO: "Sin acción a seguir, la cuenta del trabajador se encuentra en transferencia de recursos entre <b>SIEFORES</b>.",
-                CAT: "Sin acción a seguir, se debe informar al trabajador que su cuenta está participando en un proceso de transferencia de recursos entre <b>SIEFORES</b>.",
-                UNE: "Sin acción a seguir, se debe informar al trabajador que su cuenta está participando en un proceso de transferencia de recursos entre <b>SIEFORES</b>."
-            }},
-            { clave: "308", nombre: "TES AAR92", origen: "SAFRE", tipo: "OPERATIVA", plazo: "2 días hábiles", descripcion: "Cambio de régimen y Transferencia de Recursos. La marca 308 se coloca cuando la cuenta participa en la transferencia entre <b>SIEFORE</b>.", proceso: "<h3>🔄 Proceso de Transferencia de Recursos (SIEFORE)</h3><p>La cuenta individual del trabajador participa en la transferencia de recursos entre Sociedades de Inversión Especializadas en Fondos para el Retiro (SIEFORE):</p><ul><li><b>📊 Estrategia:</b> Proceso regulado que se lleva a cabo con base en la estrategia de inversión y el perfil de edad del cotizante. 📈</li><li><b>💰 Objetivo:</b> Optimizar la rentabilidad de los ahorros para el retiro moviendo los activos a la SIEFORE que mejor se adapte. 🏦</li><li><b>🏛️ Estructura:</b> Los movimientos ocurren dentro del mismo esquema de la Administradora (AFORE), sin que exista un cambio de AFORE.</li><li><b>⚖️ Normativa:</b> Conforme a las políticas establecidas por la Comisión Nacional del Sistema de Ahorro para el Retiro (CONSAR). 🎯</li></ul>", acciones: {
-                MSO: "Sin acción a seguir, la cuenta del trabajador se encuentra en transferencia de recursos entre <b>SIEFORES</b>.",
-                CAT: "Sin acción a seguir, se debe informar al trabajador que su cuenta está participando en un proceso de transferencia de recursos entre <b>SIEFORES</b>.",
-                UNE: "Sin acción a seguir, se debe informar al trabajador que su cuenta está participando en un proceso de transferencia de recursos entre <b>SIEFORES</b>."
-            }},
-            { clave: "310", nombre: "TES ISSS", origen: "SAFRE", tipo: "OPERATIVA", plazo: "2 días hábiles", descripcion: "Cambio de régimen y Transferencia de Recursos. La marca 310 se coloca cuando la cuenta participa en la transferencia entre <b>SIEFORE</b>.", proceso: "<h3>🔄 Proceso de Transferencia de Recursos (SIEFORE)</h3><p>La cuenta individual del trabajador participa en la transferencia de recursos entre Sociedades de Inversión Especializadas en Fondos para el Retiro (SIEFORE):</p><ul><li><b>📊 Estrategia:</b> Proceso regulado que se lleva a cabo con base en la estrategia de inversión y el perfil de edad del cotizante. 📈</li><li><b>💰 Objetivo:</b> Optimizar la rentabilidad de los ahorros para el retiro moviendo los activos a la SIEFORE que mejor se adapte. 🏦</li><li><b>🏛️ Estructura:</b> Los movimientos ocurren dentro del mismo esquema de la Administradora (AFORE), sin que exista un cambio de AFORE.</li><li><b>⚖️ Normativa:</b> Conforme a las políticas establecidas por la Comisión Nacional del Sistema de Ahorro para el Retiro (CONSAR). 🎯</li></ul>", acciones: {
-                MSO: "Sin acción a seguir, la cuenta del trabajador se encuentra en transferencia de recursos entre <b>SIEFORES</b>.",
-                CAT: "Sin acción a seguir, se debe informar al trabajador que su cuenta está participando en un proceso de transferencia de recursos entre <b>SIEFORES</b>.",
-                UNE: "Sin acción a seguir, se debe informar al trabajador que su cuenta está participando en un proceso de transferencia de recursos entre <b>SIEFORES</b>."
-            }},
-            { clave: "330", nombre: "POSIBLE DUPLICADO MESA DE ACLARACIONES", origen: "SAFRE", tipo: "OPERATIVA", plazo: "Indefinido", descripcion: "Se recibe en estatus de duplicado confirmado por lo cual las huellas del trabajador se encuentran duplicadas en otra cuenta individual en la <b>BDNSAR</b>", acciones: {
-                MSO: "Sin información proporcionada.",
-                CAT: "Levantar consulta para validar si la marca es correcta o brindar acción a seguir.",
-                UNE: "Sin información proporcionada."
-            }},
-            { clave: "489", nombre: "REINT. RET. PARC. POR DESEM. NO COBRADO", origen: "SAFRE", tipo: "OPERATIVA", plazo: "Indefinido", descripcion: "Se coloca cuando inicia el proceso de reintegro de un <b>Retiro Parcial por Desempleo</b> que no fue cobrado después de haber transcurrido 6 meses a partir del depósito.", acciones: {
-                MSO: "Si la marca está presente, se debe generar un caso en un folio <b>CRM</b> para su debida aclaración.",
-                CAT: "Si la marca está presente, se debe generar un caso en un folio <b>CRM</b> para su debida aclaración.",
-                UNE: "En caso de presentar la marca, levantar consulta con el área de <b>retiros parciales</b> para desmarque."
-            }},
-            { clave: "490", nombre: "RETIRO DE APORTACIONES VOLUNTARIAS", origen: "SAFRE", tipo: "OPERATIVA", plazo: "5 días hábiles", descripcion: "La marca 490 se coloca cuando el trabajador inicia el servicio de <b>Retiro de Aportaciones Voluntarias</b>.", proceso: "<h3>💰 Servicio de Retiro de Aportaciones Voluntarias</h3><p>Mecanismo fundamental para que los afiliados puedan disponer de los recursos económicos ahorrados de forma adicional a sus cuentas individuales. 🚀</p><ul><li><b>🆔 Identificación Oficial Vigente:</b> Para acreditar la identidad del titular de la cuenta. 🪪</li><li><b>📂 Expediente de Identificación:</b> Debe estar actualizado y con la biometría registrada. 🧬</li><li><b>📝 Solicitud Formal:</b> Presentada y validada ante la Afore.</li><li><b>⏳ Plazos de Permanencia:</b> Dependiendo del régimen o subcuenta, puede existir un plazo mínimo (ej. 2 o 6 meses) para optimizar la inversión.</li></ul><div class='proceso-highlight'><p>✨ <b>Garantía:</b> Este proceso asegura la transparencia y seguridad en la disposición de ahorros personales para diversos fines (emergencias, planes específicos), sin afectar la pensión obligatoria. 🛡️</p></div>", acciones: {
-                MSO: "Validar si ya se cumplió el plazo normativo, en caso de ser así, levantar consulta <b>CRM</b> para el desmarque.",
-                CAT: "Validar si ya se cumplió el plazo normativo, en caso de ser así, consultar estatus, en caso de no encontrarlo, levantar consulta <b>CRM</b>.",
-                UNE: "En caso de haberse cumplido el tiempo normativo, solicitar el desmarque con el área de <b>retiros parciales</b>."
-            }},
-            { clave: "590", nombre: "SEPARACIÓN DE CUENTAS ASOCIADO", origen: "SAFRE", tipo: "OPERATIVA", plazo: "30 días hábiles", descripcion: "Separación de cuentas <b>IMSS</b> (cuenta compartida con 2 o más trabajadores) El tiempo puede variar dependiendo del análisis del proceso. Solo como DATO ADICIONAL es un distintivo del NSS (NO RECLAMANTE)", acciones: {
-                MSO: "Sin información proporcionada.",
-                CAT: "Informar al trabajador que su cuenta se encuentra dentro de un proceso de <b>Separación de cuentas</b> y levantar <b>CRM</b> para consultar estatus.",
-                UNE: "Sin información proporcionada."
-            }},
-            { clave: "600", nombre: "MODIFICACIONES DE AFILIACIÓN", origen: "SAFRE", tipo: "OPERATIVA", plazo: "No debería de existir.", descripcion: "La marca 600 se coloca cuando inicia el servicio de <b>Modificación de Datos</b>.", acciones: {
-                MSO: "Si la cuenta tiene la marca operativa, se debe generar una consulta en el sistema <b>CRM</b> para solicitar su desmarque.",
-                CAT: "Si la cuenta tiene la marca operativa, se debe generar una consulta en el sistema <b>CRM</b> para solicitar su desmarque.",
-                UNE: "Solicitar el desmarque de la cuenta mediante un <b>TI</b>."
-            }},
-            { clave: "820", nombre: "DISP/BENEF. NEG. PENSIÓN", origen: "SAFRE", tipo: "OPERATIVA", plazo: "6 días hábiles", descripcion: "Disposición de Recursos por el Trabajador/Beneficiario derivado de una <b>Negativa de Pensión</b>.", acciones: {
-                MSO: "Es necesario verificar el cumplimiento del plazo normativo. Si se ha cumplido, se debe revisar el estado del servicio. En caso de que el servicio haya sido rechazado o no se pueda determinar su estado, se debe generar una consulta en el <b>CRM</b> para solicitar el desmarque.",
-                CAT: "Verificar el cumplimiento del plazo normativo. Si se cumplió, consultar el estatus. En caso de no localizarlo, iniciar una consulta en el <b>CRM</b>.",
-                UNE: "En caso de que el servicio haya sido rechazado y cumpla con el tiempo normativo, se debe validar su estatus y solicitar el desmarque al área de <b>retiros totales</b>."
-            }},
-            { clave: "830", nombre: "DISP/PEN. AUTORIZA. IMSS", origen: "SAFRE", tipo: "OPERATIVA", plazo: "6 días hábiles", descripcion: "Disposición de Recursos por el Trabajador/Beneficiario al amparo de una <b>Pensión autorizada</b> por el <b>IMSS</b>.", acciones: {
-                MSO: "Es necesario verificar el cumplimiento del plazo normativo. Si se ha cumplido, se debe revisar el estado del servicio. En caso de que el servicio haya sido rechazado o no se pueda determinar su estado, se debe generar una consulta en el <b>CRM</b> para solicitar el desmarque.",
-                CAT: "Verificar el cumplimiento del plazo normativo. Si se cumplió, consultar el estatus. En caso de no localizarlo, iniciar una consulta en el <b>CRM</b>.",
-                UNE: "En caso de que el servicio haya sido rechazado y cumpla con el tiempo normativo, se debe validar su estatus y solicitar el desmarque al área de <b>retiros totales</b>."
-            }},
-            { clave: "841", nombre: "CUENTA DE PENSIÓN PENSION GARANTIZADA o PAGO PENSIÓN RETIRO PROGRAMADO", origen: "SAFRE", tipo: "OPERATIVA", plazo: "Indefinido", descripcion: "Trabajador inicia un contrato por <b>Pensión Garantizada</b> y dura hasta que la cuenta quede sin saldo", acciones: {
-                MSO: "Sin información proporcionada.",
-                CAT: "Se debe validar la fecha de inicio de la Marca y consultar al trabajador si ha recibido los depósitos de su mensualidad. Si después de un mes de la fecha de inicio no se han recibido pagos, es necesario generar un <b>CRM</b> para solicitar una aclaración.",
-                UNE: "Sin información proporcionada."
-            }},
-            { clave: "850", nombre: "DISP/BENEF . INSTRUC. AUT", origen: "SAFRE", tipo: "OPERATIVA", plazo: "6 días hábiles.", descripcion: "La disposición por trámite judicial se da hasta que se tiene el laudo de la <b>JFCA</b>, si ya tiene la marca de disposición significa que ya se tiene el laudo. La solicitud de retiro se genera en el área de oficios, cuando se refleja esa marca es porque sí procedió la demanda en la <b>JFCA</b>.<br><b>LAUDO</b> (Sentencia o Decisión de la demanda).<br><b>JFCA</b> (La Junta Federal de Conciliación y Arbitraje).", acciones: {
-                MSO: "Sin información proporcionada.",
-                CAT: "Si la marca operativa no está vigente, se debe notificar al trabajador que su trámite de disposición se está llevando a cabo por la vía judicial y que es indispensable que contacte a su representante legal para darle seguimiento.",
-                UNE: "Sin información proporcionada."
-            }},
-            { clave: "851", nombre: "RET. NEG. PEN.(ISSS)", origen: "SAFRE", tipo: "OPERATIVA", plazo: "6 días hábiles", descripcion: "Disposición de Recursos por el Trabajador/Beneficiario derivado de una <b>Negativa de Pensión ISSSTE</b>.", acciones: {
-                MSO: "Es necesario verificar el cumplimiento del plazo normativo. Si se ha cumplido, se debe revisar el estado del servicio. En caso de que el servicio haya sido rechazado o no se pueda determinar su estado, se debe generar una consulta en el <b>CRM</b> para solicitar el desmarque.",
-                CAT: "Verificar el cumplimiento del plazo normativo. Si se cumplió, consultar el estatus. En caso de no localizarlo, iniciar una consulta en el <b>CRM</b>.",
-                UNE: "En caso de que el servicio haya sido rechazado y cumpla con el tiempo normativo, se debe validar su estatus y solicitar el desmarque al área de <b>retiros totales</b>."
-            }},
-            { clave: "852", nombre: "RET. PEN. AUT. (ISSS)", origen: "SAFRE", tipo: "OPERATIVA", plazo: "6 días hábiles", descripcion: "Disposición de Recursos por el Trabajador/Beneficiario al amparo de una <b>Pensión autorizada</b> por el <b>ISSSTE</b>.", acciones: {
-                MSO: "Es necesario verificar el cumplimiento del plazo normativo. Si se ha cumplido, se debe revisar el estado del servicio. En caso de que el servicio haya sido rechazado o no se pueda determinar su estado, se debe generar una consulta en el <b>CRM</b> para solicitar el desmarque.",
-                CAT: "Verificar el cumplimiento del plazo normativo. Si se cumplió, consultar el estatus. En caso de no localizarlo, iniciar una consulta en el <b>CRM</b>.",
-                UNE: "En caso de que el servicio haya sido rechazado y cumpla con el tiempo normativo, se debe validar su estatus y solicitar el desmarque al área de <b>retiros totales</b>."
-            }},
-            { clave: "853", nombre: "RET. PPP (ISSS)", origen: "SAFRE", tipo: "OPERATIVA", plazo: "6 días hábiles", descripcion: "Disposición de Recursos por el Trabajador/Beneficiario al amparo de un <b>Plan Privado de Pensiones ISSSTE</b>.", acciones: {
-                MSO: "Es necesario verificar el cumplimiento del plazo normativo. Si se ha cumplido, se debe revisar el estado del servicio. En caso de que el servicio haya sido rechazado o no se pueda determinar su estado, se debe generar una consulta en el <b>CRM</b> para solicitar el desmarque.",
-                CAT: "Verificar el cumplimiento del plazo normativo. Si se cumplió, consultar el estatus. En caso de no localizarlo, iniciar una consulta en el <b>CRM</b>.",
-                UNE: "En caso de que el servicio haya sido rechazado y cumpla con el tiempo normativo, se debe validar su estatus y solicitar el desmarque al área de <b>retiros totales</b>."
-            }},
-            { clave: "855", nombre: "RET. AMP. EDAD (ISSS)", origen: "SAFRE", tipo: "OPERATIVA", plazo: "6 días hábiles", descripcion: "Disposición de Recursos por el Trabajador al amparo de su edad (<b>ISSSTE</b>).", acciones: {
-                MSO: "Es necesario verificar el cumplimiento del plazo normativo. Si se ha cumplido, se debe revisar el estado del servicio. En caso de que el servicio haya sido rechazado o no se pueda determinar su estado, se debe generar una consulta en el <b>CRM</b> para solicitar el desmarque.",
-                CAT: "Verificar el cumplimiento del plazo normativo. Si se cumplió, consultar el estatus. En caso de no localizarlo, iniciar una consulta en el <b>CRM</b>.",
-                UNE: "En caso de que el servicio haya sido rechazado y cumpla con el tiempo normativo, se debe validar su estatus y solicitar el desmarque al área de <b>retiros totales</b>."
-            }},
-            { clave: "860", nombre: "DISP. AMPARO DE SU EDAD", origen: "SAFRE", tipo: "OPERATIVA", plazo: "6 días hábiles", descripcion: "Disposición de Recursos por el Trabajador al amparo de su edad (<b>IMSS</b>).", acciones: {
-                MSO: "Es necesario verificar el cumplimiento del plazo normativo. Si se ha cumplido, se debe revisar el estado del servicio. En caso de que el servicio haya sido rechazado o no se pueda determinar su estado, se debe generar una consulta en el <b>CRM</b> para solicitar el desmarque.",
-                CAT: "Verificar el cumplimiento del plazo normativo. Si se cumplió, consultar el estatus. En caso de no localizarlo, iniciar una consulta en el <b>CRM</b>.",
-                UNE: "En caso de que el servicio haya sido rechazado y cumpla con el tiempo normativo, se debe validar su estatus y solicitar el desmarque al área de <b>retiros totales</b>."
-            }},
-            { clave: "870", nombre: "RETIRO PARCIAL MATRIMONIO", origen: "SAFRE", tipo: "OPERATIVA", plazo: "5 días hábiles", descripcion: "Disposición de Recursos derivado de un <b>Retiro Parcial por Matrimonio</b>", acciones: {
-                MSO: "Validar si ya se cumplió el plazo normativo, en caso de ser así, levantar consulta <b>CRM</b> para el desmarque.",
-                CAT: "Validar si ya se cumplió el plazo normativo, en caso de ser así, consultar estatus, en caso de no encontrarlo, levantar consulta <b>CRM</b>.",
-                UNE: "En caso de haberse cumplido el tiempo normativo, solicitar el desmarque con el área de <b>retiros parciales</b>."
-            }},
-            { clave: "880", nombre: "DISP. REC. POR REINGRESO", origen: "SAFRE", tipo: "OPERATIVA", plazo: "10 días hábiles", descripcion: "Disposición de Recursos por el Trabajador al haber reingresado a laborar después de haberse pensionado por el <b>IMSS</b>.", acciones: {
-                MSO: "Es necesario verificar el cumplimiento del plazo normativo. Si se ha cumplido, se debe revisar el estado del servicio. En caso de que el servicio haya sido rechazado o no se pueda determinar su estado, se debe generar una consulta en el <b>CRM</b> para solicitar el desmarque.",
-                CAT: "Verificar el cumplimiento del plazo normativo. Si se cumplió, consultar el estatus. En caso de no localizarlo, iniciar una consulta en el <b>CRM</b>.",
-                UNE: "En caso de que el servicio haya sido rechazado y cumpla con el tiempo normativo, se debe validar su estatus y solicitar el desmarque al área de <b>retiros totales</b>."
-            }},
-            { clave: "922", nombre: "MARCA DE REINVERSIÓN", origen: "SAFRE", tipo: "OPERATIVA", plazo: "2 días hábiles", descripcion: "Se coloca al finalizar el proceso de <b>Saldo Previo</b>, derivado de una solicitud de Pensión y se reinvierten los recursos en la Cuenta Individual.", acciones: {
-                MSO: "Validar si ya se cumplió el plazo normativo, en caso de ser así, levantar consulta <b>CRM</b>.",
-                CAT: "Validar si ya se cumplió el plazo normativo, en caso de ser así, levantar consulta <b>CRM</b>.",
-                UNE: "En caso de haberse cumplido el tiempo normativo, solicitar el desmarque con el área de <b>retiros totales</b>."
-            }},
-            { clave: "925", nombre: "EN PROCESO DE CONCILIACIÓN DE PAGO DE VIVIENDA CON", origen: "SAFRE", tipo: "OPERATIVA", plazo: "Indefinido", descripcion: "La marca 925 se colocó derivado de un Oficio recibido por la autoridad <b>CONSAR</b>, se elimina hasta que arregle su situación con el <b>INFONAVIT</b>.", acciones: {
-                MSO: "Sin información proporcionada.",
-                CAT: "Sin información proporcionada.",
-                UNE: "Sin información proporcionada."
-            }},
-            { clave: "926", nombre: "ACLARACIÓN DE CUENTA UEAP", origen: "SAFRE", tipo: "OPERATIVA", plazo: "Indefinido", descripcion: "La Cuenta Individual del Trabajador entra en un proceso de revisión por la <b>Unidad Especializada</b>, se elimina una vez que finaliza el análisis para la solución.", acciones: {
-                MSO: "En caso de que se presente la marca, se debe levantar una consulta en el <b>CRM</b> para su aclaración.",
-                CAT: "En caso de que se presente la marca, se debe levantar una consulta en el <b>CRM</b> para su aclaración.",
-                UNE: "<b>Proceso de Separación de Cuentas:</b><br><b>Verificación:</b> Validar si el trabajador ha completado un proceso de Separación de Cuentas.<br><b>Si el proceso finalizó con éxito:</b> Enviar un correo electrónico a la <b>UNE</b> con las evidencias necesarias (Asunto: ACLARACIÓN DE CUENTAS UEAP | NSS 67806344569).<br><b>Si el proceso no se ha realizado o no finalizó con éxito:</b> Invitar al trabajador a iniciar el servicio de Separación de Cuentas."
-            }},
-            { clave: "950", nombre: "ALTA EI Y BIO", origen: "SAFRE", tipo: "OPERATIVA", plazo: "No debería de presentar la marca activa.", descripcion: "La marca 950 se coloca cuando el Trabajador realiza su alta de <b>Expediente de Identificación</b>", acciones: {
-                MSO: "Si la cuenta tiene la marca operativa, se debe generar una consulta en el sistema <b>CRM</b> para solicitar su desmarque.",
-                CAT: "Si la cuenta tiene la marca operativa, se debe generar una consulta en el sistema <b>CRM</b> para solicitar su desmarque.",
-                UNE: "Solicitar el desmarque de la cuenta mediante un <b>TI</b>."
-            }},
-            { clave: "960", nombre: "CANDIDATO A RE ENROLAMIENTO", origen: "SAFRE", tipo: "OPERATIVA", plazo: "Indefinido", descripcion: "Se coloca cuando el trabajador es candidato a dicho proceso, derivado de algún contingente en el que se consideró. Se elimina hasta que realice el proceso", acciones: {
-                MSO: "Sin información proporcionada.",
-                CAT: "Levantar consulta para validar si la marca es correcta o brindar acción a seguir.",
-                UNE: "Sin información proporcionada."
-            }},
-            { clave: "875", nombre: "RETIRO PARCIAL DESEMPLEO", origen: "SAFRE", tipo: "OPERATIVA", plazo: "5 días hábiles", descripcion: "Disposición de Recursos derivado de un <b>Retiro Parcial por Desempleo IMSS</b>.", acciones: {
-                MSO: "Validar si ya se cumplió el plazo normativo, en caso de ser así, levantar consulta <b>CRM</b>.",
-                CAT: "Validar si ya se cumplió el plazo normativo, en caso de ser así, consultar estatus, en caso de no encontrarlo, levantar consulta <b>CRM</b>.",
-                UNE: "En caso de haberse cumplido el tiempo normativo, solicitar el desmarque con el área de <b>retiros parciales</b>."
-            }},
-            { clave: "280", nombre: "SEPARACIÓN DE CUENTAS", origen: "SAFRE", tipo: "OPERATIVA", plazo: "30 días hábiles", descripcion: "Separación de cuentas <b>IMSS</b> (cuenta compartida con 2 o más trabajadores) El tiempo puede variar dependiendo del análisis del proceso.", acciones: {
-                MSO: "Validar si ya se cumplió el plazo normativo, en caso de ser así, levantar consulta <b>CRM</b>.",
-                CAT: "Validar si ya se cumplió el plazo normativo, en caso de ser así, levantar consulta <b>CRM</b>.",
-                UNE: "En caso de haberse cumplido el tiempo normativo, solicitar el desmarque con el área de <b>Separación de cuentas</b>."
-            }},
-            { clave: "819", nombre: "PROCESO DE DEVOLUCIÓN DE VIVIENDA", origen: "SAFRE", tipo: "OPERATIVA", plazo: "15 días hábiles", descripcion: "La marca 819 se coloca cuando el trabajador inició el trámite de retiro en <b>Infonavit</b>.", acciones: {
-                MSO: "Validar si ya se cumplió el plazo normativo, en caso de ser así, levantar consulta <b>CRM</b>.",
-                CAT: "Validar si ya se cumplió el plazo normativo, en caso de ser así, levantar consulta <b>CRM</b>.",
-                UNE: "En caso de haberse cumplido el tiempo normativo, solicitar el desmarque con el área de <b>retiros totales</b>."
-            }},
-            { clave: "810", nombre: "TRANS.GOB.FED.PEN. IMSS", origen: "SAFRE", tipo: "OPERATIVA", plazo: "3 días hábiles", descripcion: "La marca 810 se coloca cuando el Trabajador se encuentra en el proceso de <b>Transferencia de Recursos</b> al Gobierno Federal por una Pensión autorizada por el <b>IMSS</b>", acciones: {
-                MSO: "Validar si ya se cumplió el plazo normativo, en caso de ser así, levantar consulta <b>CRM</b>.",
-                CAT: "Validar si ya se cumplió el plazo normativo, en caso de ser así, levantar consulta <b>CRM</b>.",
-                UNE: "En caso de haberse cumplido el tiempo normativo, solicitar el desmarque con el área de <b>retiros totales</b>."
-            }},
-            { clave: "921", nombre: "CONSULTA SALDO PREVIO", origen: "SAFRE", tipo: "OPERATIVA", plazo: "30 días hábiles", descripcion: "La marca 921 se coloca cuando el Trabajador está en proceso de pensión", query: "select F_RESPUESTA_A_PROCESAR, FECHA_VENCIMIENTO, ESTADO_SOLICITUD, *\nfrom ret_solicitud_saldo\nwhere nss=''", servidor: "SAFRE", acciones: {
-                MSO: "Es necesario verificar the fecha de vigencia en el campo <b>FECHA_VENCIMIENTO</b> del query de consulta de saldo previo. Si el plazo ha expirado, se debe solicitar el desmarque mediante un folio <b>CRM</b>.",
-                CAT: "Validar si ya se cumplió el plazo normativo, en caso de ser así, levantar consulta <b>CRM</b> para el desmarque.",
-                UNE: "Es necesario verificar la fecha de vigencia en el campo <b>FECHA_VENCIMIENTO</b> del query de consulta de saldo previo. Si el plazo ha expirado, se debe solicitar el desmarque al área de otorgamiento."
-            }},
-            { clave: "238", nombre: "TRANSFERENCIA DE ACREDITADOS FOVISSSTE", origen: "SAFRE", tipo: "OPERATIVA", plazo: "Duración del Crédito de Vivienda", descripcion: "Se coloca cuando el instituto lo notifica, Dirigir al trabajador a <b>FOVISSSTE</b> para más información.", acciones: {
-                MSO: "Sin información proporcionada.",
-                CAT: "Sin información proporcionada.",
-                UNE: "Sin información proporcionada."
-            }},
-            { clave: "924", nombre: "CUENTA EN TRÁMITE JUDICIAL", origen: "SAFRE", tipo: "OPERATIVA", plazo: "Indefinido", descripcion: "La cuenta Individual del Trabajador se encuentra en proceso de una demanda interpuesta ante la <b>JFCA</b>, el seguimiento será directamente en la <b>JFCA</b>. Finaliza una vez que se haya recibido el desistimiento o el laudo condenatorio.", acciones: {
-                MSO: "Sin información proporcionada.",
-                CAT: "Mencionar al trabajador que se encuentra en un proceso judicial y comunicarse con su representante legal para consultar el estatus.",
-                UNE: "Sin información proporcionada."
-            }},
-            { clave: "260", nombre: "TRASPASO SAR ISSSTE", origen: "SAFRE", tipo: "OPERATIVA", plazo: "30 días hábiles", descripcion: "Se coloca cuando el trabajador realiza un servicio de traspaso de <b>ICEFAS ISSSTE</b> y tarda aproximadamente 30 días hábiles en liquidar sus recursos.", acciones: {
-                MSO: "Validar si ya se cumplió el plazo normativo, en caso de ser así, levantar folio <b>CRM</b> solicitando el desmarque.",
-                CAT: "Validar si ya se cumplió el plazo normativo, en caso de ser así, levantar folio <b>CRM</b> solicitando el desmarque.",
-                UNE: "Validar si ya se cumplió el plazo normativo, en caso de ser así, solicitar el desmarque con el área de <b>Traspasos A-A</b>."
-            }},
-            { clave: "239", nombre: "ACREDITADOS FOVISSSTE SALDO EN GARANTÍA", origen: "SAFRE", tipo: "OPERATIVA", plazo: "Indefinido", descripcion: "Se coloca cuando el trabajador cuenta con un crédito de vivienda. Tiene una duración del tiempo del crédito.", acciones: {
-                MSO: "En caso de no convivir con algún servicio, levantar <b>CRM</b> para aclaración de la marca.",
-                CAT: "En caso de que el trabajador quiera realizar un servicio y presente la marca, levantar aclaración mediante <b>CRM</b>.",
-                UNE: "Levantar consulta con el área de <b>Traspasos A-A</b> para validar si la marca es correcta."
-            }},
-            { clave: "1270", nombre: "UNI INTRA-AFORE UNIFICADOR OP25", origen: "SAFRE", tipo: "OPERATIVA", plazo: "N/A", descripcion: "Favor de generar un reporte para para consultar la marca Operativa y que por parte de 2do. Nivel nos informe si se requiere la liberación de la Marca. También hay que agregar al reporte el <b>HOM-02</b>, <b>INE</b> y la evidencia de la Marca operativa. Por favor.", query: "--saber si el caso fue notificado por medio de la Op.25 de posibles cuentas a unificar\nselect fecha_actualiza as fecha_recpecion,nss,curp,cve_ent_nss,cve_ent_curp,\nCase\nwhen universo=1 then '1 Unificacion Intra-Afore'\nwhen universo=2 then '2 Confronta Intra-Afore'\nwhen universo=3 then '3 Confronta Extra-Afore'\nwhen universo=4 then '4 Localizar trabajador registro NSS'\nend as Universo,\nCase\nwhen ind_responsabilidad=1 then 'Afore responsable'\nwhen ind_responsabilidad=2 then 'Afore participante'\nend as ID_responsabilidad,\nCase\nwhen ind_procedencia='01' then 'Procedente para unificacion'\nwhen ind_procedencia='01' then 'No Procedente para unificacion'\nend\nfrom umi_det_solicitud\nwhere curp in('REMPLAZAR_CURP')", servidor: "SAFRE", acciones: {
-                MSO: "Si la marca está presente, se debe generar una consulta en <b>CRM</b> para su aclaración.",
-                CAT: "Si la marca está presente, se debe generar una consulta en <b>CRM</b> para su aclaración.",
-                UNE: "Se debe verificar el tipo de escenario en la consulta (“QUERY”), específicamente en el apartado “UNIVERSO”.<br><b>Escenarios 1 al 3:</b> El proceso debe concluir en un plazo aproximado de 30 días hábiles.<br><b>Si se excede el plazo:</b> Se debe levantar una consulta con el área de <b>Unificación de Cuentas</b> para solicitar el desmarque de la cuenta."
-            }},
-            { clave: "1274", nombre: "ALERTA TRÁMITES DE TERCEROS", origen: "SAFRE", tipo: "INFORMATIVA", plazo: "Indefinido", descripcion: "Se coloca para identificar aquellos casos que <b>Procesar</b> nos reporta mediante el proceso de alertas en trámites a terceros, es decir, beneficiarios identificados que intentan el servicio en más de 2 ocasiones." },
-            { clave: "1275", nombre: "PROCESO DE VALIDACIÓN POR ALERTA DE TERCEROS", origen: "SAFRE", tipo: "OPERATIVA", plazo: "Indefinido", descripcion: "Se determinó que aquellas cuentas identificadas con un trámite de Retiro total de recursos realizado por el beneficiario y que a la fecha continúa recibiendo dispersión de aportaciones. El marcaje operativo interno, permite bloquear la cuenta e impedir que se realice un servicio.", acciones: {
-                MSO: "Sin información proporcionada.",
-                CAT: "Mencionar que se identifica que se realizó un intento de retiro total por beneficiario, en caso de aclaración levantar consulta <b>CRM</b>.",
-                UNE: "Sin información proporcionada."
-            }},
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js';
+        import { getAuth, signInAnonymously } from 'https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js';
+        import { getFirestore, collection, getDocs, getDoc, doc, setDoc } from 'https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js';
 
-            // --- PROCESAR ---
-            { clave: "N/A", nombre: "RETIROS DATAMART DERECHO RETIRO BENEFICIARIO", origen: "PROCESAR", tipo: "INFORMATIVA", plazo: "Indefinido", descripcion: "Se coloca cuando el beneficiario cuenta con un derecho otorgado y cargado. <b>NO CONVIVE</b> para realizar <b>MODIFICACIÓN DE DATOS CERTIFICABLES</b>" },
-            { clave: "N/A", nombre: "RETIROS CUENTA CON DERECHO A RETIRO", origen: "PROCESAR", tipo: "INFORMATIVA", plazo: "Indefinido", descripcion: "Se coloca cuando el trabajador cuenta con un derecho otorgado y cargado y/o cumple para realizar el servicio de retiro total" },
-            { clave: "N/A", nombre: "MODIFICACIÓN DE DATOS IMSS", origen: "PROCESAR", tipo: "INFORMATIVA", plazo: "Indefinido", descripcion: "Se coloca cuando se realiza una modificación de datos en el <b>IMSS</b>." },
-            { clave: "N/A", nombre: "RETIRO PARCIAL IMSS_CONCILIACIÓN DE SALARIO", origen: "PROCESAR", tipo: "OPERATIVA", plazo: "20 días naturales", descripcion: "Se coloca derivado del diagnóstico de rechazo <b>J62</b> de un retiro parcial por diferencias de último salario base de cotización <b>IMSS/ PROCESAR</b>", acciones: {
-                MSO: "Sin información proporcionada.",
-                CAT: "Sin información proporcionada.",
-                UNE: "Sin información proporcionada."
-            }},
-            { clave: "N/A", nombre: "RETIROS PARCIALES POR MEDIOS REMOTOS", origen: "PROCESAR", tipo: "OPERATIVA", plazo: "5 días hábiles", descripcion: "Disposición de Recursos derivado de un <b>Retiro Parcial</b> ya sea matrimonio/desempleo realizado por los medios digitales (en su mayoría la App)", acciones: {
-                MSO: "Validar si ya se cumplió el plazo normativo, en caso de ser así, levantar consulta <b>CRM</b>.",
-                CAT: "Validar si ya se cumplió el plazo normativo, en caso de ser así, consultar estatus, en caso de no encontrarlo, levantar consulta <b>CRM</b>.",
-                UNE: "En caso de haberse cumplido el tiempo normativo, solicitar el desmarque con el área de <b>retiros parciales</b>."
-            }},
-            { clave: "N/A", nombre: "CUENTA INDIVIDUAL REINGRESO", origen: "PROCESAR", tipo: "INFORMATIVA", plazo: "Indefinido", descripcion: "Sin descripción." },
-            { clave: "N/A", nombre: "RETIRO CTA ISSSTE CON DERECHO A DISPOSICIÓN RECURSOS", origen: "PROCESAR", tipo: "INFORMATIVA", plazo: "Indefinido", descripcion: "Se coloca cuando el trabajador cuenta con un derecho otorgado y cargado y/o cumple para realizar el servicio de retiro total <b>ISSSTE</b>" },
-            { clave: "N/A", nombre: "TRABAJADOR EN SIEFORE BÁSICA DE PENSIONES", origen: "PROCESAR", tipo: "INFORMATIVA", plazo: "Indefinido", descripcion: "Sin descripción." },
-            { clave: "N/A", nombre: "CUENTA INDIVIDUAL NUEVO", origen: "PROCESAR", tipo: "INFORMATIVA", plazo: "Indefinido", descripcion: "Sin descripción." },
-            { clave: "N/A", nombre: "TRABAJADOR ASIGNADO", origen: "PROCESAR", tipo: "OPERATIVA", plazo: "Indefinido", descripcion: "Se elimina hasta que el trabajador registre el <b>NSS</b>", acciones: {
-                MSO: "Trabajador se encuentra asignado en <b>Afore Coppel</b>, es importante invitarlo a realizar el servicio de registro.",
-                CAT: "Informar al trabajador que se encuentra asignado en <b>Afore Coppel</b> e invitarlo a realizar el servicio de registro.",
-                UNE: "Mencionar al trabajador que se encuentra asignado en <b>Afore Coppel</b>, es importante invitarlo a realizar su servicio de registro."
-            }},
-            { clave: "N/A", nombre: "TRASPASOS TRASPASO AFORE AFORE", origen: "PROCESAR", tipo: "OPERATIVA", plazo: "20 días hábiles", descripcion: "Se colocan cuando el trabajador realizó su proceso de traspaso hacia otra administradora", acciones: {
-                MSO: "Sin acción a seguir, trabajador se encuentra en proceso de traspaso.",
-                CAT: "Sin acción a seguir, mencionar al trabajador que su cuenta se encuentra en un proceso de traspaso hacia a otra Afore.",
-                UNE: "Sin acción a seguir, mencionar al trabajador que su cuenta se encuentra en un proceso de traspaso hacia a otra Afore."
-            }},
-            { clave: "N/A", nombre: "TRASPASOS AFORE - AFORE A LIQUIDARSE", origen: "PROCESAR", tipo: "OPERATIVA", plazo: "INDEFINIDO", descripcion: "Se encuentra dentro del proceso del Traspaso", acciones: {
-                MSO: "Levantar consulta mediante un folio <b>CRM</b> para la aclaración de la marca.",
-                CAT: "Levantar consulta mediante un folio <b>CRM</b> para la aclaración de la marca.",
-                UNE: "Levantar consulta con <b>Traspasos A-A</b> para la validación de la marca."
-            }},
-            { clave: "N/A", nombre: "DISPOSICIÓN DE RETIRO DÉCIMO TRANSITORIO ISSSTE", origen: "PROCESAR", tipo: "OPERATIVA", plazo: "6 días hábiles", descripcion: "Disposición de Recursos por el Trabajador/Beneficiario derivado de una <b>Negativa de Pensión</b>.", acciones: {
-                MSO: "Es necesario verificar el cumplimiento del plazo normativo. Si se ha cumplido, se debe revisar el estado del servicio. En caso de que el servicio haya sido rechazado o no se pueda determinar su estado, se debe generar una consulta en el <b>CRM</b> para solicitar el desmarque.",
-                CAT: "Verificar el cumplimiento del plazo normativo. Si se cumplió, consultar el estatus. En caso de no localizarlo, iniciar una consulta en el <b>CRM</b>.",
-                UNE: "En caso de que el servicio haya sido rechazado y cumpla con el tiempo normativo, se debe validar su estatus y solicitar el desmarque al área de <b>retiros totales</b>."
-            }},
-            { clave: "N/A", nombre: "RETIRO CTA ISSSTE CON DERECHO A DISPOSICIÓN RECURSOS", origen: "PROCESAR", tipo: "OPERATIVA", plazo: "6 días hábiles", descripcion: "Disposición de Recursos por el Trabajador/Beneficiario derivado de una <b>Negativa de Pensión</b>.", acciones: {
-                MSO: "Es necesario verificar el cumplimiento del plazo normativo. Si se ha cumplido, se debe revisar el estado del servicio. En caso de que el servicio haya sido rechazado o no se pueda determinar su estado, se debe generar una consulta en el <b>CRM</b> para solicitar el desmarque.",
-                CAT: "Verificar el cumplimiento del plazo normativo. Si se cumplió, consultar el estatus. En caso de no localizarlo, iniciar una consulta en el <b>CRM</b>.",
-                UNE: "En caso de que el servicio haya sido rechazado y cumpla con el tiempo normativo, se debe validar su estatus y solicitar el desmarque al área de <b>retiros totales</b>."
-            }},
-            { clave: "N/A", nombre: "CUENTA CON CRÉDITO INFONAVIT ANUALIDADES GARANTIZADAS", origen: "PROCESAR", tipo: "INFORMATIVA", plazo: "Indefinido", descripcion: "Cuenta con Crédito vigente" },
-            { clave: "N/A", nombre: "CUENTA CON CRÉDITO INFONAVIT 43 BIS", origen: "PROCESAR", tipo: "INFORMATIVA", plazo: "Indefinido.", descripcion: "Se coloca cuando el trabajador cuenta con un crédito de vivienda. Tiene una duración del tiempo del crédito." },
-            { clave: "N/A", nombre: "UNIFICACIÓN DE CUENTAS MIXTAS", origen: "PROCESAR", tipo: "OPERATIVA", plazo: "30 días hábiles", descripcion: "Unificación de cuentas <b>MIXTA</b> (cuenta IMSS con cuenta ISSSTE o Independiente).", acciones: {
-                MSO: "Validar si ya se cumplió el plazo normativo, en caso de ser así, levantar folio <b>CRM</b> solicitando status.",
-                CAT: "Validar si ya se cumplió el plazo normativo, en caso de ser así, levantar folio <b>CRM</b> solicitando status.",
-                UNE: "Validar status de la unificación en <b>SICI</b>, de acuerdo al status realizar la consulta o aclaración correspondiente."
-            }},
-            { clave: "N/A", nombre: "UNIFICACIÓN DE CUENTAS ACTIVA - ACTIVA ISSSTE", origen: "PROCESAR", tipo: "OPERATIVA", plazo: "30 días hábiles", descripcion: "Se coloca cuando el trabajador está en proceso de Unificación y la otra cuenta se encuentra “X” Administradora", acciones: {
-                MSO: "Validar si ya se cumplió el plazo normativo, en caso de ser así, levantar folio <b>CRM</b> solicitando status.",
-                CAT: "Validar si ya se cumplió el plazo normativo, en caso de ser así, levantar folio <b>CRM</b> solicitando status.",
-                UNE: "Validar status de la unificación en <b>SICI</b>, de acuerdo al status realizar la consulta o aclaración correspondiente."
-            }},
-            { clave: "N/A", nombre: "RETIROS DISPOSICIÓN POR RETIROS PROGRAMADOS", origen: "PROCESAR", tipo: "INFORMATIVA", plazo: "Indefinido", descripcion: "Se coloca la marca cuando tiene resolución de <b>Pensión Garantizada</b>. No convive con un servicio o proceso de Unificación IMSS, MIXTA y Separación" },
-            { clave: "N/A", nombre: "RETIROS DISPOSICIÓN POR RECURSOS TOTALES", origen: "PROCESAR", tipo: "OPERATIVA", plazo: "6 días hábiles", descripcion: "Se coloca cuando el Trabajador se encuentra en Proceso de la Disposición de Recursos derivado de un Servicio de Retiro Total.", acciones: {
-                MSO: "Es necesario verificar el cumplimiento del plazo normativo. Si se ha cumplido, se debe revisar el estado del servicio. En caso de que el servicio haya sido rechazado o no se pueda determinar su estado, se debe generar una consulta en el <b>CRM</b> para solicitar el desmarque.",
-                CAT: "Verificar el cumplimiento del plazo normativo. Si se cumplió, consultar el estatus. En caso de no localizarlo, iniciar una consulta en el <b>CRM</b>.",
-                UNE: "En caso de que el servicio haya sido rechazado y cumpla con el tiempo normativo, se debe validar su estatus y solicitar el desmarque al área de <b>retiros totales</b>."
-            }},
-            { clave: "N/A", nombre: "RETIROS PROCESO DE RETIRO PARCIAL", origen: "PROCESAR", tipo: "OPERATIVA", plazo: "Matrimonio 90 días naturales / Desempleo 30 días naturales", descripcion: "Disposición de Recursos derivado de un <b>Retiro Parcial por Desempleo IMSS</b>.", query: "select a.fecha_solicitud, a.nss, a.curp, a.tipo_desempleo, a.diag_cuenta_ind, a.estado_solicitud, a.rechazo_cod, b.fecha_ini_vigencia, b.fecha_fin_vigencia\nfrom ret_parcial as A\nLEFT OUTER JOIN ret_parcial_resol as B\nON(a.nss = b.nss) \nwhere a.nss=''", servidor: "SAFRE", acciones: {
-                MSO: "Se requiere la validación de la fecha de vigencia en el query de retiros parciales, específicamente en el campo <b>fecha_fin_vigencia</b>. A esta fecha se deberán sumar tres días hábiles adicionales. Si se cumple con el tiempo normativo resultante, se deberá solicitar el desmarque mediante un folio <b>CRM</b>, en caso contrario, mencionar al asesor la fecha del desmarque de la cuenta.",
-                CAT: "Validar el estatus del servicio, y en caso de encontrarse rechazado o no encontrar con un proceso de pago en <b>SAFRE</b>, levantar consulta <b>CRM</b> para aclaración.",
-                UNE: "Se requiere la validación de la fecha de vigencia en el query de retiros parciales, específicamente en el campo <b>fecha_fin_vigencia</b>. A esta fecha se deberán sumar tres días hábiles adicionales. Si se cumple con el tiempo normativo resultante, se deberá solicitar el desmarque de los retiros parciales, en caso contrario, mencionar al trabajador la fecha del desmarque de la cuenta."
-            }},
-            { clave: "N/A", nombre: "SEPARACIÓN DE CUENTAS", origen: "PROCESAR", tipo: "OPERATIVA", plazo: "30 días hábiles", descripcion: "Separación de cuentas <b>IMSS</b> (cuenta compartida con 2 o más trabajadores) El tiempo puede variar dependiendo del análisis del proceso. En caso de que el <b>NSS</b> sea del No reclamante la cuenta queda marcada hasta que el dueño de ese <b>NSS</b> se presente a hacer la separación (Tiempo Indefinido).", acciones: {
-                MSO: "Validar si ya se cumplió el plazo normativo, en caso de ser así, levantar folio <b>CRM</b> solicitando status.",
-                CAT: "Validar si ya se cumplió el plazo normativo, en caso de ser así, levantar folio <b>CRM</b> solicitando status.",
-                UNE: "Validar status de la unificación en <b>SICI</b>, de acuerdo al status realizar la consulta o aclaración correspondiente."
-            }},
-            { clave: "N/A", nombre: "CUENTA CON CRÉDITO INFONAVIT TRADICIONAL (INFORMATIVA)", origen: "PROCESAR", tipo: "INFORMATIVA", plazo: "Duración del Crédito de Vivienda", descripcion: "Se Marca cuando el trabajador cuenta con <b>crédito de vivienda</b> y queda hasta que haya terminado el crédito." },
-            { clave: "N/A", nombre: "UNIFICACIÓN DE CUENTAS IMSS", origen: "PROCESAR", tipo: "OPERATIVA", plazo: "30 días hábiles", descripcion: "Se coloca cuando el trabajador está en proceso de Unificación y la otra cuenta se encuentra “X” Administradora. El plazo puede extenderse en caso de que los institutos así lo requieran.", acciones: {
-                MSO: "Validar si ya se cumplió el plazo normativo, en caso de ser así, levantar folio <b>CRM</b> solicitando status.",
-                CAT: "Validar si ya se cumplió el plazo normativo, en caso de ser así, levantar folio <b>CRM</b> solicitando status.",
-                UNE: "Validar status de la unificación en <b>SICI</b>, de acuerdo al status realizar la consulta o aclaración correspondiente."
-            }},
-            { clave: "N/A", nombre: "FONDO DE PENSIÓN BIENESTAR", origen: "PROCESAR", tipo: "OPERATIVA", plazo: "Indefinido", descripcion: "Se coloca cuando se realiza la Transferencia de Recursos al <b>FONDO BIENESTAR</b>", proceso: "<h3>📑 1. Casos que SÍ atendemos en Afore (CRM)</h3><p>Si el trabajador presenta alguna de estas situaciones, procedemos a realizar la solicitud de devolución generando el CRM correspondiente:</p><ul><li>Proceso de <b>Unificación de cuentas</b>. 📂</li><li><b>Separación de cuentas</b>. ✂️</li><li><b>Trámite Judicial</b> en curso. ⚖️</li></ul><h3>🏛️ 2. Casos gestionados por el Instituto (IMSS/ISSSTE)</h3><p>En los siguientes escenarios, la Afore ya no inicia el proceso:</p><ul><li><b>Si el trabajador ya tiene resolución (derecho cargado):</b> O si está iniciando su trámite de pensión, el Instituto será el encargado de detonar la devolución de los recursos automáticamente. ✅</li><li><b>Si el trabajador NO tiene resolución:</b> (Y no requiere unificación, separación o trámite judicial), debemos dirigir al trabajador al Instituto correspondiente (IMSS o ISSSTE), donde ellos iniciarán su devolución. 🚩</li></ul><div class='proceso-highlight'><p>💡 <b>Resumen para tu atención:</b> Es muy importante identificar si el cliente tiene un trámite administrativo pendiente (Unificación/Separación) antes de derivarlo, para asegurar que reciba la atención correcta en el lugar indicado. 🎯</p></div>", acciones: {
-                MSO: "Si la devolución de todas las subcuentas ya ha sido efectuada, se debe generar un folio <b>CRM</b> para solicitar el desmarque. En el supuesto de que los saldos presenten el cargo al <b>FPB</b> y aún no se haya realizado la solicitud de devolución, canalizar a ventanilla correspondiente.",
-                CAT: "Sondear al trabajador si ya realizó la solicitud de devolución de recurso transferidos al fondo de pensiones bienestar, en caso de no ser así, canalizarlo a ventanilla correspondiente. En caso de mencionar de haber realizado la solicitud, canalizar al trabajador en ventanilla que lo realizó para solicitar estatus.",
-                UNE: "Validar si ya se realizó la devolución de los saldos en las subcuentas correspondientes, de ser así, solicitar el desmarque con <b>Traspasos A-A</b>. En caso de que alguna subcuenta tenga el cargo al <b>FPB</b>, canalizar a ventanilla correspondiente."
-            }},
-            { clave: "N/A", nombre: "RETIROS DISPOSICIÓN POR RECURSOS VENTANILLA INFONAVIT", origen: "PROCESAR", tipo: "OPERATIVA", plazo: "15 días hábiles", descripcion: "La marca se coloca cuando el trabajador inició el trámite de retiro en <b>Infonavit</b>.", acciones: {
-                MSO: "Sin información proporcionada.",
-                CAT: "Sin información proporcionada.",
-                UNE: "Sin información proporcionada."
-            }},
-            { clave: "N/A", nombre: "RETIROS TRANSFERENCIA DE RECURSOS", origen: "PROCESAR", tipo: "OPERATIVA", plazo: "5 días hábiles", descripcion: "La marca se coloca cuando el Trabajador se encuentra en el proceso de <b>Transferencia de Recursos</b> al Gobierno Federal por una Pensión autorizada por el <b>IMSS</b>", query: "SELECT FECHA_CARGA_AFORE, * FROM RET_DET_DATAMART WHERE NSS=''", servidor: "SAFRE", proceso: "<h3>🔄 Proceso de Transferencia de Recursos</h3><p>Este procedimiento asegura que los recursos se muevan correctamente hacia las entidades correspondientes. 🏦</p><ul><li><b>📊 Verificación:</b> Se debe validar el tiempo normativo de 5 días hábiles.</li><li><b>📅 Punto de Partida:</b> La cuenta inicia a partir de la fecha de apartado (FECHA_CARGA_AFORE) registrada en el sistema.</li><li><b>⚖️ Objetivo:</b> Garantizar que la pensión autorizada por el <b>IMSS</b> cuente con los fondos liquidados en tiempo y forma. 🎯</li></ul>", acciones: {
-                MSO: "Para solicitar el desmarque de una cuenta, es necesario validar el tiempo normativo de la marca de transferencia de recursos. Esto se realiza contando 5 días hábiles a partir de la fecha de apartado (<b>FECHA_CARGA_AFORE</b>) en el query correspondiente. Si se cumple con dicho plazo, se debe levantar una consulta en el <b>CRM</b>.",
-                CAT: "Si el plazo normativo se cumple, debe levantarse una consulta a través de un folio <b>CRM</b> para solicitar una aclaración.",
-                UNE: "Para solicitar el desmarque de una cuenta, es necesario validar el tiempo normativo de la marca de transferencia de recursos. Esto se realiza contando 5 días hábiles a partir de la fecha de apartado (<b>FECHA_CARGA_AFORE</b>) en el query correspondiente. Si se cumple con dicho plazo, se debe solicitar el desmarque con el área de otorgamiento."
-            }},
-            { clave: "N/A", nombre: "RETIROS PROCESO DE SALDO PREVIO IMSS", origen: "PROCESAR", tipo: "OPERATIVA", plazo: "30 días hábiles", descripcion: "La marca se coloca cuando el Trabajador está en proceso de pensión. En algunos casos, puede recibir ampliación de vigencia", query: "select F_RESPUESTA_A_PROCESAR, FECHA_VENCIMIENTO, ESTADO_SOLICITUD, *\nfrom ret_solicitud_saldo\nwhere nss=''", servidor: "SAFRE", acciones: {
-                MSO: "Es necesario verificar the fecha de vigencia en el campo <b>FECHA_VENCIMIENTO</b> del query de consulta de saldo previo. Si el plazo ha expirado, se debe solicitar el desmarque mediante un folio <b>CRM</b>.",
-                CAT: "Validar si ya se cumplió el plazo normativo, en caso de ser así, levantar consulta <b>CRM</b> para el desmarque.",
-                UNE: "Es necesario verificar la fecha de vigencia en el campo <b>FECHA_VENCIMIENTO</b> del query de consulta de saldo previo. Si el plazo ha expirado, se debe solicitar el desmarque al área de otorgamiento."
-            }},
-            { clave: "N/A", nombre: "CRÉDITO DE VIVIENDA FOVISSSTE", origen: "PROCESAR", tipo: "INFORMATIVA", plazo: "Duración del Crédito de Vivienda", descripcion: "Se coloca cuando el instituto lo notifica, Dirigir al trabajador a <b>FOVISSSTE</b> para más información." },
-            { clave: "N/A", nombre: "TJ INFONAVIT", origen: "PROCESAR", tipo: "OPERATIVA", plazo: "Indefinido", descripcion: "Se coloca cuando el trabajador acude a la <b>Junta de Conciliación</b> y realiza demanda hacia los institutos. Se desmarca hasta que el trabajador nos mande el desistimiento", acciones: {
-                MSO: "Sin información proporcionada.",
-                CAT: "Sin información proporcionada.",
-                UNE: "Sin información proporcionada."
-            }},
-            { clave: "N/A", nombre: "TRÁMITE JUDICIAL (IMSS)", origen: "PROCESAR", tipo: "OPERATIVA", plazo: "Indefinido", descripcion: "Se coloca cuando el trabajador acude a la <b>Junta de Conciliación</b> y realiza demanda hacia los institutos. Se desmarca hasta que el trabajador nos mande el desistimiento", acciones: {
-                MSO: "Sin información proporcionada.",
-                CAT: "Sin información proporcionada.",
-                UNE: "Sin información proporcionada."
-            }},
-            { clave: "N/A", nombre: "TRASPASOS SAR92", origen: "PROCESAR", tipo: "OPERATIVA", plazo: "60 días hábiles", descripcion: "Se coloca cuando el trabajador realiza un servicio de traspaso de <b>ICEFAS IMSS</b> y tarda aproximadamente 60 días hábiles en liquidar sus recursos.", acciones: {
-                MSO: "Validar si ya se cumplió el plazo normativo, en caso de ser así, levantar folio <b>CRM</b> solicitando el desmarque.",
-                CAT: "Validar si ya se cumplió el plazo normativo, en caso de ser así, levantar folio <b>CRM</b> solicitando el desmarque.",
-                UNE: "Validar si ya se cumplió el plazo normativo, en caso de ser así, solicitar el desmarque con el área de <b>Traspasos A-A</b>."
-            }},
-            { clave: "N/A", nombre: "TRASPASOS SARISSSTE", origen: "PROCESAR", tipo: "OPERATIVA", plazo: "30 días hábiles", descripcion: "Se coloca cuando el trabajador realiza un servicio de traspaso de <b>ICEFAS ISSSTE</b> y tarda aproximadamente 30 días hábiles en liquidar sus recursos.", acciones: {
-                MSO: "Validar si ya se cumplió el plazo normativo, en caso de ser así, levantar folio <b>CRM</b> solicitando el desmarque.",
-                CAT: "Validar si ya se cumplió el plazo normativo, en caso de ser así, levantar folio <b>CRM</b> solicitando el desmarque.",
-                UNE: "Validar si ya se cumplió el plazo normativo, en caso de ser así, solicitar el desmarque con el área de <b>Traspasos A-A</b>."
-            }},
-            { clave: "N/A", nombre: "RETIROS PROCESO DE SALDO PREVIO ISSSTE", origen: "PROCESAR", tipo: "OPERATIVA", plazo: "30 días hábiles", descripcion: "La marca se coloca cuando el Trabajador está en proceso de pensión. En algunos casos, puede recibir ampliación de vigencia", acciones: {
-                MSO: "Sin información proporcionada.",
-                CAT: "Sin información proporcionada.",
-                UNE: "Sin información proporcionada."
-            }},
-            { clave: "N/A", nombre: "TRANSFERENCIA ACREDITADOS INFONAVIT", origen: "PROCESAR", tipo: "INFORMATIVA", plazo: "Duración del Crédito de Vivienda", descripcion: "Se Marca cuando el trabajador cuenta con <b>crédito de vivienda</b> y queda hasta que haya terminado el crédito." },
-            { clave: "N/A", nombre: "TRANSFERIDA AL FPB POR EL ART. 37 LEY INFONAVIT", origen: "PROCESAR", tipo: "INFORMATIVA", plazo: "Indefinido", descripcion: "Dicha marca es Informativa por lo cual, puede hacer los trámites correspondientes sin afectar debido a que convive con todos los Servicios." },
-            { clave: "N/A", nombre: "CUENTA TRANSFERIDA AL FPB (SOLO VIVIENDA)", origen: "PROCESAR", tipo: "INFORMATIVA", plazo: "Indefinido", descripcion: "Dicha marca es Informativa y nos indica que hacen falta recuperar los saldos de Vivienda, por lo que no se requiere gestionar el desmarque." }
-        ];
+        // PEGUE SU CODIGO DE FIREBASE AQUÍ
+        const firebaseConfig = {
+            apiKey: "AIzaSyDsNnGym8K_noUMIdpWYhfXWOe4NkuUJ-M",
+            authDomain: "universomarcas-ad78c.firebaseapp.com",
+            projectId: "universomarcas-ad78c",
+            storageBucket: "universomarcas-ad78c.firebasestorage.app",
+            messagingSenderId: "661272043721",
+            appId: "1:661272043721:web:531bcb7185cfbd04296d18"
+        };
+        // ---------------------------------
 
-        let activeQueryText = '';
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+        const appId = 'universomarcas-ad78c';
+
+        let marcasDB = [];
+        let currentActiveQuery = '';
 
         function renderBrands(list) {
             const grid = document.getElementById('brands-grid');
             if (!grid) return;
-            grid.innerHTML = '';
-
+            grid.innerHTML = list.length === 0 ? '<div class="col-span-full text-center py-10 opacity-50 font-bold">No se encontraron marcas</div>' : '';
             list.forEach((brand) => {
                 const card = document.createElement('div');
                 card.className = "brand-card bg-white dark:bg-gray-800 rounded-3xl shadow-md border border-gray-100 dark:border-gray-700 overflow-hidden animate-fade";
+                const isSafre = brand.origen === "SAFRE";
+                const sourceColor = isSafre ? "bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300" : "bg-purple-100 text-purple-700 dark:bg-purple-900/40 dark:text-purple-300";
+                const isInformativa = brand.tipo === "INFORMATIVA";
+                const typeColor = isInformativa ? "bg-green-100 text-green-700 dark:bg-green-900/40 dark:text-green-300" : "bg-red-100 text-red-700 dark:bg-red-900/40 dark:text-red-300";
+                const titleNum = (brand.clave && brand.clave !== "N/A") ? `<span class="text-blue-700 dark:text-yellow-500 mr-2 font-black">${brand.clave}</span>` : "";
                 
-                const isSafreSource = brand.origen === "SAFRE";
-                const sourceColorClass = isSafreSource ? "bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300" : "bg-purple-100 text-purple-700 dark:bg-purple-900/40 dark:text-purple-300";
-                const isInformativaType = brand.tipo === "INFORMATIVA";
-                const typeColorClass = isInformativaType ? "bg-green-100 text-green-700 dark:bg-green-900/40 dark:text-green-300" : "bg-red-100 text-red-700 dark:bg-red-900/40 dark:text-red-300";
+                const qBtn = brand.query ? `<button onclick="window.openQueryModal('${brand.nombre}', \`${brand.query}\`, '${brand.servidor}')" class="p-2 bg-blue-600 text-white rounded-xl pulse-query"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4 7v10c0 2.21 3.58 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.58 4 8 4s8-1.79 8-4M4 7c0-2.21 3.58-4 8-4s8 1.79 8 4m0 5c0 2.21-3.58 4-8 4s-8-1.79-8-4"></path></svg></button>` : "";
+                const pBtn = brand.proceso ? `<button onclick="window.openProcesoModal('${brand.nombre}', \`${brand.proceso}\`)" class="p-2 bg-amber-500 text-white rounded-xl pulse-proceso"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg></button>` : "";
+                const tBtn = brand.ti ? `<button onclick="window.openTiModalByName('${brand.nombre}')" class="p-2 bg-indigo-600 text-white rounded-xl pulse-ti font-black text-[10px]">TI</button>` : "";
+                const dBtn = brand.pdf ? `<button onclick="window.openPdfModalByName('${brand.nombre}')" class="p-2 bg-red-600 text-white rounded-xl pulse-pdf font-black text-[10px]">PDF</button>` : "";
 
-                const titleNumHtml = (brand.clave !== "N/A") ? `<span class="text-blue-700 dark:text-yellow-500 mr-2 font-black">${brand.clave}</span>` : "";
-                
-                const queryBtnHtml = brand.query ? `<button onclick="window.openQueryModal('${brand.nombre}', \`${brand.query}\`, '${brand.servidor || 'SAFRE'}')" class="p-2 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-all pulse-query" title="Ver Query"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.58 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.58 4 8 4s8-1.79 8-4M4 7c0-2.21 3.58-4 8-4s8 1.79 8 4m0 5c0 2.21-3.58 4-8 4s-8-1.79-8-4"></path></svg></button>` : "";
-                const procesoBtnHtml = brand.proceso ? `<button onclick="window.openProcesoModal('${brand.nombre}', \`${brand.proceso}\`)" class="p-2 bg-amber-500 text-white rounded-xl hover:bg-amber-600 transition-all pulse-proceso" title="Ver Contexto"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg></button>` : "";
-                const tiBtnHtml = brand.ti ? `<button onclick="window.openTiModalByName('${brand.nombre}')" class="p-2 bg-indigo-600 text-white rounded-xl hover:bg-indigo-700 transition-all pulse-ti font-black text-[10px]" title="Oferta TI">TI</button>` : "";
-
-                let actionsHtml = '';
+                let actionHtml = '';
                 if (brand.tipo === 'OPERATIVA' && brand.acciones) {
-                    const brandSafeId = brand.nombre.replace(/[^a-zA-Z0-9]/g, '-');
-                    actionsHtml = `
+                    const sid = brand.nombre.replace(/[^a-zA-Z0-9]/g, '-');
+                    actionHtml = `
                         <div class="mt-auto pt-4 border-t border-gray-100 dark:border-gray-700">
                             <div class="flex gap-1 mb-2 bg-gray-50 dark:bg-gray-900/50 p-1 rounded-xl">
-                                <button onclick="window.switchArea(this, '${brandSafeId}', 'CAT', '${brand.nombre}')" class="area-tab active flex-1 py-1.5 text-[10px] font-bold rounded-lg transition-all">CAT</button>
-                                <button onclick="window.switchArea(this, '${brandSafeId}', 'MSO', '${brand.nombre}')" class="area-tab flex-1 py-1.5 text-[10px] font-bold rounded-lg transition-all">MSO</button>
-                                <button onclick="window.switchArea(this, '${brandSafeId}', 'UNE', '${brand.nombre}')" class="area-tab flex-1 py-1.5 text-[10px] font-bold rounded-lg transition-all">UNE/GAP</button>
+                                <button onclick="window.switchArea(this, '${sid}', 'CAT', '${brand.nombre}')" class="area-tab active flex-1 py-1.5 text-[10px] font-bold rounded-lg transition-all">CAT</button>
+                                <button onclick="window.switchArea(this, '${sid}', 'MSO', '${brand.nombre}')" class="area-tab flex-1 py-1.5 text-[10px] font-bold rounded-lg transition-all">MSO</button>
+                                <button onclick="window.switchArea(this, '${sid}', 'UNE', '${brand.nombre}')" class="area-tab flex-1 py-1.5 text-[10px] font-bold rounded-lg transition-all">UNE/GAP</button>
                             </div>
                             <div class="bg-blue-50/50 dark:bg-blue-900/10 p-4 rounded-xl min-h-[100px] flex items-start border border-blue-100 dark:border-blue-900/30 overflow-y-auto">
-                                <p id="action-text-${brandSafeId}" class="text-[11px] italic font-medium text-gray-700 dark:text-gray-200 animate-fade">
-                                    "${brand.acciones.CAT}"
-                                </p>
+                                <p id="action-text-${sid}" class="text-[11px] italic font-medium text-gray-700 dark:text-gray-200 animate-fade">"${brand.acciones.CAT}"</p>
                             </div>
-                        </div>
-                    `;
+                        </div>`;
                 }
 
                 card.innerHTML = `
                     <div class="p-5 flex-grow flex flex-col">
                         <div class="flex flex-wrap justify-between items-start gap-2 mb-3">
                             <div class="flex gap-2">
-                                <span class="text-[9px] font-black px-2 py-1 rounded-lg ${sourceColorClass} uppercase tracking-widest">${brand.origen}</span>
-                                <span class="text-[9px] font-black px-2 py-1 rounded-lg ${typeColorClass} uppercase tracking-widest">${brand.tipo}</span>
+                                <span class="text-[9px] font-black px-2 py-1 rounded-lg ${sourceColor} uppercase tracking-widest font-black">${brand.origen}</span>
+                                <span class="text-[9px] font-black px-2 py-1 rounded-lg ${typeColor} uppercase tracking-widest font-black">${brand.tipo}</span>
                             </div>
-                            <span class="text-[9px] font-bold text-gray-400 uppercase tracking-tighter">${brand.plazo}</span>
+                            <span class="text-[9px] font-bold text-gray-400 uppercase tracking-tighter font-black">${brand.plazo}</span>
                         </div>
                         <div class="flex justify-between items-start gap-2 mb-2">
-                            <h3 class="text-base font-bold text-blue-900 dark:text-yellow-400 leading-tight uppercase flex-grow">${titleNumHtml}${brand.nombre}</h3>
-                            <div class="flex gap-1">
-                                ${queryBtnHtml}
-                                ${procesoBtnHtml}
-                                ${tiBtnHtml}
-                            </div>
+                            <h3 class="text-base font-bold text-blue-900 dark:text-yellow-400 leading-tight uppercase flex-grow">${titleNum}${brand.nombre}</h3>
+                            <div class="flex gap-1">${qBtn}${pBtn}${tBtn}${dBtn}</div>
                         </div>
                         <p class="text-[11px] text-gray-600 dark:text-gray-400 leading-normal mb-4">${brand.descripcion}</p>
-                        ${actionsHtml}
-                    </div>
-                `;
+                        ${actionHtml}
+                    </div>`;
                 grid.appendChild(card);
             });
         }
 
-        window.openQueryModal = (name, query, servidor) => {
-            const modal = document.getElementById('query-modal');
-            const content = document.getElementById('query-modal-content');
-            activeQueryText = query;
-            document.getElementById('query-title').innerText = `Query: ${name}`;
-            document.getElementById('query-text').innerText = query;
-            document.getElementById('server-badge').innerText = `Servidor: ${servidor}`;
-            modal.classList.replace('hidden', 'flex');
-            setTimeout(() => { modal.classList.add('opacity-100'); content.classList.add('scale-100'); }, 10);
-        };
-
-        window.openProcesoModal = (name, htmlContent) => {
-            const modal = document.getElementById('proceso-modal');
-            const content = document.getElementById('proceso-modal-content');
-            document.getElementById('proceso-title').innerText = `Contexto: ${name}`;
-            document.getElementById('proceso-text').innerHTML = htmlContent;
-            modal.classList.replace('hidden', 'flex');
-            setTimeout(() => { modal.classList.add('opacity-100'); content.classList.add('scale-100'); }, 10);
-        };
-
-        window.openTiModalByName = (name) => {
-            const brand = brandsData.find(b => b.nombre === name);
-            if (!brand || !brand.ti) return;
-            const tiData = brand.ti;
-            const modal = document.getElementById('ti-modal');
-            const content = document.getElementById('ti-modal-content');
-            document.getElementById('ti-offer-name').innerText = tiData.titulo;
-            const pathParts = tiData.ruta.split(' » ');
-            document.getElementById('ti-path').innerHTML = pathParts.map((p, i) => `
-                <span>${p}</span>
-                ${i < pathParts.length - 1 ? '<svg class="w-3 h-3 text-indigo-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M9 5l7 7-7 7"></path></svg>' : ''}
-            `).join('');
-            document.getElementById('ti-image').src = tiData.imagen;
-            modal.classList.replace('hidden', 'flex');
-            setTimeout(() => { modal.classList.add('opacity-100'); content.classList.add('scale-100'); }, 10);
-        };
-
-        window.closeModal = (modalId) => {
-            const modal = document.getElementById(modalId);
-            const content = document.getElementById(modalId + '-content');
-            if (!modal) return;
-            modal.classList.remove('opacity-100');
-            content.classList.replace('scale-100', 'scale-95');
-            setTimeout(() => { modal.classList.replace('flex', 'hidden'); }, 300);
-        };
-
+        // Modales y Copiado
+        window.openQueryModal = (n, q, s) => { currentActiveQuery = q; document.getElementById('query-title').innerText = n; document.getElementById('query-text').innerText = q; document.getElementById('server-badge').innerText = `Servidor: ${s}`; const m = document.getElementById('query-modal'); m.classList.replace('hidden', 'flex'); setTimeout(() => { m.classList.add('opacity-100'); document.getElementById('query-modal-content').classList.replace('scale-95', 'scale-100'); }, 10); };
+        window.openProcesoModal = (n, h) => { document.getElementById('proceso-title').innerText = n; document.getElementById('proceso-text').innerHTML = h; const m = document.getElementById('proceso-modal'); m.classList.replace('hidden', 'flex'); setTimeout(() => { m.classList.add('opacity-100'); document.getElementById('proceso-modal-content').classList.replace('scale-95', 'scale-100'); }, 10); };
+        window.openTiModalByName = (n) => { const b = marcasDB.find(x => x.nombre === n); if (!b?.ti) return; document.getElementById('ti-offer-name').innerText = b.ti.titulo; const parts = b.ti.ruta.split(' » '); document.getElementById('ti-path').innerHTML = parts.map((p, i) => `<span>${p}</span>${i < parts.length - 1 ? '<svg class="w-3 h-3 text-indigo-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"></path></svg>' : ''}`).join(''); document.getElementById('ti-image').src = b.ti.imagen; const m = document.getElementById('ti-modal'); m.classList.replace('hidden', 'flex'); setTimeout(() => { m.classList.add('opacity-100'); document.getElementById('ti-modal-content').classList.replace('scale-95', 'scale-100'); }, 10); };
+        window.openPdfModalByName = (n) => { const b = marcasDB.find(x => x.nombre === n); if (!b?.pdf) return; document.getElementById('pdf-manual-name').innerText = b.nombre; document.getElementById('pdf-download-link').href = b.pdf.enlace; const m = document.getElementById('pdf-modal'); m.classList.replace('hidden', 'flex'); setTimeout(() => { m.classList.add('opacity-100'); document.getElementById('pdf-modal-content').classList.replace('scale-95', 'scale-100'); }, 10); };
+        window.closeModal = (id) => { const m = document.getElementById(id); const c = document.getElementById(id + '-content'); m.classList.remove('opacity-100'); c.classList.replace('scale-100', 'scale-95'); setTimeout(() => m.classList.replace('flex', 'hidden'), 300); };
+        
         window.copyToClipboard = () => {
-            const btnText = document.getElementById('copy-btn-text');
-            const el = document.createElement('textarea');
-            el.value = activeQueryText;
-            document.body.appendChild(el);
-            el.select();
-            document.execCommand('copy');
-            document.body.removeChild(el);
-            btnText.innerText = '¡Copiado!';
-            setTimeout(() => { btnText.innerText = 'Copiar Query'; }, 2000);
+            const ta = document.createElement('textarea');
+            ta.value = currentActiveQuery;
+            document.body.appendChild(ta); ta.select();
+            try { document.execCommand('copy'); document.getElementById('copy-btn-text').innerText = '¡Copiado!'; } catch(e) { }
+            document.body.removeChild(ta);
+            setTimeout(() => document.getElementById('copy-btn-text').innerText = 'Copiar Query', 2000);
         };
 
-        window.switchArea = (btn, brandSafeId, area, originalName) => {
-            const parent = btn.parentElement;
-            parent.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+        window.switchArea = (btn, sid, a, n) => {
+            btn.parentElement.querySelectorAll('button').forEach(x => x.classList.remove('active'));
             btn.classList.add('active');
-            const brand = brandsData.find(b => b.nombre === originalName);
-            const textElement = document.getElementById(`action-text-${brandSafeId}`);
-            if (brand && textElement && brand.acciones) {
-                const actionKey = area === 'UNE' ? 'UNE' : area;
-                textElement.innerHTML = `"${brand.acciones[actionKey]}"`;
-                textElement.classList.remove('animate-fade');
-                void textElement.offsetWidth;
-                textElement.classList.add('animate-fade');
-            }
+            const b = marcasDB.find(x => x.nombre === n);
+            const k = a === 'UNE' ? 'UNE' : a;
+            document.getElementById(`action-text-${sid}`).innerHTML = `"${b.acciones[k]}"`;
         };
+
+        // --- SEMILLA DE DATOS (SUBIDA MASIVA) ---
+        async function seedFirebase() {
+            const btn = document.getElementById('seed-btn');
+            btn.innerText = 'Subiendo...';
+            const data = [
+                { clave: "258", nombre: "TRANSFERENCIA FONDO BIENESTAR", origen: "SAFRE", tipo: "OPERATIVA", plazo: "Indefinido", descripcion: "Transferencia de recursos al Fondo de Pensiones para el Bienestar.", proceso: "<h3>📑 1. Casos que SÍ atendemos en Afore (CRM)</h3><p>Si el trabajador presenta alguna de estas situaciones, procedemos a realizar la solicitud de devolución:</p><ul><li>Proceso de Unificación. 📂</li><li>Separación de cuentas. ✂️</li><li>Trámite Judicial. ⚖️</li></ul>", acciones: { CAT: "Sondear devolución.", MSO: "Levantar CRM si aplica unificación.", UNE: "Validar devolución en subcuentas." } },
+                { clave: "268", nombre: "CANDIDATO DE UNIFICACIÓN MIXTA", origen: "SAFRE", tipo: "OPERATIVA", plazo: "Indefinido", descripcion: "CURP duplicada detectada en BDSAR.", pdf: { titulo: "Unificación de Cuentas MIXTA.pdf", enlace: "Unificación de Cuentas MIXTA.pdf" }, proceso: "<div class='proceso-highlight font-bold mb-4'>📌 Para acción a seguir UNE/GAP</div><p>Resumen estructurado sobre Unificación MIXTA...</p>", acciones: { CAT: "Generar consulta CRM.", MSO: "Iniciar proceso.", UNE: "Análisis técnico (Ver PDF)." } },
+                { clave: "160", nombre: "INHABILITACIÓN POR SALDO CERO", origen: "SAFRE", tipo: "OPERATIVA", plazo: "Indefinido", descripcion: "Cuenta sin aportaciones en 6 bimestres.", ti: { titulo: "ELIMINAR MARCA SAFRE", ruta: "Quiero pedir algo » Mesa de Servicios BackOffice Afore » UNE » Atención al Público", imagen: "ofertamarca160.PNG" }, acciones: { CAT: "Sondear aportaciones patronales.", MSO: "Levantar CRM si hay reporte.", UNE: "Desmarque vía TI." } },
+                { clave: "921", nombre: "CONSULTA SALDO PREVIO", origen: "SAFRE", tipo: "OPERATIVA", plazo: "30 días hábiles", descripcion: "Proceso de pensión.", query: "select F_RESPUESTA_A_PROCESAR, FECHA_VENCIMIENTO, ESTADO_SOLICITUD, * from ret_solicitud_saldo where nss=''", servidor: "SAFRE", acciones: { CAT: "Validar fecha.", MSO: "Verificar FECHA_VENCIMIENTO.", UNE: "Solicitar desmarque." } },
+                { clave: "490", nombre: "RETIRO DE APORTACIONES VOLUNTARIAS", origen: "SAFRE", tipo: "OPERATIVA", plazo: "5 días hábiles", descripcion: "Aportaciones extra.", proceso: "<h3>💰 Servicio Voluntario</h3><ul><li>🪪 ID Vigente.</li><li>🧬 Biometría.</li></ul>", acciones: { CAT: "Consultar estatus.", MSO: "Plazo normativo.", UNE: "Desmarque retiros parciales." } }
+                // Agregue aquí el resto de marcas si es necesario
+            ];
+            try {
+                for (const item of data) {
+                    const id = (item.clave && item.clave !== 'N/A') ? item.clave : item.nombre.replace(/\s+/g, '-');
+                    await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'marcas', id), item);
+                }
+                await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'config', 'access'), { key: 'GAP2024' });
+                btn.innerText = 'Sincronizado';
+                setTimeout(() => { btn.classList.add('hidden'); loadData(); }, 1500);
+            } catch (e) { btn.innerText = 'Error'; }
+        }
+
+        async function loadData() {
+            const snap = await getDocs(collection(db, 'artifacts', appId, 'public', 'data', 'marcas'));
+            if (snap.empty) { document.getElementById('seed-btn').classList.remove('hidden'); }
+            else { marcasDB = snap.docs.map(x => x.data()); renderBrands(marcasDB); }
+        }
 
         window.addEventListener('DOMContentLoaded', () => {
-            const accessBtn = document.getElementById('access-app');
-            const toggleDarkBtn = document.getElementById('toggle-dark');
-            const searchInput = document.getElementById('search-input');
-            if (accessBtn) {
-                accessBtn.onclick = () => {
-                    const gatekeeper = document.getElementById('gatekeeper');
-                    const appContent = document.getElementById('app-content');
-                    gatekeeper.classList.add('opacity-0');
-                    setTimeout(() => {
-                        gatekeeper.style.display = 'none';
-                        appContent.classList.replace('hidden', 'block');
-                        setTimeout(() => appContent.classList.add('opacity-100'), 50);
-                        renderBrands(brandsData);
-                    }, 500);
-                };
-            }
-            if (toggleDarkBtn) {
-                toggleDarkBtn.onclick = () => document.documentElement.classList.toggle('dark');
-            }
-            if (searchInput) {
-                searchInput.addEventListener('input', (e) => {
-                    const term = e.target.value.toLowerCase();
-                    const activeNavBtn = document.querySelector('.nav-button.active');
-                    const category = activeNavBtn ? activeNavBtn.dataset.cat : 'all';
-                    const filtered = brandsData.filter(b => {
-                        const matchSearch = b.nombre.toLowerCase().includes(term) || b.clave.toLowerCase().includes(term) || b.descripcion.toLowerCase().includes(term);
-                        return matchSearch && (category === 'all' || b.tipo === category);
-                    });
-                    renderBrands(filtered);
-                });
-            }
-            document.querySelectorAll('.nav-button').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    document.querySelectorAll('.nav-button').forEach(b => b.classList.remove('active'));
-                    btn.classList.add('active');
-                    if (searchInput) {
-                        searchInput.dispatchEvent(new Event('input'));
-                    }
-                });
+            const authBtn = document.getElementById('auth-btn');
+            authBtn.onclick = async () => {
+                const keyIn = document.getElementById('access-key').value;
+                authBtn.disabled = true; authBtn.innerText = 'Validando...';
+                try {
+                    await signInAnonymously(auth);
+                    const conf = await getDoc(doc(db, 'artifacts', appId, 'public', 'data', 'config', 'access'));
+                    if (!conf.exists() || keyIn === conf.data().key) {
+                        document.getElementById('gatekeeper').classList.add('opacity-0');
+                        setTimeout(() => {
+                            document.getElementById('gatekeeper').style.display = 'none';
+                            document.getElementById('app-content').classList.replace('hidden', 'block');
+                            setTimeout(() => document.getElementById('app-content').classList.add('opacity-100'), 50);
+                            loadData();
+                        }, 500);
+                    } else { document.getElementById('auth-error').classList.remove('hidden'); authBtn.disabled = false; authBtn.innerText = 'Entrar'; }
+                } catch (e) { document.getElementById('auth-error').classList.remove('hidden'); authBtn.disabled = false; }
+            };
+            document.getElementById('seed-btn').onclick = seedFirebase;
+            document.getElementById('toggle-dark').onclick = () => document.documentElement.classList.toggle('dark');
+            document.getElementById('search-input')?.addEventListener('input', (e) => {
+                const t = e.target.value.toLowerCase();
+                const c = document.querySelector('.nav-button.active')?.dataset.cat || 'all';
+                renderBrands(marcasDB.filter(x => (x.nombre.toLowerCase().includes(t) || (x.clave && x.clave.toLowerCase().includes(t))) && (c === 'all' || x.tipo === c)));
+            });
+            document.querySelectorAll('.nav-button').forEach(b => {
+                b.onclick = () => { document.querySelectorAll('.nav-button').forEach(x => x.classList.remove('active')); b.classList.add('active'); document.getElementById('search-input').dispatchEvent(new Event('input')); };
             });
         });
     </script>
