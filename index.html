@@ -72,7 +72,7 @@
             <div class="p-6 bg-gray-50 dark:bg-gray-900">
                 <div class="relative group">
                     <pre class="font-mono text-sm p-6 bg-gray-900 text-green-400 rounded-2xl overflow-x-auto border border-gray-700 shadow-inner max-h-[400px]" id="query-text"></pre>
-                    <button id="copy-query-btn" class="absolute top-4 right-4 bg-white/10 hover:bg-white/20 text-white px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 backdrop-blur-md border border-white/10 shadow-lg">
+                    <button id="copy-query-btn" onclick="window.copyToClipboard()" class="absolute top-4 right-4 bg-white/10 hover:bg-white/20 text-white px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 backdrop-blur-md border border-white/10 shadow-lg">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path></svg>
                         <span id="copy-btn-text">Copiar Query</span>
                     </button>
@@ -154,7 +154,7 @@
             </div>
         </nav>
 
-        <header class="relative text-center bg-cover bg-center shadow-xl overflow-hidden py-24 mb-10" style="background-image: url('cafe.png'); background-color: #1e3a8a;">
+        <header class="relative text-center bg-cover bg-center shadow-xl overflow-hidden py-32 md:py-48 lg:py-56 mb-10 transition-all duration-500" style="background-image: url('cafe.png'); background-color: #1e3a8a;">
             <div class="absolute inset-0 bg-blue-900 bg-opacity-75"></div>
             <div class="relative z-10 px-6 max-w-5xl mx-auto text-white">
                 <h1 class="text-3xl sm:text-5xl font-black dark:text-yellow-300 tracking-tight uppercase">Base de Conocimiento de Marcas</h1>
@@ -176,12 +176,20 @@
             </div>
             <main id="brands-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-6 items-start"></main>
         </div>
+
+        <footer class="mt-10 py-10 border-t border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-800/50">
+            <div class="max-w-[1920px] mx-auto px-6 text-center">
+                <p class="text-sm font-bold text-gray-500 dark:text-gray-400 uppercase tracking-widest">
+                    Herramienta generada por la Gerencia de Atención al Público - Afore GAP
+                </p>
+            </div>
+        </footer>
     </div>
 
-    <!-- Gatekeeper Original -->
+    <!-- Gatekeeper con logo integrado -->
     <div id="gatekeeper" class="fixed inset-0 z-50 bg-gray-100 dark:bg-gray-900 flex flex-col items-center justify-center p-4 transition-opacity duration-500">
         <div class="max-w-md w-full bg-white dark:bg-gray-800 rounded-2xl shadow-2xl p-8 text-center border border-gray-200 dark:border-gray-700">
-            <img src="logoafore.png" alt="Logo" class="h-16 mx-auto mb-6" onerror="this.style.display='none'">
+            <img src="logoafore.png" alt="Logo Afore Coppel" class="h-16 mx-auto mb-6 object-contain" onerror="this.style.display='none'">
             <h1 class="text-3xl font-bold text-blue-900 dark:text-yellow-400 mb-2 font-black uppercase tracking-tight">Biblioteca GAP</h1>
             <p class="text-gray-600 dark:text-gray-300 mb-8 font-medium italic uppercase text-xs tracking-widest">Base de Conocimiento de Marcas</p>
             <button id="access-app" class="w-full py-3 px-4 bg-blue-700 hover:bg-blue-800 text-white font-bold rounded-lg shadow transition-all active:scale-95 uppercase tracking-widest text-sm">Ingresar al Sistema</button>
@@ -233,7 +241,7 @@
                 CAT: "En caso de que el trabajador quiera realizar un servicio y presente la marca, levantar aclaración mediante <b>CRM</b>.",
                 UNE: "Levantar consulta con el área de <b>Traspasos A-A</b> para validar si la marca es correcta."
             }},
-            { clave: "243", nombre: "UNIFICACIÓN EXTRA-AFORE", origen: "SAFRE", tipo: "OPERATIVA", plazo: "30 días hábiles", descripcion: "Se coloca cuando el trabajador está en proceso de Unificación y la otra cuenta se encuentra “X” Administradora. El plazo puede extenderse en caso de que los institutos así lo requieran.", acciones: {
+            { clave: "243", nombre: "UNIFICACIÓN EXTRA-AFORE", origen: "SAFRE", tipo: "OPERATIVA", plazo: "30 días hábiles", descripcion: "Se coloca cuando el trabajador está en proceso de Unificación y la otra cuenta se encuentra “X” Administradora. El plazo puede extenderse in caso de que los institutos así lo requieran.", acciones: {
                 MSO: "Validar si ya se cumplió el plazo normativo, en caso de ser así, levantar folio <b>CRM</b> solicitando status.",
                 CAT: "Validar si ya se cumplió el plazo normativo, en caso de ser así, levantar folio <b>CRM</b> solicitando status.",
                 UNE: "Validar status de la unificación en <b>SICI</b>, de acuerdo al status realizar la consulta o aclaración correspondiente."
@@ -274,11 +282,58 @@
                 CAT: "Validar si ya se cumplió el plazo normativo, en caso de ser así, levantar folio <b>CRM</b> solicitando status.",
                 UNE: "Validar status de la unificación en <b>SICI</b>, de acuerdo al status realizar la consulta o aclaración correspondiente."
             }},
-            { clave: "268", nombre: "CANDIDATO DE UNIFICACIÓN MIXTA", origen: "SAFRE", tipo: "OPERATIVA", plazo: "Indefinido", descripcion: "Se coloca cuando se identifica <b>CURP duplicada</b> en <b>BDSAR</b>. Se finaliza cuando el trabajador realiza el servicio de <b>Unificación mixta</b>", acciones: {
-                MSO: "Es necesario iniciar el proceso de <b>Unificación Mixta</b>, en caso de no permitir realizar el el servicio, levantar folio <b>CRM</b> para aclaración.",
-                CAT: "Generar una consulta en el <b>CRM</b> para la aclaración de la marca operativa.",
-                UNE: "Realizar el análisis de la cuenta del trabajador para validar si es candidato y realizar las consultas correspondientes de acuerdo al análisis."
-            }},
+            // --- MARCA 268 ACTUALIZADA CON CONTEXTO/PROCESO ---
+            { 
+                clave: "268", 
+                nombre: "CANDIDATO DE UNIFICACIÓN MIXTA", 
+                origen: "SAFRE", 
+                tipo: "OPERATIVA", 
+                plazo: "Indefinido", 
+                descripcion: "Se coloca cuando se identifica <b>CURP duplicada</b> en <b>BDSAR</b>. Se finaliza cuando el trabajador realiza el servicio de <b>Unificación mixta</b>",
+                proceso: `
+                    <div class='mb-5 p-3 bg-blue-100 dark:bg-blue-900/40 rounded-xl border-l-4 border-blue-600'>
+                        <span class='font-black text-xs text-blue-700 dark:text-blue-300 uppercase tracking-widest'>📢 PARA UNE/GAP</span>
+                    </div>
+                    <h3>🔍 ¿Qué es la Unificación MIXTA?</h3>
+                    <p>Se refiere a la misma persona con su <b>CURP duplicada</b> en la <b>BDNSAR</b> (PROCESAR). Existen dos tipos principales:</p>
+                    <ul>
+                        <li><b>🤝 MIXTA ISSSTE - IMSS:</b> El trabajador tiene un registro por CURP en ISSSTE y un registro por NSS.</li>
+                        <li><b>🧩 MIXTA REGISTRO POR CURP:</b> El trabajador tiene un registro por CURP (NTI) en la misma o diferente Afore, además de un registro por NSS.</li>
+                    </ul>
+                    <h3>📋 Candidato a Unificación MIXTA ISSSTE - IMSS</h3>
+                    <ul>
+                        <li><b>Marca activa:</b> CANDIDATO DE UNIFICACIÓN MIXTA en Consulta 0101 (PROCESAR). ✅</li>
+                        <li><b>Campo CURPDUPLICADO:</b> Debe indicar <b>1</b>. 1️⃣</li>
+                        <li><b>Estatus de Expedientes y Enrolamiento:</b> Deben aparecer en tránsito <b>(03 - 03)</b>. 🔄</li>
+                        <li><b>Tabla EIMAESTRO:</b> El campo ESTATUS debe aparecer como <b>1 = TRÁNSITO</b>. Si no, solicitar modificación al área de expedientes. 📂</li>
+                    </ul>
+                    <div class='proceso-highlight'>
+                        <p>⏱️ <b>Duración:</b> El proceso de Unificación MIXTA tiene un tiempo estimado de <b>30 días hábiles</b>.</p>
+                        <p>📍 <b>Ubicación:</b> Se realiza siempre en la Afore donde se encuentre el <b>NSS</b>.</p>
+                    </div>
+                    <h3>🏛️ Escenarios e Instancias</h3>
+                    <ul>
+                        <li><b>🏢 Escenario NTI:</b> Si Afore Coppel tiene el NTI, pero el NSS está en otra administradora, el trabajador debe acudir a esa Afore.</li>
+                        <li><b>🚩 Décimo Transitorio:</b> Debe acudir directamente a <b>PENSIONISSSTE</b>. No pueden traspasar su cuenta.</li>
+                        <li><b>📁 Sin expedientes:</b> Realizar primero el alta para que queden en estatus 0303 antes de la Unificación Mixta.</li>
+                    </ul>
+                    <h3>🚩 Marcas Identificadoras</h3>
+                    <ul>
+                        <li><b>Marca 268:</b> Detecta CURP duplicada. Dura hasta que se realice la unificación.</li>
+                        <li><b>Marca 265:</b> Indica que la Unificación MIXTA está <b>en proceso</b> (30 días hábiles). ⏳</li>
+                    </ul>
+                    <h3>⚙️ Unificación MIXTA Registro por CURP (NTI-IMSS)</h3>
+                    <ul>
+                        <li>Se detona por detección de cuentas con CURP y NSS en una administradora (confronta <b>OP25</b>). 📡</li>
+                        <li>Si el sistema indica candidato pero el servicio ya concluyó y el registro NTI sigue vigente en <i>afop_cuota_diaria</i>, solicitar al área de Unificación marcar el NTI con la <b>marca 130 INHABILITACIÓN POR UNIFI</b>. 🛡️</li>
+                    </ul>
+                `,
+                acciones: {
+                    MSO: "Es necesario iniciar el proceso de <b>Unificación Mixta</b>, en caso de no permitir realizar el el servicio, levantar folio <b>CRM</b> para aclaración.",
+                    CAT: "Generar una consulta en el <b>CRM</b> para la aclaración de la marca operativa.",
+                    UNE: "Realizar el análisis de la cuenta del trabajador para validar si es candidato y realizar las consultas correspondientes de acuerdo al análisis."
+                }
+            },
             { clave: "294", nombre: "TRASPASO POR ENTIDAD VERIFICADORA", origen: "SAFRE", tipo: "OPERATIVA", plazo: "1 semana", descripcion: "Solicitud de traspaso cedente del trabajador.", acciones: {
                 MSO: "Sin acción a seguir, trabajador se encuentra en proceso de traspaso.",
                 CAT: "Sin acción a seguir, mencionar al trabajador que su cuenta se encuentra en un proceso de traspaso.",
@@ -409,7 +464,7 @@
                 CAT: "Levantar consulta para validar si la marca es correcta o brindar acción a seguir.",
                 UNE: "Sin información proporcionada."
             }},
-            { clave: "875", nombre: "RETIRO PARCIAL DESEMPLEO", origen: "SAFRE", tipo: "OPERATIVA", plazo: "5 días hábiles", descripcion: "Disposición de Recursos derivado de un <b>Retiro Parcial por Desempleo IMSS</b>.", acciones: {
+            { clave: "875", nombre: "RETIRO PARCIAL DESEMPLEO", origen: "SAFRE", tipo: "OPERATIVA", plazo: "5 días hábiles", descripcion: "Disposición de Recursos derivado de un <b>Retiro Parcial por DesempleO IMSS</b>.", acciones: {
                 MSO: "Validar si ya se cumplió el plazo normativo, en caso de ser así, levantar consulta <b>CRM</b>.",
                 CAT: "Validar si ya se cumplió el plazo normativo, en caso de ser así, consultar estatus, en caso de no encontrarlo, levantar consulta <b>CRM</b>.",
                 UNE: "En caso de haberse cumplido el tiempo normativo, solicitar el desmarque con el área de <b>retiros parciales</b>."
@@ -667,6 +722,10 @@
             document.getElementById('query-title').innerText = `Query: ${name}`;
             document.getElementById('query-text').innerText = query;
             document.getElementById('server-badge').innerText = `Servidor: ${servidor}`;
+            
+            // Reset button text
+            document.getElementById('copy-btn-text').innerText = 'Copiar Query';
+            
             modal.classList.replace('hidden', 'flex');
             setTimeout(() => { modal.classList.add('opacity-100'); content.classList.add('scale-100'); }, 10);
         };
@@ -692,7 +751,7 @@
                 <span>${p}</span>
                 ${i < pathParts.length - 1 ? '<svg class="w-3 h-3 text-indigo-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M9 5l7 7-7 7"></path></svg>' : ''}
             `).join('');
-            document.getElementById('ti-image').src = tiData.imagen;
+            document.getElementById('ti-image').src = tiData.imagen || ''; 
             modal.classList.replace('hidden', 'flex');
             setTimeout(() => { modal.classList.add('opacity-100'); content.classList.add('scale-100'); }, 10);
         };
@@ -706,16 +765,36 @@
             setTimeout(() => { modal.classList.replace('flex', 'hidden'); }, 300);
         };
 
+        // Función de copiado corregida
         window.copyToClipboard = () => {
             const btnText = document.getElementById('copy-btn-text');
-            const el = document.createElement('textarea');
-            el.value = activeQueryText;
-            document.body.appendChild(el);
-            el.select();
-            document.execCommand('copy');
-            document.body.removeChild(el);
-            btnText.innerText = '¡Copiado!';
-            setTimeout(() => { btnText.innerText = 'Copiar Query'; }, 2000);
+            
+            // Creamos un elemento textarea invisible
+            const textArea = document.createElement("textarea");
+            textArea.value = activeQueryText;
+            
+            // Asegurar que no sea visible pero esté en el DOM
+            textArea.style.position = "fixed";
+            textArea.style.left = "-9999px";
+            textArea.style.top = "0";
+            document.body.appendChild(textArea);
+            
+            textArea.focus();
+            textArea.select();
+            
+            try {
+                // Ejecutamos el comando de copiado
+                const successful = document.execCommand('copy');
+                if(successful) {
+                    btnText.innerText = '¡Copiado!';
+                    setTimeout(() => { btnText.innerText = 'Copiar Query'; }, 2000);
+                }
+            } catch (err) {
+                console.error('Error al copiar:', err);
+                btnText.innerText = 'Error al copiar';
+            }
+            
+            document.body.removeChild(textArea);
         };
 
         window.switchArea = (btn, brandSafeId, area, originalName) => {
