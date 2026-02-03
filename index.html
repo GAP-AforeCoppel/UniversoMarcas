@@ -35,10 +35,12 @@
         @keyframes pulse-blue { 0% { box-shadow: 0 0 0 0 rgba(29, 78, 216, 0.4); } 70% { box-shadow: 0 0 0 8px rgba(29, 78, 216, 0); } 100% { box-shadow: 0 0 0 0 rgba(29, 78, 216, 0); } }
         @keyframes pulse-amber { 0% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.4); } 70% { box-shadow: 0 0 0 8px rgba(245, 158, 11, 0); } 100% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0); } }
         @keyframes pulse-indigo { 0% { box-shadow: 0 0 0 0 rgba(79, 70, 229, 0.4); } 70% { box-shadow: 0 0 0 8px rgba(79, 70, 229, 0); } 100% { box-shadow: 0 0 0 0 rgba(79, 70, 229, 0); } }
+        @keyframes pulse-red { 0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4); } 70% { box-shadow: 0 0 0 8px rgba(239, 68, 68, 0); } 100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); } }
         
         .pulse-query { animation: pulse-blue 2s infinite; }
         .pulse-proceso { animation: pulse-amber 2s infinite; }
         .pulse-ti { animation: pulse-indigo 2s infinite; }
+        .pulse-pdf { animation: pulse-red 2s infinite; }
 
         b { font-weight: 700; color: inherit; }
         
@@ -99,6 +101,35 @@
             <div class="p-8 max-h-[70vh] overflow-y-auto proceso-content text-gray-700 dark:text-gray-300 leading-relaxed" id="proceso-text"></div>
             <div class="p-6 border-t border-gray-100 dark:border-gray-700 text-right bg-gray-50 dark:bg-gray-800/50">
                 <button onclick="closeModal('proceso-modal')" class="px-8 py-2.5 bg-amber-500 hover:bg-amber-600 text-white font-bold rounded-xl transition-all shadow-lg shadow-amber-500/20">Entendido</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para el PDF -->
+    <div id="pdf-modal" class="fixed inset-0 z-[100] hidden items-center justify-center p-4 bg-black/60 backdrop-blur-sm opacity-0 transition-opacity duration-300">
+        <div class="bg-white dark:bg-gray-800 w-full max-w-5xl h-[90vh] rounded-3xl shadow-2xl overflow-hidden transform scale-95 transition-transform duration-300 flex flex-col" id="pdf-modal-content">
+            <div class="p-6 border-b border-red-100 dark:border-red-900/30 flex justify-between items-center bg-red-50 dark:bg-red-900/10">
+                <div class="flex items-center gap-3">
+                    <div class="p-2 bg-red-100 dark:bg-red-900/30 rounded-lg shadow-inner">
+                        <svg class="w-5 h-5 text-red-600" fill="currentColor" viewBox="0 0 24 24"><path d="M11.363 2c4.155 0 2.637 6 2.637 6s6-1.518 6 2.638v11.362c0 .552-.448 1-1 1H5c-.552 0-1-.448-1-1V3c0-.552.448-1 1-1h6.363zM10.5 4H6v16h12V10h-6V4h-1.5zm2.5 6.5l3 3-3 3v-2H10v-2h3v-2z"></path></svg>
+                    </div>
+                    <h2 class="text-xl font-bold dark:text-white" id="pdf-title">Documento PDF</h2>
+                </div>
+                <div class="flex items-center gap-2">
+                    <a id="pdf-download-link" href="#" download class="p-2 bg-white dark:bg-gray-700 text-red-600 rounded-xl shadow hover:bg-red-50 transition-all flex items-center gap-2 text-xs font-bold">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a2 2 0 002 2h12a2 2 0 002-2v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                        Descargar
+                    </a>
+                    <button onclick="closeModal('pdf-modal')" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 p-2">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                    </button>
+                </div>
+            </div>
+            <div class="flex-grow bg-gray-100 dark:bg-gray-900 p-4">
+                <iframe id="pdf-viewer" src="" class="w-full h-full rounded-2xl border border-gray-200 dark:border-gray-700 shadow-inner"></iframe>
+            </div>
+            <div class="p-4 bg-white dark:bg-gray-800 text-center text-[10px] text-gray-400 font-bold uppercase tracking-widest">
+                Vista previa del documento adjunto en el repositorio
             </div>
         </div>
     </div>
@@ -205,7 +236,7 @@
             { clave: "700", nombre: "TRABAJADORES DE 57 A 59 AÑOS", origen: "SAFRE", tipo: "INFORMATIVA", plazo: "Indefinido", descripcion: "La marca 700 solo es informativa y se coloca cuando el trabajador cuenta con edad 57 a 59 años." },
             { clave: "701", nombre: "TRABAJADORES CON 60 AÑOS O MÁS", origen: "SAFRE", tipo: "INFORMATIVA", plazo: "Indefinido", descripcion: "La marca 701 es solo informativa y se coloca cuando el trabajador cumple 60 años." },
             { clave: "703", nombre: "TRABAJADORES CON 65 AÑOS O MÁS y SAR 92", origen: "SAFRE", tipo: "INFORMATIVA", plazo: "Indefinido", descripcion: "La marca 703 es solo informativa y se coloca cuando el trabajador cumple 65 años o más." },
-            { clave: "930", nombre: "RETIRO EN PROCESO DE PAGO", origen: "SAFRE", tipo: "INFORMATIVA", plazo: "30 días naturales", descripcion: "Se coloca cuando se rechaza el pago por la cuenta clabe bancaria, es necesario que el trabajador mande un nuevo <b>estado de cuenta</b> para gestionar su pago." },
+            { clave: "930", nombre: "RETIRO EN PROCESO DE PAGO", origen: "SAFRE", tipo: "INFORMATIVA", plazo: "30 días naturales", descripcion: "Se coloca cuando se reconoce el pago por la cuenta clabe bancaria, es necesario que el trabajador mande un nuevo <b>estado de cuenta</b> para gestionar su pago." },
             { clave: "120", nombre: "INHABILITACIÓN POR TRASP.", origen: "SAFRE", tipo: "OPERATIVA", plazo: "Indefinido", descripcion: "Se coloca cuando el trabajador se traspasó a otra Afore y se elimina una vez que el trabajador regrese a <b>Afore Coppel</b>.", acciones: {
                 MSO: "Levantar <b>CRM</b> si presenta una situación especial, de lo contrario la marca es correcta.",
                 CAT: "Mencionar al trabajador que su cuenta se encuentra inhabilitada derivado de un servicio de traspaso realizado y canalizarlo a su Afore actual para consultar el estatus.",
@@ -242,8 +273,8 @@
                 UNE: "Levantar consulta con el área de <b>Traspasos A-A</b> para validar si la marca es correcta."
             }},
             { clave: "243", nombre: "UNIFICACIÓN EXTRA-AFORE", origen: "SAFRE", tipo: "OPERATIVA", plazo: "30 días hábiles", descripcion: "Se coloca cuando el trabajador está en proceso de Unificación y la otra cuenta se encuentra “X” Administradora. El plazo puede extenderse in caso de que los institutos así lo requieran.", acciones: {
-                MSO: "Validar si ya se cumplió el plazo normativo, en caso de ser así, levantar folio <b>CRM</b> solicitando status.",
-                CAT: "Validar si ya se cumplió el plazo normativo, en caso de ser así, levantar folio <b>CRM</b> solicitando status.",
+                MSO: "Validar si ya se cumplió el plazo normativo, en caso de ser así, levantar folio <b>CRM</b> solicitar status.",
+                CAT: "Validar si ya se cumplió el plazo normativo, en caso de ser así, levantar folio <b>CRM</b> solicitar status.",
                 UNE: "Validar status de la unificación en <b>SICI</b>, de acuerdo al status realizar la consulta o aclaración correspondiente."
             }},
             { clave: "250", nombre: "TRASPASO DE ICEFAS", origen: "SAFRE", tipo: "OPERATIVA", plazo: "60 días hábiles", descripcion: "Se coloca cuando el trabajador realiza un servicio de traspaso de <b>ICEFAS IMSS</b> y tarda aproximadamente 60 días hábiles en liquidar sus recursos.", acciones: {
@@ -263,26 +294,26 @@
                 UNE: "Validar si ya se realizó la devolución de los saldos en las subcuentas correspondientes, de ser así, solicitar el desmarque con <b>Traspasos A-A</b>. En caso de que alguna subcuenta tenga el cargo al <b>FPB</b>, canalizar a ventanilla correspondiente."
             }},
             { clave: "261", nombre: "UNIFICACIÓN ISSSTE MIXTA", origen: "SAFRE", tipo: "OPERATIVA", plazo: "30 días hábiles", descripcion: "Se coloca en el proceso de <b>Unificación Mixta</b>", acciones: {
-                MSO: "Validar si ya se cumplió el plazo normativo, en caso de ser así, levantar folio <b>CRM</b> solicitando status.",
-                CAT: "Validar si ya se cumplió el plazo normativo, en caso de ser así, levantar folio <b>CRM</b> solicitando status.",
+                MSO: "Validar si ya se cumplió el plazo normativo, en caso de ser así, levantar folio <b>CRM</b> solicitar status.",
+                CAT: "Validar si ya se cumplió el plazo normativo, en caso de ser así, levantar folio <b>CRM</b> solicitar status.",
                 UNE: "Validar status de la unificación en <b>SICI</b>, de acuerdo al status realizar la consulta o aclaración correspondiente."
             }},
             { clave: "263", nombre: "ANÁLISIS UNIFICACIÓN DE CUENTAS MIXTA", origen: "SAFRE", tipo: "OPERATIVA", plazo: "Dentro de los 30 días hábiles", descripcion: "Parte del proceso de la <b>Unificación Mixta</b>", acciones: {
-                MSO: "Validar si ya se cumplió el plazo normativo, en caso de ser así, levantar folio <b>CRM</b> solicitando status.",
-                CAT: "Validar si ya se cumplió el plazo normativo, en caso de ser así, levantar folio <b>CRM</b> solicitando status.",
+                MSO: "Validar si ya se cumplió el plazo normativo, en caso de ser así, levantar folio <b>CRM</b> solicitar status.",
+                CAT: "Validar si ya se cumplió el plazo normativo, en caso de ser así, levantar folio <b>CRM</b> solicitar status.",
                 UNE: "Validar status de la unificación en <b>SICI</b>, de acuerdo al status realizar la consulta o aclaración correspondiente."
             }},
             { clave: "264", nombre: "UNIFICACIÓN INTRA-AFORE IMSS-ISSSTE UNIFICADO", origen: "SAFRE", tipo: "OPERATIVA", plazo: "Dentro de los 30 días hábiles", descripcion: "Parte del proceso de la <b>Unificación Mixta</b> / Proceso de liquidación de los recursos de la cuenta", acciones: {
-                MSO: "Validar si ya se cumplió el plazo normativo, en caso de ser así, levantar folio <b>CRM</b> solicitando status.",
-                CAT: "Validar si ya se cumplió el plazo normativo, en caso de ser así, levantar folio <b>CRM</b> solicitando status.",
+                MSO: "Validar si ya se cumplió el plazo normativo, en caso de ser así, levantar folio <b>CRM</b> solicitar status.",
+                CAT: "Validar si ya se cumplió el plazo normativo, en caso de ser así, levantar folio <b>CRM</b> solicitar status.",
                 UNE: "Validar status de la unificación en <b>SICI</b>, de acuerdo al status realizar la consulta o aclaración correspondiente."
             }},
             { clave: "265", nombre: "UNIFICACIÓN INTRA-AFORE IMSS-ISSSTE UNIFICADOR", origen: "SAFRE", tipo: "OPERATIVA", plazo: "Dentro de los 30 días hábiles", descripcion: "Parte del proceso de la <b>Unificación Mixta</b> / Proceso de liquidación de los recursos de la cuenta", acciones: {
-                MSO: "Validar si ya se cumplió el plazo normativo, en caso de ser así, levantar folio <b>CRM</b> solicitando status.",
-                CAT: "Validar si ya se cumplió el plazo normativo, en caso de ser así, levantar folio <b>CRM</b> solicitando status.",
+                MSO: "Validar si ya se cumplió el plazo normativo, en caso de ser así, levantar folio <b>CRM</b> solicitar status.",
+                CAT: "Validar si ya se cumplió el plazo normativo, en caso de ser así, levantar folio <b>CRM</b> solicitar status.",
                 UNE: "Validar status de la unificación en <b>SICI</b>, de acuerdo al status realizar la consulta o aclaración correspondiente."
             }},
-            // --- MARCA 268 ACTUALIZADA CON CONTEXTO/PROCESO ---
+            // --- MARCA 268 ACTUALIZADA CON PDF ---
             { 
                 clave: "268", 
                 nombre: "CANDIDATO DE UNIFICACIÓN MIXTA", 
@@ -290,6 +321,7 @@
                 tipo: "OPERATIVA", 
                 plazo: "Indefinido", 
                 descripcion: "Se coloca cuando se identifica <b>CURP duplicada</b> en <b>BDSAR</b>. Se finaliza cuando el trabajador realiza el servicio de <b>Unificación mixta</b>",
+                pdf: { nombre: "Unificación de Cuentas MIXTA.pdf" },
                 proceso: `
                     <div class='mb-5 p-3 bg-blue-100 dark:bg-blue-900/40 rounded-xl border-l-4 border-blue-600'>
                         <span class='font-black text-xs text-blue-700 dark:text-blue-300 uppercase tracking-widest'>📢 PARA UNE/GAP</span>
@@ -437,7 +469,7 @@
             { clave: "880", nombre: "DISP. REC. POR REINGRESO", origen: "SAFRE", tipo: "OPERATIVA", plazo: "10 días hábiles", descripcion: "Disposición de Recursos por el Trabajador al haber reingresado a laborar después de haberse pensionado por el <b>IMSS</b>.", acciones: {
                 MSO: "Es necesario verificar el cumplimiento del plazo normativo. Si se ha cumplido, se debe revisar el estado del servicio. En caso de que el servicio haya sido rechazado o no se pueda determinar su estado, se debe generar una consulta en el <b>CRM</b> para solicitar el desmarque.",
                 CAT: "Verificar el cumplimiento del plazo normativo. Si se cumplió, consultar el estatus. En caso de no localizarlo, iniciar una consulta en el <b>CRM</b>.",
-                UNE: "En caso de que el servicio haya sido rechazado y cumpla con el tiempo normativo, se debe validar su estatus y solicitar el desmarque al área de <b>retiros totales</b>."
+                UNE: "En caso de que el servicio haya sido rechazado y cumpta con el tiempo normativo, se debe validar su estatus y solicitar el desmarque al área de <b>retiros totales</b>."
             }},
             { clave: "922", nombre: "MARCA DE REINVERSIÓN", origen: "SAFRE", tipo: "OPERATIVA", plazo: "2 días hábiles", descripcion: "Se coloca al finalizar el proceso de <b>Saldo Previo</b>, derivado de una solicitud de Pensión y se reinvierten los recursos en la Cuenta Individual.", acciones: {
                 MSO: "Validar si ya se cumplió el plazo normativo, en caso de ser así, levantar consulta <b>CRM</b>.",
@@ -504,11 +536,6 @@
                 CAT: "Validar si ya se cumplió el plazo normativo, en caso de ser así, levantar folio <b>CRM</b> solicitando el desmarque.",
                 UNE: "Validar si ya se cumplió el plazo normativo, en caso de ser así, solicitar el desmarque con el área de <b>Traspasos A-A</b>."
             }},
-            { clave: "239", nombre: "ACREDITADOS FOVISSSTE SALDO EN GARANTÍA", origen: "SAFRE", tipo: "OPERATIVA", plazo: "Indefinido", descripcion: "Se coloca cuando el trabajador cuenta con un crédito de vivienda. Tiene una duración del tiempo del crédito.", acciones: {
-                MSO: "En caso de no convivir con algún servicio, levantar <b>CRM</b> para aclaración de la marca.",
-                CAT: "En caso de que el trabajador quiera realizar un servicio y presente la marca, levantar aclaración mediante <b>CRM</b>.",
-                UNE: "Levantar consulta con el área de <b>Traspasos A-A</b> para validar si la marca es correcta."
-            }},
             { clave: "1270", nombre: "UNI INTRA-AFORE UNIFICADOR OP25", origen: "SAFRE", tipo: "OPERATIVA", plazo: "N/A", descripcion: "Favor de generar un reporte para para consultar la marca Operativa y que por parte de 2do. Nivel nos informe si se requiere la liberación de la Marca. También hay que agregar al reporte el <b>HOM-02</b>, <b>INE</b> y la evidencia de la Marca operativa. Por favor.", query: "--saber si el caso fue notificado por medio de la Op.25 de posibles cuentas a unificar\nselect fecha_actualiza as fecha_recpecion,nss,curp,cve_ent_nss,cve_ent_curp,\nCase\nwhen universo=1 then '1 Unificacion Intra-Afore'\nwhen universo=2 then '2 Confronta Intra-Afore'\nwhen universo=3 then '3 Confronta Extra-Afore'\nwhen universo=4 then '4 Localizar trabajador registro NSS'\nend as Universo,\nCase\nwhen ind_responsabilidad=1 then 'Afore responsable'\nwhen ind_responsabilidad=2 then 'Afore participante'\nend as ID_responsabilidad,\nCase\nwhen ind_procedencia='01' then 'Procedente para unificacion'\nwhen ind_procedencia='01' then 'No Procedente para unificacion'\nend\nfrom umi_det_solicitud\nwhere curp in('REMPLAZAR_CURP')", servidor: "SAFRE", acciones: {
                 MSO: "Si la marca está presente, se debe generar una consulta en <b>CRM</b> para su aclaración.",
                 CAT: "Si la marca está presente, se debe generar una consulta en <b>CRM</b> para su aclaración.",
@@ -524,7 +551,7 @@
             // --- PROCESAR ---
             { clave: "N/A", nombre: "RETIROS DATAMART DERECHO RETIRO BENEFICIARIO", origen: "PROCESAR", tipo: "INFORMATIVA", plazo: "Indefinido", descripcion: "Se coloca cuando el beneficiario cuenta con un derecho otorgado y cargado. <b>NO CONVIVE</b> para realizar <b>MODIFICACIÓN DE DATOS CERTIFICABLES</b>" },
             { clave: "N/A", nombre: "RETIROS CUENTA CON DERECHO A RETIRO", origen: "PROCESAR", tipo: "INFORMATIVA", plazo: "Indefinido", descripcion: "Se coloca cuando el trabajador cuenta con un derecho otorgado y cargado y/o cumple para realizar el servicio de retiro total" },
-            { clave: "N/A", nombre: "MODIFICACIÓN DE DATOS IMSS", origen: "PROCESAR", tipo: "INFORMATIVA", plazo: "Indefinido", descripcion: "Se coloca cuando se realiza una modificación de datos en el <b>IMSS</b>." },
+            { clave: "N/A", nombre: "MODIFICACIÓN DE DATOS IMSS", origen: "PROCESAR", tipo: "INFORMATIVA", plazo: "Indefinido", descripcion: "Se coloca cuando se reconoce una modificación de datos en el <b>IMSS</b>." },
             { clave: "N/A", nombre: "RETIRO PARCIAL IMSS_CONCILIACIÓN DE SALARIO", origen: "PROCESAR", tipo: "OPERATIVA", plazo: "20 días naturales", descripcion: "Se coloca derivado del diagnóstico de rechazo <b>J62</b> de un retiro parcial por diferencias de último salario base de cotización <b>IMSS/ PROCESAR</b>", acciones: {
                 MSO: "Sin información proporcionada.",
                 CAT: "Sin información proporcionada.",
@@ -567,13 +594,13 @@
             { clave: "N/A", nombre: "CUENTA CON CRÉDITO INFONAVIT ANUALIDADES GARANTIZADAS", origen: "PROCESAR", tipo: "INFORMATIVA", plazo: "Indefinido", descripcion: "Cuenta con Crédito vigente" },
             { clave: "N/A", nombre: "CUENTA CON CRÉDITO INFONAVIT 43 BIS", origen: "PROCESAR", tipo: "INFORMATIVA", plazo: "Indefinido.", descripcion: "Se coloca cuando el trabajador cuenta con un crédito de vivienda. Tiene una duración del tiempo del crédito." },
             { clave: "N/A", nombre: "UNIFICACIÓN DE CUENTAS MIXTAS", origen: "PROCESAR", tipo: "OPERATIVA", plazo: "30 días hábiles", descripcion: "Unificación de cuentas <b>MIXTA</b> (cuenta IMSS con cuenta ISSSTE o Independiente).", acciones: {
-                MSO: "Validar si ya se cumplió el plazo normativo, en caso de ser así, levantar folio <b>CRM</b> solicitando status.",
-                CAT: "Validar si ya se cumplió el plazo normativo, en caso de ser así, levantar folio <b>CRM</b> solicitando status.",
+                MSO: "Validar si ya se cumplió el plazo normativo, en caso de ser así, levantar folio <b>CRM</b> solicitar status.",
+                CAT: "Validar si ya se cumplió el plazo normativo, en caso de ser así, levantar folio <b>CRM</b> solicitar status.",
                 UNE: "Validar status de la unificación en <b>SICI</b>, de acuerdo al status realizar la consulta o aclaración correspondiente."
             }},
             { clave: "N/A", nombre: "UNIFICACIÓN DE CUENTAS ACTIVA - ACTIVA ISSSTE", origen: "PROCESAR", tipo: "OPERATIVA", plazo: "30 días hábiles", descripcion: "Se coloca cuando el trabajador está en proceso de Unificación y la otra cuenta se encuentra “X” Administradora", acciones: {
-                MSO: "Validar si ya se cumplió el plazo normativo, en caso de ser así, levantar folio <b>CRM</b> solicitando status.",
-                CAT: "Validar si ya se cumplió el plazo normativo, en caso de ser así, levantar folio <b>CRM</b> solicitando status.",
+                MSO: "Validar si ya se cumplió el plazo normativo, en caso de ser así, levantar folio <b>CRM</b> solicitar status.",
+                CAT: "Validar si ya se cumplió el plazo normativo, en caso de ser así, levantar folio <b>CRM</b> solicitar status.",
                 UNE: "Validar status de la unificación en <b>SICI</b>, de acuerdo al status realizar la consulta o aclaración correspondiente."
             }},
             { clave: "N/A", nombre: "RETIROS DISPOSICIÓN POR RETIROS PROGRAMADOS", origen: "PROCESAR", tipo: "INFORMATIVA", plazo: "Indefinido", descripcion: "Se coloca la marca cuando tiene resolución de <b>Pensión Garantizada</b>. No convive con un servicio o proceso de Unificación IMSS, MIXTA y Separación" },
@@ -588,14 +615,14 @@
                 UNE: "Se requiere la validación de la fecha de vigencia en el query de retiros parciales, específicamente en el campo <b>fecha_fin_vigencia</b>. A esta fecha se deberán sumar tres días hábiles adicionales. Si se cumple con el tiempo normativo resultante, se deberá solicitar el desmarque de los retiros parciales, en caso contrario, mencionar al trabajador la fecha del desmarque de la cuenta."
             }},
             { clave: "N/A", nombre: "SEPARACIÓN DE CUENTAS", origen: "PROCESAR", tipo: "OPERATIVA", plazo: "30 días hábiles", descripcion: "Separación de cuentas <b>IMSS</b> (cuenta compartida con 2 o más trabajadores) El tiempo puede variar dependiendo del análisis del proceso. En caso de que el <b>NSS</b> sea del No reclamante la cuenta queda marcada hasta que el dueño de ese <b>NSS</b> se presente a hacer la separación (Tiempo Indefinido).", acciones: {
-                MSO: "Validar si ya se cumplió el plazo normativo, en caso de ser así, levantar folio <b>CRM</b> solicitando status.",
-                CAT: "Validar si ya se cumplió el plazo normativo, en caso de ser así, levantar folio <b>CRM</b> solicitando status.",
+                MSO: "Validar si ya se cumplió el plazo normativo, en caso de ser así, levantar folio <b>CRM</b> solicitar status.",
+                CAT: "Validar si ya se cumplió el plazo normativo, en caso de ser así, levantar folio <b>CRM</b> solicitar status.",
                 UNE: "Validar status de la unificación en <b>SICI</b>, de acuerdo al status realizar la consulta o aclaración correspondiente."
             }},
             { clave: "N/A", nombre: "CUENTA CON CRÉDITO INFONAVIT TRADICIONAL (INFORMATIVA)", origen: "PROCESAR", tipo: "INFORMATIVA", plazo: "Duración del Crédito de Vivienda", descripcion: "Se Marca cuando el trabajador cuenta con <b>crédito de vivienda</b> y queda hasta que haya terminado el crédito." },
             { clave: "N/A", nombre: "UNIFICACIÓN DE CUENTAS IMSS", origen: "PROCESAR", tipo: "OPERATIVA", plazo: "30 días hábiles", descripcion: "Se coloca cuando el trabajador está en proceso de Unificación y la otra cuenta se encuentra “X” Administradora. El plazo puede extenderse en caso de que los institutos así lo requieran.", acciones: {
-                MSO: "Validar si ya se cumplió el plazo normativo, en caso de ser así, levantar folio <b>CRM</b> solicitando status.",
-                CAT: "Validar si ya se cumplió el plazo normativo, en caso de ser así, levantar folio <b>CRM</b> solicitando status.",
+                MSO: "Validar si ya se cumplió el plazo normativo, en caso de ser así, levantar folio <b>CRM</b> solicitar status.",
+                CAT: "Validar si ya se cumplió el plazo normativo, en caso de ser así, levantar folio <b>CRM</b> solicitar status.",
                 UNE: "Validar status de la unificación en <b>SICI</b>, de acuerdo al status realizar la consulta o aclaración correspondiente."
             }},
             { clave: "N/A", nombre: "FONDO DE PENSIÓN BIENESTAR", origen: "PROCESAR", tipo: "OPERATIVA", plazo: "Indefinido", descripcion: "Se coloca cuando se realiza la Transferencia de Recursos al <b>FONDO BIENESTAR</b>", proceso: "<h3>📑 1. Casos que SÍ atendemos en Afore (CRM)</h3><p>Si el trabajador presenta alguna de estas situaciones, procedemos a realizar la solicitud de devolución generando el CRM correspondiente:</p><ul><li>Proceso de <b>Unificación de cuentas</b>. 📂</li><li><b>Separación de cuentas</b>. ✂️</li><li><b>Trámite Judicial</b> en curso. ⚖️</li></ul><h3>🏛️ 2. Casos gestionados por el Instituto (IMSS/ISSSTE)</h3><p>En los siguientes escenarios, la Afore ya no inicia el proceso:</p><ul><li><b>Si el trabajador ya tiene resolución (derecho cargado):</b> O si está iniciando su trámite de pensión, el Instituto será el encargado de detonar la devolución de los recursos automáticamente. ✅</li><li><b>Si el trabajador NO tiene resolución:</b> (Y no requiere unificación, separación o trámite judicial), debemos dirigir al trabajador al Instituto correspondiente (IMSS o ISSSTE), donde ellos iniciarán su devolución. 🚩</li></ul><div class='proceso-highlight'><p>💡 <b>Resumen para tu atención:</b> Es muy importante identificar si el cliente tiene un trámite administrativo pendiente (Unificación/Separación) antes de derivarlo, para asegurar que reciba la atención correcta en el lugar indicado. 🎯</p></div>", acciones: {
@@ -670,6 +697,7 @@
                 const queryBtnHtml = brand.query ? `<button onclick="window.openQueryModal('${brand.nombre}', \`${brand.query}\`, '${brand.servidor || 'SAFRE'}')" class="p-2 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-all pulse-query" title="Ver Query"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.58 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.58 4 8 4s8-1.79 8-4M4 7c0-2.21 3.58-4 8-4s8 1.79 8 4m0 5c0 2.21-3.58 4-8 4s-8-1.79-8-4"></path></svg></button>` : "";
                 const procesoBtnHtml = brand.proceso ? `<button onclick="window.openProcesoModal('${brand.nombre}', \`${brand.proceso}\`)" class="p-2 bg-amber-500 text-white rounded-xl hover:bg-amber-600 transition-all pulse-proceso" title="Ver Contexto"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg></button>` : "";
                 const tiBtnHtml = brand.ti ? `<button onclick="window.openTiModalByName('${brand.nombre}')" class="p-2 bg-indigo-600 text-white rounded-xl hover:bg-indigo-700 transition-all pulse-ti font-black text-[10px]" title="Oferta TI">TI</button>` : "";
+                const pdfBtnHtml = brand.pdf ? `<button onclick="window.openPdfModal('${brand.nombre}', '${brand.pdf.nombre}')" class="p-2 bg-red-600 text-white rounded-xl hover:bg-red-700 transition-all pulse-pdf" title="Ver PDF"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M11.363 2c4.155 0 2.637 6 2.637 6s6-1.518 6 2.638v11.362c0 .552-.448 1-1 1H5c-.552 0-1-.448-1-1V3c0-.552.448-1 1-1h6.363zM10.5 4H6v16h12V10h-6V4h-1.5zm2.5 6.5l3 3-3 3v-2H10v-2h3v-2z"></path></svg></button>` : "";
 
                 let actionsHtml = '';
                 if (brand.tipo === 'OPERATIVA' && brand.acciones) {
@@ -705,6 +733,7 @@
                                 ${queryBtnHtml}
                                 ${procesoBtnHtml}
                                 ${tiBtnHtml}
+                                ${pdfBtnHtml}
                             </div>
                         </div>
                         <p class="text-[11px] text-gray-600 dark:text-gray-400 leading-normal mb-4">${brand.descripcion}</p>
@@ -722,10 +751,7 @@
             document.getElementById('query-title').innerText = `Query: ${name}`;
             document.getElementById('query-text').innerText = query;
             document.getElementById('server-badge').innerText = `Servidor: ${servidor}`;
-            
-            // Reset button text
             document.getElementById('copy-btn-text').innerText = 'Copiar Query';
-            
             modal.classList.replace('hidden', 'flex');
             setTimeout(() => { modal.classList.add('opacity-100'); content.classList.add('scale-100'); }, 10);
         };
@@ -735,6 +761,20 @@
             const content = document.getElementById('proceso-modal-content');
             document.getElementById('proceso-title').innerText = `Contexto: ${name}`;
             document.getElementById('proceso-text').innerHTML = htmlContent;
+            modal.classList.replace('hidden', 'flex');
+            setTimeout(() => { modal.classList.add('opacity-100'); content.classList.add('scale-100'); }, 10);
+        };
+
+        window.openPdfModal = (brandName, pdfFileName) => {
+            const modal = document.getElementById('pdf-modal');
+            const content = document.getElementById('pdf-modal-content');
+            const viewer = document.getElementById('pdf-viewer');
+            const downloadBtn = document.getElementById('pdf-download-link');
+            
+            document.getElementById('pdf-title').innerText = `Documento: ${brandName}`;
+            viewer.src = pdfFileName;
+            downloadBtn.href = pdfFileName;
+            
             modal.classList.replace('hidden', 'flex');
             setTimeout(() => { modal.classList.add('opacity-100'); content.classList.add('scale-100'); }, 10);
         };
@@ -762,28 +802,23 @@
             if (!modal) return;
             modal.classList.remove('opacity-100');
             content.classList.replace('scale-100', 'scale-95');
-            setTimeout(() => { modal.classList.replace('flex', 'hidden'); }, 300);
+            setTimeout(() => { 
+                modal.classList.replace('flex', 'hidden');
+                if(modalId === 'pdf-modal') document.getElementById('pdf-viewer').src = "";
+            }, 300);
         };
 
-        // Función de copiado corregida
         window.copyToClipboard = () => {
             const btnText = document.getElementById('copy-btn-text');
-            
-            // Creamos un elemento textarea invisible
             const textArea = document.createElement("textarea");
             textArea.value = activeQueryText;
-            
-            // Asegurar que no sea visible pero esté en el DOM
             textArea.style.position = "fixed";
             textArea.style.left = "-9999px";
             textArea.style.top = "0";
             document.body.appendChild(textArea);
-            
             textArea.focus();
             textArea.select();
-            
             try {
-                // Ejecutamos el comando de copiado
                 const successful = document.execCommand('copy');
                 if(successful) {
                     btnText.innerText = '¡Copiado!';
@@ -793,7 +828,6 @@
                 console.error('Error al copiar:', err);
                 btnText.innerText = 'Error al copiar';
             }
-            
             document.body.removeChild(textArea);
         };
 
