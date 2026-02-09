@@ -391,11 +391,22 @@
                 CAT: "Sin acción a seguir, se debe informar al trabajador que su cuenta está participando en un proceso de transferencia de recursos entre <b>SIEFORES</b>.",
                 UNE: "Sin acción a seguir, se debe informar al trabajador que su cuenta está participando en un proceso de transferencia de recursos entre <b>SIEFORES</b>."
             }},
-            { clave: "330", nombre: "POSIBLE DUPLICADO MESA DE ACLARACIONES", origen: "SAFRE", tipo: "OPERATIVA", plazo: "Indefinido", descripcion: "Se recibe en estatus de duplicado confirmado por lo cual las huellas del trabajador se encuentran duplicadas en otra cuenta individual en la <b>BDNSAR</b>", acciones: {
-                MSO: "Sin información proporcionada.",
-                CAT: "Levantar consulta para validar si la marca es correcta o brindar acción a seguir.",
-                UNE: "Sin información proporcionada."
-            }},
+            { 
+                clave: "330", 
+                nombre: "POSIBLE DUPLICADO MESA DE ACLARACIONES", 
+                origen: "SAFRE", 
+                tipo: "OPERATIVA", 
+                plazo: "Indefinido", 
+                descripcion: "Se recibe en estatus de duplicado confirmado por lo cual las huellas del trabajador se encuentran duplicadas en otra cuenta individual en la <b>BDNSAR</b>",
+                query: "select * from mdacontrolfoliosposibleduplicado where nss = ''", 
+                servidor: "AforeGlobal",
+                ti: { titulo: "ELIMINAR MARCA SAFRE", ruta: "Quiero pedir algo » Mesa de Servicios BackOffice Afore » UNE » Modificación de Folios", imagen: "tiposibleduplicado.png" },
+                acciones: {
+                    MSO: "Sin información proporcionada.",
+                    CAT: "Levantar consulta para validar si la marca es correcta o brindar acción a seguir.",
+                    UNE: "Sin información proporcionada."
+                }
+            },
             { clave: "489", nombre: "REINT. RET. PARC. POR DESEM. NO COBRADO", origen: "SAFRE", tipo: "OPERATIVA", plazo: "Indefinido", descripcion: "Se coloca cuando inicia el proceso de reintegro de un <b>Retiro Parcial por Desempleo</b> que no fue cobrado después de haber transcurrido 6 meses a partir del depósito.", acciones: {
                 MSO: "Si la marca está presente, se debe generar un caso en un folio <b>CRM</b> para su debida aclaración.",
                 CAT: "Si la marca está presente, se debe generar un caso en un folio <b>CRM</b> para su debida aclaración.",
@@ -411,7 +422,7 @@
                 CAT: "Informar al trabajador que su cuenta se encuentra dentro de un proceso de <b>Separación de cuentas</b> y levantar <b>CRM</b> para consultar estatus.",
                 UNE: "Sin información proporcionada."
             }},
-            { clave: "600", nombre: "MODIFICACIONES DE AFILIACIÓN", origen: "SAFRE", tipo: "OPERATIVA", plazo: "No debería de existir.", descripcion: "La marca 600 se coloca cuando inicia el servicio de <b>Modificación de Datos</b>.", acciones: {
+            { clave: "600", nombre: "MODIFICACIONES DE AFILIACIÓN", origen: "SAFRE", tipo: "OPERATIVA", plazo: "No debería de existir.", descripcion: "La marca 600 se coloca cuando inicia el servicio de <b>Modificación de Datos</b>.", ti: { titulo: "ELIMINAR MARCA SAFRE", ruta: "Quiero pedir algo » Mesa de Servicios BackOffice Afore » UNE » Proyectos", imagen: "timarca600.png" }, acciones: {
                 MSO: "Si la cuenta tiene la marca operativa, se debe generar una consulta en el sistema <b>CRM</b> para solicitar su desmarque.",
                 CAT: "Si la cuenta tiene la marca operativa, se debe generar una consulta en el sistema <b>CRM</b> para solicitar su desmarque.",
                 UNE: "Solicitar el desmarque de la cuenta mediante un <b>TI</b>."
@@ -486,12 +497,12 @@
                 CAT: "En caso de que se presente la marca, se debe levantar una consulta en el <b>CRM</b> para su aclaración.",
                 UNE: "<b>Proceso de Separación de Cuentas:</b><br><b>Verificación:</b> Validar si el trabajador ha completado un proceso de Separación de Cuentas.<br><b>Si el proceso finalizó con éxito:</b> Enviar un correo electrónico a la <b>UNE</b> con las evidencias necesarias (Asunto: ACLARACIÓN DE CUENTAS UEAP | NSS 67806344569).<br><b>Si el proceso no se ha realizado o no finalizó con éxito:</b> Invitar al trabajador a iniciar el servicio de Separación de Cuentas."
             }},
-            { clave: "950", nombre: "ALTA EI Y BIO", origen: "SAFRE", tipo: "OPERATIVA", plazo: "No debería de presentar la marca activa.", descripcion: "La marca 950 se coloca cuando el Trabajador realiza su alta de <b>Expediente de Identificación</b>", acciones: {
+            { clave: "950", nombre: "ALTA EI Y BIO", origen: "SAFRE", tipo: "OPERATIVA", plazo: "No debería de presentar la marca activa.", descripcion: "La marca 950 se coloca cuando el Trabajador realiza su alta de <b>Expediente de Identificación</b>", ti: { titulo: "ELIMINAR MARCA SAFRE", ruta: "Quiero pedir algo » Mesa de Servicios BackOffice Afore » UNE » Proyectos", imagen: "timarca950.png" }, acciones: {
                 MSO: "Si la cuenta tiene la marca operativa, se debe generar una consulta en el sistema <b>CRM</b> para solicitar su desmarque.",
                 CAT: "Si la cuenta tiene la marca operativa, se debe generar una consulta en el sistema <b>CRM</b> para solicitar su desmarque.",
                 UNE: "Solicitar el desmarque de la cuenta mediante un <b>TI</b>."
             }},
-            { clave: "960", nombre: "CANDIDATO A RE ENROLAMIENTO", origen: "SAFRE", tipo: "OPERATIVA", plazo: "Indefinido", descripcion: "Se coloca cuando el trabajador es candidato a dicho proceso, derivado de algún contingente en el que se consideró. Se elimina hasta que realice el proceso", acciones: {
+            { clave: "960", nombre: "CANDIDATO A RE ENROLAMIENTO", origen: "SAFRE", tipo: "OPERATIVA", plazo: "Indefinido", descripcion: "Se coloca cuando el trabajador es candidato a dicho proceso, derivado de algún contingente en el que se consideró. Se elimina hasta que realice el proceso", ti: { titulo: "ELIMINAR MARCA SAFRE", ruta: "Quiero pedir algo » Mesa de Servicios BackOffice Afore » UNE » Proyectos", imagen: "timarca960.png" }, acciones: {
                 MSO: "Sin información proporcionada.",
                 CAT: "Levantar consulta para validar si la marca es correcta o brindar acción a seguir.",
                 UNE: "Sin información proporcionada."
@@ -535,6 +546,11 @@
                 MSO: "Validar si ya se cumplió el plazo normativo, en caso de ser así, levantar folio <b>CRM</b> solicitando el desmarque.",
                 CAT: "Validar si ya se cumplió el plazo normativo, en caso de ser así, levantar folio <b>CRM</b> solicitando el desmarque.",
                 UNE: "Validar si ya se cumplió el plazo normativo, en caso de ser así, solicitar el desmarque con el área de <b>Traspasos A-A</b>."
+            }},
+            { clave: "239", nombre: "ACREDITADOS FOVISSSTE SALDO EN GARANTÍA", origen: "SAFRE", tipo: "OPERATIVA", plazo: "Indefinido", descripcion: "Se coloca cuando el trabajador cuenta con un crédito de vivienda. Tiene una duración del tiempo del crédito.", acciones: {
+                MSO: "En caso de no convivir con algún servicio, levantar <b>CRM</b> para aclaración de la marca.",
+                CAT: "En caso de que el trabajador quiera realizar un servicio y presente la marca, levantar aclaración mediante <b>CRM</b>.",
+                UNE: "Levantar consulta con el área de <b>Traspasos A-A</b> para validar si la marca es correcta."
             }},
             { clave: "1270", nombre: "UNI INTRA-AFORE UNIFICADOR OP25", origen: "SAFRE", tipo: "OPERATIVA", plazo: "N/A", descripcion: "Favor de generar un reporte para para consultar la marca Operativa y que por parte de 2do. Nivel nos informe si se requiere la liberación de la Marca. También hay que agregar al reporte el <b>HOM-02</b>, <b>INE</b> y la evidencia de la Marca operativa. Por favor.", query: "--saber si el caso fue notificado por medio de la Op.25 de posibles cuentas a unificar\nselect fecha_actualiza as fecha_recpecion,nss,curp,cve_ent_nss,cve_ent_curp,\nCase\nwhen universo=1 then '1 Unificacion Intra-Afore'\nwhen universo=2 then '2 Confronta Intra-Afore'\nwhen universo=3 then '3 Confronta Extra-Afore'\nwhen universo=4 then '4 Localizar trabajador registro NSS'\nend as Universo,\nCase\nwhen ind_responsabilidad=1 then 'Afore responsable'\nwhen ind_responsabilidad=2 then 'Afore participante'\nend as ID_responsabilidad,\nCase\nwhen ind_procedencia='01' then 'Procedente para unificacion'\nwhen ind_procedencia='01' then 'No Procedente para unificacion'\nend\nfrom umi_det_solicitud\nwhere curp in('REMPLAZAR_CURP')", servidor: "SAFRE", acciones: {
                 MSO: "Si la marca está presente, se debe generar una consulta en <b>CRM</b> para su aclaración.",
