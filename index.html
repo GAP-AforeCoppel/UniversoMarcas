@@ -125,6 +125,10 @@
                     </button>
                 </div>
             </div>
+            <!-- Banner para UNE/GAP en PDF -->
+            <div id="pdf-note-banner" class="hidden px-6 py-3 bg-blue-100 dark:bg-blue-900/40 border-b border-blue-200 dark:border-blue-800">
+                <span class='font-black text-xs text-blue-700 dark:text-blue-300 uppercase tracking-widest'>📢 PARA UNE/GAP</span>
+            </div>
             <div class="flex-grow bg-gray-100 dark:bg-gray-900 p-4">
                 <iframe id="pdf-viewer" src="" class="w-full h-full rounded-2xl border border-gray-200 dark:border-gray-700 shadow-inner"></iframe>
             </div>
@@ -226,7 +230,7 @@
             { clave: "700", nombre: "TRABAJADORES DE 57 A 59 AÑOS", origen: "SAFRE", tipo: "INFORMATIVA", plazo: "Indefinido", descripcion: "La marca 700 solo es informativa y se coloca cuando el trabajador cuenta con edad 57 a 59 años." },
             { clave: "701", nombre: "TRABAJADORES CON 60 AÑOS O MÁS", origen: "SAFRE", tipo: "INFORMATIVA", plazo: "Indefinido", descripcion: "La marca 701 es solo informativa y se coloca cuando el trabajador cumple 60 años." },
             { clave: "703", nombre: "TRABAJADORES CON 65 AÑOS O MÁS y SAR 92", origen: "SAFRE", tipo: "INFORMATIVA", plazo: "Indefinido", descripcion: "La marca 703 es solo informativa y se coloca cuando el trabajador cumple 65 años o más." },
-            { clave: "930", nombre: "RETIRO EN PROCESO DE PAGO", origen: "SAFRE", tipo: "INFORMATIVA", plazo: "30 días naturales", descripcion: "Se coloca cuando se rechaza el pago por la cuenta clabe bancaria, es necesario que el trabajador mande un nuevo <b>estado de cuenta</b> para gestionar su pago." },
+            { clave: "930", nombre: "RETIRO EN PROCESO DE PAGO", origen: "SAFRE", tipo: "INFORMATIVA", plazo: "30 días naturales", descripcion: "Se coloca cuando se reconoce el pago por la cuenta clabe bancaria, es necesario que el trabajador mande un nuevo <b>estado de cuenta</b> para gestionar su pago." },
             { clave: "120", nombre: "INHABILITACIÓN POR TRASP.", origen: "SAFRE", tipo: "OPERATIVA", plazo: "Indefinido", descripcion: "Se coloca cuando el trabajador se traspasó a otra Afore y se elimina una vez que el trabajador regrese a <b>Afore Coppel</b>.", acciones: {
                 MSO: "Levantar <b>CRM</b> si presenta una situación especial, de lo contrario la marca es correcta.",
                 CAT: "Mencionar al trabajador que su cuenta se encuentra inhabilitada derivado de un servicio de traspaso realizado y canalizarlo a su Afore actual para consultar el estatus.",
@@ -242,10 +246,10 @@
                 CAT: "Sondear al trabajador si ha recibido aportaciones patronales posteriores al 1ro de Julio de 1997. En caso de requerir una aclaración de saldos o presentar saldos en la cuenta, levantar consulta <b>CRM</b>.",
                 UNE: "Si no hay saldo disponible, es necesario realizar un análisis para confirmar la procedencia. En caso de ser así, se debe generar una consulta con el área de <b>Recaudación</b>, proporcionando los siguientes datos: comprobantes de pago, NSS, PERIODO DE PAGO, FOLIO SUA y NRP. Si cuenta con saldos, se debe solicitar el desmarque."
             }},
-            { clave: "160", nombre: "INHABILITACIÓN POR SALDO CERO", origen: "SAFRE", tipo: "OPERATIVA", plazo: "Indefinido", descripcion: "Cuando se apertura una cuenta y no se recibe aportación en por lo menos 6 bimestres, se elimina al recibir nuevas aportaciones.", ti: { titulo: "ELIMINAR MARCA SAFRE", ruta: "Quiero pedir algo » Mesa de Servicios BackOffice Afore » UNE » Atención al Público", imagen: "ofertamarca160.png" }, acciones: {
+            { clave: "160", nombre: "INHABILITACIÓN POR SALDO CERO", origen: "SAFRE", tipo: "OPERATIVA", plazo: "Indefinido", descripcion: "Cuando se apertura una cuenta y no se recibe aportación en por lo menos 6 bimestres, se elimina al recibir nuevas aportaciones.", acciones: {
                 MSO: "Si el asesor indica que el trabajador tiene aportaciones pero no tiene saldo en la cuenta, se debe levantar un <b>CRM</b>. En este caso, si se dispone del reporte de semanas cotizadas, se debe anexar al folio. Si el trabajador sí cuenta con saldos, se debe solicitar el desmarque.",
                 CAT: "Sondear al trabajador si ha recibido aportaciones patronales posteriores al 1ro de Julio del 1997. En caso de requerir una aclaración de saldos o presenta saldos en la cuenta, levantar consulta <b>CRM</b>.",
-                UNE: "Si no hay saldo disponible, es necesario realizar un análisis para confirmar la procedencia. En caso de ser así, se debe generar una consulta con el área de <b>Recaudación</b>, proporcionando los siguientes datos: comprobantes de pago, NSS, PERIODO DE PAGO, FOLIO SUA y NRP. Si cuenta con saldos, se debe solicitar el desmarque mediante <b>TI</b>."
+                UNE: "Si no hay saldo disponible, es necesario realizar un análisis para confirmar la procedencia. En caso de ser así, se debe generar una consulta con el área de <b>Recaudación</b>, proporcionando los siguientes datos: comprobantes de pago, NSS, PERIODO DE PAGO, FOLIO SUA y NRP. Si cuenta con saldos, se debe solicitar el desmarque al área de <b>recaudación</b>."
             }},
             { clave: "220", nombre: "TRASPASO AFORE CEDENTE", origen: "SAFRE", tipo: "OPERATIVA", plazo: "1 semana", descripcion: "Esta marca se coloca cuando la cuenta se encuentra en proceso de Traspaso a otra Afore.", acciones: {
                 MSO: "Sin acción a seguir, trabajador se encuentra en proceso de traspaso.",
@@ -270,7 +274,7 @@
                     UNE: "Levantar consulta con el área de <b>Traspasos A-A</b> para validar si la marca es correcta."
                 }
             },
-            { clave: "243", nombre: "UNIFICACIÓN EXTRA-AFORE", origen: "SAFRE", tipo: "OPERATIVA", plazo: "30 días hábiles", descripcion: "Se coloca cuando el trabajador está en proceso de Unificación y la otra cuenta se encuentra “X” Administradora. El plazo puede extenderse en caso de que los institutos así lo requieran.", acciones: {
+            { clave: "243", nombre: "UNIFICACIÓN EXTRA-AFORE", origen: "SAFRE", tipo: "OPERATIVA", plazo: "30 días hábiles", descripcion: "Se coloca cuando el trabajador está en proceso de Unificación y la otra cuenta se encuentra “X” Administradora. El plazo puede extenderse in caso de que los institutos así lo requieran.", acciones: {
                 MSO: "Validar si ya se cumplió el plazo normativo, en caso de ser así, levantar folio <b>CRM</b> solicitando status.",
                 CAT: "Validar si ya se cumplió el plazo normativo, en caso de ser así, levantar folio <b>CRM</b> solicitando status.",
                 UNE: "Validar status de la unificación en <b>SICI</b>, de acuerdo al status realizar la consulta o aclaración correspondiente."
@@ -327,7 +331,7 @@
                     <p>La Unificación de Cuentas MIXTA se refiere a la misma persona con su <b>CURP duplicada</b> en la <b>BDNSAR</b> (Base de Datos del SAR, es decir, PROCESAR). Existen dos tipos principales de Unificación MIXTA:</p>
                     <ul>
                         <li><b>🤝 Unificación MIXTA ISSSTE - IMSS:</b> Ocurre cuando el trabajador tiene un registro por CURP en ISSSTE y un registro por NSS.</li>
-                        <li><b>🧩 Unificación MIXTA REGISTRO POR CURP:</b> Ocurre cuando el trabajador tiene un registro por CURP (Registro NTI - Número de Trabajador Independiente) en otra o en la misma Afore, y además cuenta con un registro por NSS.</li>
+                        <li><b>🧩 Unificación MIXTA REGISTRO POR CURP:</b> Ocurre cuando el trabajador tiene un registro por CURP (NTI - Número de Trabajador Independiente) en otra o en la misma Afore, y además cuenta con un registro por NSS.</li>
                     </ul>
                     <h3>📋 Candidato a Unificación MIXTA ISSSTE - IMSS</h3>
                     <ul>
@@ -353,7 +357,7 @@
                     </ul>
                     <h3>⚙️ Unificación MIXTA REGISTRO POR CURP (Registro NTI - IMSS)</h3>
                     <p>Se detona por la detección de cuentas registradas con CURP y NSS en una administradora (confronta <b>OP25</b>). 📡</p>
-                    <p>En casos donde el sistema indica que el trabajador es candidato, pero al intentar el servicio no lo es (porque la Unificación ya concluyó, pero el registro NTI está vigente en <i>afop_cuota_diaria</i>), se solicita al área de Unificación marcar la cuenta del NTI con la <b>marca 130 INHABILITACIÓN POR UNIFI</b>. 🛡️</p>
+                    <p>En casos donde el sistema indica que el trabajador es candidato, pero al intentar el servicio no lo es (porque la Unificación ya concluyó, pero el registro NTI está vigente en afop_cuota_diaria), se solicita al área de Unificación marcar la cuenta del NTI con la <b>marca 130 INHABILITACIÓN POR UNIFI</b>. 🛡️</p>
                 `,
                 acciones: {
                     MSO: "Es necesario iniciar el proceso de <b>Unificación Mixta</b>, en caso de no permitir realizar el el servicio, levantar folio <b>CRM</b> para aclaración.",
@@ -507,11 +511,19 @@
                 CAT: "Validar si ya se cumplió el plazo normativo, en caso de ser así, consultar estatus, en caso de no encontrarlo, levantar consulta <b>CRM</b>.",
                 UNE: "En caso de haberse cumplido el tiempo normativo, solicitar el desmarque con el área de <b>retiros parciales</b>."
             }},
-            { clave: "280", nombre: "SEPARACIÓN DE CUENTAS", origen: "SAFRE", tipo: "OPERATIVA", plazo: "30 días hábiles", descripcion: "Separación de cuentas <b>IMSS</b> (cuenta compartida con 2 o más trabajadores) El tiempo puede variar dependiendo del análisis del proceso.", acciones: {
-                MSO: "Validar si ya se cumplió el plazo normativo, en caso de ser así, levantar folio <b>CRM</b> solicitando status.",
-                CAT: "Validar si ya se cumplió el plazo normativo, en caso de ser así, levantar folio <b>CRM</b> solicitando status.",
-                UNE: "Validar status de la unificación en <b>SICI</b>, de acuerdo al status realizar la consulta o aclaración correspondiente."
-            }},
+            { 
+                clave: "280", 
+                nombre: "SEPARACIÓN DE CUENTAS", 
+                origen: "SAFRE", 
+                tipo: "OPERATIVA", 
+                plazo: "30 días hábiles", 
+                descripcion: "Separación de cuentas <b>IMSS</b> (cuenta compartida con 2 o más trabajadores) El tiempo puede variar dependiendo del análisis del proceso.", 
+                acciones: {
+                    MSO: "Validar si ya se cumplió el plazo normativo, en caso de ser así, levantar folio <b>CRM</b> solicitando status.",
+                    CAT: "Validar si ya se cumplió el plazo normativo, en caso de ser así, levantar folio <b>CRM</b> solicitando status.",
+                    UNE: "Validar status de la <b>Separación</b> en <b>SICI</b> y en la bitácora de <b>Separación de Cuentas</b>, de acuerdo al status realizar la consulta o aclaración correspondiente."
+                }
+            },
             { clave: "819", nombre: "PROCESO DE DEVOLUCIÓN DE VIVIENDA", origen: "SAFRE", tipo: "OPERATIVA", plazo: "15 días hábiles", descripcion: "La marca 819 se coloca cuando el trabajador inició el trámite de retiro en <b>Infonavit</b>.", acciones: {
                 MSO: "Validar si ya se cumplió el plazo normativo, en caso de ser así, levantar consulta <b>CRM</b>.",
                 CAT: "Validar si ya se cumplió el plazo normativo, en caso de ser así, levantar consulta <b>CRM</b>.",
@@ -637,13 +649,13 @@
                 acciones: {
                     MSO: "Validar si ya se cumplió el plazo normativo, en caso de ser así, levantar folio <b>CRM</b> solicitando status.",
                     CAT: "Validar si ya se cumplió el plazo normativo, en caso de ser así, levantar folio <b>CRM</b> solicitando status.",
-                    UNE: "Validar status de la unificación en <b>SICI</b>, de acuerdo al status realizar la consulta o aclaración correspondiente."
+                    UNE: "Validar status de la <b>Separación</b> en <b>SICI</b> y en la bitácora de <b>Separación de Cuentas</b>, de acuerdo al status realizar la consulta o aclaración correspondiente."
                 }
             },
             { clave: "N/A", nombre: "CUENTA CON CRÉDITO INFONAVIT TRADICIONAL (INFORMATIVA)", origen: "PROCESAR", tipo: "INFORMATIVA", plazo: "Duración del Crédito de Vivienda", descripcion: "Se Marca cuando el trabajador cuenta con <b>crédito de vivienda</b> y queda hasta que haya terminado el crédito." },
-            { clave: "N/A", nombre: "UNIFICACIÓN DE CUENTAS IMSS", origen: "PROCESAR", tipo: "OPERATIVA", plazo: "30 días hábiles", descripcion: "Se coloca cuando el trabajador está en proceso de Unificación y la otra cuenta se encuentra “X” Administradora. El plazo puede extenderse en caso de que los institutos así lo requieran.", acciones: {
-                MSO: "Validar si ya se cumplió el plazo normativo, en caso de ser así, levantar folio <b>CRM</b> solicitar status.",
-                CAT: "Validar si ya se cumplió el plazo normativo, en caso de ser así, levantar folio <b>CRM</b> solicitar status.",
+            { clave: "N/A", nombre: "UNIFICACIÓN DE CUENTAS IMSS", origen: "PROCESAR", tipo: "OPERATIVA", plazo: "30 días hábiles", descripcion: "Se coloca cuando el trabajador está en proceso de Unificación y la otra cuenta se encuentra “X” Administradora. El plazo puede extenderse in caso de que los institutos así lo requieran.", acciones: {
+                MSO: "Validar si ya se cumplió el plazo normativo, en caso de ser así, levantar folio <b>CRM</b> solicitando status.",
+                CAT: "Validar si ya se cumplió el plazo normativo, en caso de ser así, levantar folio <b>CRM</b> solicitando status.",
                 UNE: "Validar status de la unificación en <b>SICI</b>, de acuerdo al status realizar la consulta o aclaración correspondiente."
             }},
             { clave: "N/A", nombre: "FONDO DE PENSIÓN BIENESTAR", origen: "PROCESAR", tipo: "OPERATIVA", plazo: "Indefinido", descripcion: "Se coloca cuando se realiza la Transferencia de Recursos al <b>FONDO BIENESTAR</b>", proceso: "<h3>📑 1. Casos que SÍ atendemos en Afore (CRM)</h3><p>Si el trabajador presenta alguna de estas situaciones, procedemos a realizar la solicitud de devolución generando el CRM correspondiente:</p><ul><li>Proceso de <b>Unificación de cuentas</b>. 📂</li><li><b>Separación de cuentas</b>. ✂️</li><li><b>Trámite Judicial</b> en curso. ⚖️</li></ul><h3>🏛️ 2. Casos gestionados por el Instituto (IMSS/ISSSTE)</h3><p>En los siguientes escenarios, la Afore ya no inicia el proceso:</p><ul><li><b>Si el trabajador ya tiene resolución (derecho cargado):</b> O si está iniciando su trámite de pensión, el Instituto será el encargado de detonar la devolución de los recursos automáticamente. ✅</li><li><b>Si el trabajador NO tiene resolución:</b> (Y no requiere unificación, separación o trámite judicial), debemos dirigir al trabajador al Instituto correspondiente (IMSS o ISSSTE), donde ellos iniciarán su devolución. 🚩</li></ul><div class='proceso-highlight'><p>💡 <b>Resumen para tu atención:</b> Es muy importante identificar si el cliente tiene un trámite administrativo pendiente (Unificación/Separación) antes de derivarlo, para asegurar que reciba la atención correcta en el lugar indicado. 🎯</p></div>", acciones: {
@@ -651,7 +663,7 @@
                 CAT: "Sondear al trabajador si ya realizó la solicitud de devolución de recurso transferidos al fondo de pensiones bienestar, en caso de no ser así, canalizarlo a ventanilla correspondiente. En caso de mencionar de haber realizado la solicitud, canalizar al trabajador en ventanilla que lo realizó para solicitar estatus.",
                 UNE: "Validar si ya se realizó la devolución de los saldos en las subcuentas correspondientes, de ser así, solicitar el desmarque con <b>Traspasos A-A</b>. En caso de que alguna subcuenta tenga el cargo al <b>FPB</b>, canalizar a ventanilla correspondiente."
             }},
-            { clave: "N/A", nombre: "RETIROS DISPOSICIÓN POR RECURSOS VENTANILLA INFONAVIT", origen: "PROCESAR", tipo: "OPERATIVA", plazo: "15 días hábiles", descripcion: "La marca se coloca cuando el trabajador inició el trámite de retiro en <b>Infonavit</b>.", acciones: {
+            { clave: "N/A", nombre: "RETIROS DISPOSICIÓN POR RECURSOS VENTANILLA INFONAVIT", origen: "PROCESAR", tipo: "OPERATIVA", plazo: "15 días hábiles", descripcion: "La marca se coloca cuando el trabajador inició el trámite de retiro in <b>Infonavit</b>.", acciones: {
                 MSO: "Sin información proporcionada.",
                 CAT: "Sin información proporcionada.",
                 UNE: "Sin información proporcionada."
@@ -720,18 +732,19 @@
                 const tiBtnHtml = brand.ti ? `<button onclick="window.openTiModalByName('${brand.nombre}')" class="p-2 bg-indigo-600 text-white rounded-xl hover:bg-indigo-700 transition-all pulse-ti font-black text-[10px]" title="Oferta TI">TI</button>` : "";
                 const pdfBtnHtml = brand.pdf ? `<button onclick="window.openPdfModal('${brand.nombre}', '${brand.pdf.nombre}')" class="p-2 bg-red-600 text-white rounded-xl hover:bg-red-700 transition-all pulse-pdf" title="Ver PDF"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M11.363 2c4.155 0 2.637 6 2.637 6s6-1.518 6 2.638v11.362c0 .552-.448 1-1 1H5c-.552 0-1-.448-1-1V3c0-.552.448-1 1-1h6.363zM10.5 4H6v16h12V10h-6V4h-1.5zm2.5 6.5l3 3-3 3v-2H10v-2h3v-2z"></path></svg></button>` : "";
 
+                const brandId = (brand.origen + '-' + (brand.clave || 'NA') + '-' + brand.nombre).replace(/[^a-zA-Z0-9]/g, '-');
+
                 let actionsHtml = '';
                 if (brand.tipo === 'OPERATIVA' && brand.acciones) {
-                    const brandSafeId = brand.nombre.replace(/[^a-zA-Z0-9]/g, '-');
                     actionsHtml = `
                         <div class="mt-auto pt-4 border-t border-gray-100 dark:border-gray-700">
                             <div class="flex gap-1 mb-2 bg-gray-50 dark:bg-gray-900/50 p-1 rounded-xl">
-                                <button onclick="window.switchArea(this, '${brandSafeId}', 'CAT', '${brand.nombre}')" class="area-tab active flex-1 py-1.5 text-[10px] font-bold rounded-lg transition-all">CAT</button>
-                                <button onclick="window.switchArea(this, '${brandSafeId}', 'MSO', '${brand.nombre}')" class="area-tab flex-1 py-1.5 text-[10px] font-bold rounded-lg transition-all">MSO</button>
-                                <button onclick="window.switchArea(this, '${brandSafeId}', 'UNE', '${brand.nombre}')" class="area-tab flex-1 py-1.5 text-[10px] font-bold rounded-lg transition-all">UNE/GAP</button>
+                                <button onclick="window.switchArea(this, '${brandId}', 'CAT', '${brand.nombre}')" class="area-tab active flex-1 py-1.5 text-[10px] font-bold rounded-lg transition-all">CAT</button>
+                                <button onclick="window.switchArea(this, '${brandId}', 'MSO', '${brand.nombre}')" class="area-tab flex-1 py-1.5 text-[10px] font-bold rounded-lg transition-all">MSO</button>
+                                <button onclick="window.switchArea(this, '${brandId}', 'UNE', '${brand.nombre}')" class="area-tab flex-1 py-1.5 text-[10px] font-bold rounded-lg transition-all">UNE/GAP</button>
                             </div>
                             <div class="bg-blue-50/50 dark:bg-blue-900/10 p-4 rounded-xl min-h-[100px] flex items-start border border-blue-100 dark:border-blue-900/30 overflow-y-auto">
-                                <p id="action-text-${brandSafeId}" class="text-[11px] italic font-medium text-gray-700 dark:text-gray-200 animate-fade">
+                                <p id="action-text-${brandId}" class="text-[11px] italic font-medium text-gray-700 dark:text-gray-200 animate-fade">
                                     "${brand.acciones.CAT}"
                                 </p>
                             </div>
@@ -791,10 +804,17 @@
             const content = document.getElementById('pdf-modal-content');
             const viewer = document.getElementById('pdf-viewer');
             const downloadBtn = document.getElementById('pdf-download-link');
+            const noteBanner = document.getElementById('pdf-note-banner');
             
             document.getElementById('pdf-title').innerText = `Documento: ${brandName}`;
             viewer.src = pdfFileName;
             downloadBtn.href = pdfFileName;
+
+            if (brandName.includes("CANDIDATO DE UNIFICACIÓN MIXTA")) {
+                noteBanner.classList.remove('hidden');
+            } else {
+                noteBanner.classList.add('hidden');
+            }
             
             modal.classList.replace('hidden', 'flex');
             setTimeout(() => { modal.classList.add('opacity-100'); content.classList.add('scale-100'); }, 10);
@@ -825,7 +845,10 @@
             content.classList.replace('scale-100', 'scale-95');
             setTimeout(() => { 
                 modal.classList.replace('flex', 'hidden');
-                if(modalId === 'pdf-modal') document.getElementById('pdf-viewer').src = "";
+                if(modalId === 'pdf-modal') {
+                    document.getElementById('pdf-viewer').src = "";
+                    document.getElementById('pdf-note-banner').classList.add('hidden');
+                }
             }, 300);
         };
 
@@ -856,7 +879,12 @@
             const parent = btn.parentElement;
             parent.querySelectorAll('button').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
-            const brand = brandsData.find(b => b.nombre === originalName);
+            
+            const brand = brandsData.find(b => {
+                const bUniqueId = (b.origen + '-' + (b.clave || 'NA') + '-' + b.nombre).replace(/[^a-zA-Z0-9]/g, '-');
+                return bUniqueId === brandSafeId;
+            });
+
             const textElement = document.getElementById(`action-text-${brandSafeId}`);
             if (brand && textElement && brand.acciones) {
                 const actionKey = area === 'UNE' ? 'UNE' : area;
@@ -870,13 +898,8 @@
         window.addEventListener('DOMContentLoaded', () => {
             const toggleDarkBtn = document.getElementById('toggle-dark');
             const searchInput = document.getElementById('search-input');
-            
-            // Renderizado directo
             renderBrands(brandsData);
-
-            if (toggleDarkBtn) {
-                toggleDarkBtn.onclick = () => document.documentElement.classList.toggle('dark');
-            }
+            if (toggleDarkBtn) toggleDarkBtn.onclick = () => document.documentElement.classList.toggle('dark');
             if (searchInput) {
                 searchInput.addEventListener('input', (e) => {
                     const term = e.target.value.toLowerCase();
@@ -893,9 +916,7 @@
                 btn.addEventListener('click', () => {
                     document.querySelectorAll('.nav-button').forEach(b => b.classList.remove('active'));
                     btn.classList.add('active');
-                    if (searchInput) {
-                        searchInput.dispatchEvent(new Event('input'));
-                    }
+                    if (searchInput) searchInput.dispatchEvent(new Event('input'));
                 });
             });
         });
